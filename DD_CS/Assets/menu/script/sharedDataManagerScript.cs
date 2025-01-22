@@ -4,6 +4,10 @@ using UnityEngine;
 
 namespace menu.script
 {
+    public class SharedDataManagerScript : NetworkBehaviour
+    {
+        public List<PlayerInfo> playerInfos = new ();
+    }
     public struct PlayerInfo
     {
         public enum Role
@@ -15,9 +19,5 @@ namespace menu.script
         public string username;
         public Role role;
         public ulong clientID;
-    }
-    public class SharedDataManagerScript : NetworkBehaviour
-    {
-        public List<PlayerInfo> playerInfos = new ();
     }
 }
