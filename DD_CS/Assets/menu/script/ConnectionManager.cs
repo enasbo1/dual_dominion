@@ -10,7 +10,8 @@ namespace menu.script
 {
     public class ConnectionManager : MonoBehaviour
     {
-        private string _profileName;
+        public SharedDataManagerScript dataManager;
+        private string _username;
         private string _sessionName;
         private int _maxPlayers = 2;
         private ConnectionState _state = ConnectionState.Disconnected;
@@ -44,7 +45,19 @@ namespace menu.script
         {
             if (m_NetworkManager.LocalClientId == clientId)
             {
+                var player = new PlayerInfo();
+                player.username = _username;
+                player.clientID = clientId;
+                player.role = dataManager.playerInfos.Exists(i => i.role.Equals(PlayerInfo.Role.God))?
+                    PlayerInfo.Role.Survivor:
+                    PlayerInfo.Role.God;
+                dataManager.playerInfos.Add(player);
+                Debug.Log(dataManager.playerInfos);
                 Debug.Log($"Client-{clientId} is connected and can spawn {nameof(NetworkObject)}s.");
+            }
+            else
+            {
+                Debug.Log($"Client-{clientId} is now connected.");
             }
         }
 
@@ -58,7 +71,7 @@ namespace menu.script
             using (new GUILayout.HorizontalScope(GUILayout.Width(250)))
             {
                 GUILayout.Label("Profile Name", GUILayout.Width(100));
-                _profileName = GUILayout.TextField(_profileName);
+                _username = GUILayout.TextField(_username);
             }
 
             using (new GUILayout.HorizontalScope(GUILayout.Width(250)))
@@ -67,7 +80,7 @@ namespace menu.script
                 _sessionName = GUILayout.TextField(_sessionName);
             }
 
-            GUI.enabled = GUI.enabled && !string.IsNullOrEmpty(_profileName) && !string.IsNullOrEmpty(_sessionName);
+            GUI.enabled = GUI.enabled && !string.IsNullOrEmpty(_username) && !string.IsNullOrEmpty(_sessionName);
 
             if (GUILayout.Button("Create or Join Session"))
             {
@@ -86,7 +99,7 @@ namespace menu.script
 
             try
             {
-                AuthenticationService.Instance.SwitchProfile(_profileName);
+                AuthenticationService.Instance.SwitchProfile(_username);
                 await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
                 var options = new SessionOptions() {
@@ -97,6 +110,8 @@ namespace menu.script
                 _session = await MultiplayerService.Instance.CreateOrJoinSessionAsync(_sessionName, options);
 
                 _state = ConnectionState.Connected;
+                
+                
             }
             catch (Exception e)
             {
@@ -104,5 +119,6 @@ namespace menu.script
                 Debug.LogException(e);
             }
         }
+    }
     }
 }
