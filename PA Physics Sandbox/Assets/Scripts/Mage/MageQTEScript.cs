@@ -1,55 +1,245 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 namespace Mage
 {
     public class MageQTEScript : MonoBehaviour
     {
+        public enum ControllerInputType
+        {
+            DualShock,
+            Buttons,
+            Both,
+        }
+        
         // public Transform playerTransform;
-        public float timeLimit = 10f;
+        [Header("GameObjects needed")]
+        public PlayerInput player;
+        public Slider timeBarSlider;
+        public SpellManager spellManager;
+        [FormerlySerializedAs("inputs")] public RectTransform inputsParent;
+        [Header("QTE values")]
+        public ControllerInputType controllerInputType;
+        [Range(0f, 0.9f)]
+        public float crossDetectionSensibility = 0.7f;
+        public float timeLimit = 15f;
+        public float bonusTimePerInput = 0.1f;
 
-        private float _inputTime;
+
+        private readonly List<Image> _playerInputs = new List<Image>();
+        private Vector3 _inputsPosition;
+        private SpellDirections _inputCurrent = SpellDirections.None;
+        private SpellDirections _inputPrevious = SpellDirections.None;
         private int _inputStep;
-        private const int LastStep = 4;
+        private float _inputTimer;
+        private Vector2 _moveVector;
+        private List<Spell> _spellsAvailable = new List<Spell>();
+        private Spell _spellParent;
+        private bool _isIncanting;
+        private float _timeBarWidth;
+        private float _timeBarWidthMax;
+        
+        private InputAction _incantationTrigger;
+        private InputAction _actionMove;
+        private InputAction _incantationMove;
+
+        private void Start()
+        {
+            _inputsPosition = inputsParent.transform.position;
+            foreach (Transform child in inputsParent.transform)
+            {
+                _playerInputs.Add(child.GetComponent<Image>());
+            }
+            
+            if (_playerInputs.Count < 15)
+            {
+                throw new Exception("Number of inputs insufficient");
+            }
+
+            _incantationTrigger = player.actions["incantationTrigger"];
+            _incantationTrigger.started += _ => IncantationRestart();
+            _incantationTrigger.canceled += _ => _isIncanting = false;
+
+            _actionMove = player.actions["move"];
+            _incantationMove = player.actions["IncantationMove"];
+            
+            switch (controllerInputType)
+            {
+                case ControllerInputType.DualShock:
+                    _actionMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _actionMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    break;
+                case ControllerInputType.Buttons:
+                    _incantationMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _incantationMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    break;
+                case ControllerInputType.Both:
+                    _incantationMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _actionMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _incantationMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _actionMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+     
+            _spellsAvailable = spellManager.GetSpells().GetRange(0, spellManager.GetSpells().Count);
+            IncantationEnd();
+        }
+        
+        private void IncantationRestart()
+        {
+            _inputPrevious = SpellDirections.None;
+            _isIncanting = true;
+        }
+
+        private void IncantationEnd()
+        {
+            _inputStep = 0;
+            _inputTimer = 0f;
+            _spellsAvailable.Clear();
+            _spellsAvailable.AddRange(spellManager.GetSpells()); 
+            _isIncanting = false;
+            _playerInputs.ForEach(input => input.gameObject.SetActive(false));
+            inputsParent.transform.position = _inputsPosition; }
+
+        private void IncantationCheck()
+        {
+            if (!_isIncanting) return;
+
+            if (_moveVector.y > crossDetectionSensibility)
+                _inputCurrent = SpellDirections.Up;
+            else if (_moveVector.y < -crossDetectionSensibility)
+                _inputCurrent = SpellDirections.Down;
+            else if (_moveVector.x > crossDetectionSensibility)
+                _inputCurrent = SpellDirections.Right;
+            else if (_moveVector.x < -crossDetectionSensibility)
+                _inputCurrent = SpellDirections.Left;
+            else
+                _inputCurrent = SpellDirections.None;
+        }
+
+        private void InputDisplay(string hexColor, float rotationAngle)
+        {
+            if (!ColorUtility.TryParseHtmlString(hexColor, out Color color)) return;
+            
+            _playerInputs[_inputStep].gameObject.SetActive(true);
+            _playerInputs[_inputStep].color = color;
+            _playerInputs[_inputStep].rectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
+        }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl))
-            {
-                Debug.Log("S Z Z Z"); // Adapt to keyboard (querty/azerty) or controller
-            }
-            if (!Input.GetKey(KeyCode.LeftControl))
-            {
-                return;
-            }
+            IncantationCheck();
+        }
+        
+        private void IncantationDisplay()
+        {
+            timeBarSlider.value = (timeLimit -_inputTimer) / timeLimit;
+            timeBarSlider.gameObject.SetActive(_inputTimer > 0f);
+
+            if (!_isIncanting && _inputStep == 0) return;
             
-            if (_inputStep is 0 && Input.GetKeyDown(KeyCode.S))
+            if (_inputPrevious == _inputCurrent) return;
+            
+            switch (_inputCurrent)
+            {
+                case SpellDirections.Up:
+                    InputDisplay("#FFB600", 0f);
+                    break;
+                case SpellDirections.Down:
+                    InputDisplay("#009DFF", 180f);
+                    break;
+                case SpellDirections.Left:
+                    InputDisplay("#00FF15", 90f);
+                    break;
+                case SpellDirections.Right:
+                    InputDisplay("#FF0080", -90f);
+                    break;
+                case SpellDirections.None:
+                default:
+                    break;
+            }
+        }
+        
+        private void LateUpdate()
+        {
+            IncantationDisplay();
+        }
+        
+        private void Incanting()
+        {
+            // Condition to fail an incantation
+            if (!(_spellsAvailable.Count > 0) || _inputTimer >= timeLimit)
+            {
+                CastSpell();
+                Debug.Log("Failed");
+            }
+
+            // Prevent triggering the input while in it
+            if (_inputPrevious == _inputCurrent) return;
+            
+            _inputPrevious = _inputCurrent;
+
+            if (_inputCurrent == SpellDirections.None) return;
+            
+            _spellsAvailable = _spellsAvailable.Where(spell =>
+            {
+                if (spell.inputs.Count <= _inputStep) return false;
+
+                // If input not for this spell, remove it from the available ones
+                if (_inputCurrent != spell.inputs[_inputStep]) return false;
+
+                if (_inputCurrent == spell.inputs[_inputStep]) _spellParent = spell;
+                
+                return true;
+            }).ToList();
+
+            if (_isIncanting)
             {
                 _inputStep += 1;
-                _inputTime -= 1f;
-            }
-            if (_inputStep is 1 or 2 or 3 && Input.GetKeyDown(KeyCode.W))
-            {
-                _inputStep += 1;
-                _inputTime -= 1f;
-            }
-            
-            if (_inputTime >= timeLimit)
-            {
-                _inputStep = 0;
-                _inputTime = 0f;
-                Debug.Log("failure");
-            }
-            if (_inputStep >= LastStep) {
-                _inputStep = 0;
-                _inputTime = 0f;
-                Debug.Log("success");
+                _inputTimer -= bonusTimePerInput;
+                _inputTimer = Mathf.Max(_inputTimer, 0);
+
+                if (_inputStep > 6)
+                {
+                    Vector2 inputMovements = inputsParent.anchoredPosition + new Vector2(-40f, 0f);
+                    inputsParent.anchoredPosition = inputMovements;
+                }
             }
         }
 
+        private void CastSpell()
+        {
+            Spell spellToCast = _spellParent.inputs?.Count <= _inputStep+1 ? _spellParent : new Spell();
+            _spellsAvailable.ForEach(spell =>
+            {
+                if (spell.inputs.Count > _inputStep)
+                    return;
+
+                if (spell.schema)
+                    spellToCast = spell;
+            });
+            
+            spellToCast.Cast();
+            IncantationEnd();
+        }
+                
         private void FixedUpdate()
         {
-            if (_inputStep > 0) {
-                _inputTime += Time.deltaTime;
+            if (_inputStep > 0)
+            {
+                _inputTimer += Time.deltaTime;
+                
+            }
+            if (_isIncanting)
+            {
+                Incanting();
             }
         }
     }
