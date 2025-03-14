@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 public class show_move : MonoBehaviour
 {
-    public Transform out_target;
-    public Transform camera;
+    public Transform playerCamera;
     public PlayerInput player;
+    public Transform cameraTarget;
     
     private Vector2 look_vector;
     private bool mouse = false;
@@ -14,8 +14,6 @@ public class show_move : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player.actions["move"].performed += ctx => out_target.position = ctx.ReadValue<Vector2>();
-        player.actions["move"].canceled += ctx => out_target.position = ctx.ReadValue<Vector2>();
         player.actions["look_GP"].performed += ctx => RotateCamera(ctx.ReadValue<Vector2>());
         player.actions["look_GP"].canceled += ctx => RotateCamera(Vector2.zero);
         player.actions["look_mouse"].performed += ctx => RotateCameraFromMouse(ctx.ReadValue<Vector2>());
@@ -49,10 +47,10 @@ public class show_move : MonoBehaviour
             RotateCamera(Vector2.zero);
             mouse = false;
         }
-        var rot = camera.rotation.eulerAngles;
+        var rot = playerCamera.rotation.eulerAngles;
         rot.y += look_vector.x * 90 * Time.deltaTime;
         rot.x -= look_vector.y * 90 * Time.deltaTime;
-        camera.rotation = Quaternion.Euler(rot);
-        camera.position = camera.rotation * Vector3.back * 10;
+        playerCamera.rotation = Quaternion.Euler(rot);
+        playerCamera.position = cameraTarget.position + (playerCamera.rotation * Vector3.back * 10);
     }
 }
