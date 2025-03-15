@@ -15,8 +15,8 @@ public class AnalogMoves : MonoBehaviour
     void Start()
     {
         _targetStart = target.position;
-        player.actions["move"].performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
-        player.actions["move"].canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
+        player.actions["Look_GP"].performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+        player.actions["Look_GP"].canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
         Cursor.lockState = CursorLockMode.Locked;
     }
     

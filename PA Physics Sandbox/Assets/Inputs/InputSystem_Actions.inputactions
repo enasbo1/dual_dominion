@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "CastSpell",
+                    "type": "Button",
+                    "id": "e7aa34f5-947a-4906-8229-b6c2795c4a88",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Look_Mouse",
                     "type": "Value",
                     "id": "76a7cfd7-9732-4148-b8e5-b88f01cb0a01",
@@ -349,10 +358,10 @@
                 {
                     "name": "",
                     "id": "c1f7a91b-d0fd-4a62-997e-7fb9b69bf235",
-                    "path": "<Gamepad>/rightStick",
+                    "path": "<Gamepad>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
+                    "groups": "",
                     "action": "Look_GP",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -601,23 +610,34 @@
                 },
                 {
                     "name": "",
-                    "id": "587ada6f-d4b3-48c1-8b65-245842b4467b",
-                    "path": "<Keyboard>/leftCtrl",
+                    "id": "8876748e-3cbc-45af-a4ff-c7125d91704a",
+                    "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
+                    "groups": ";Gamepad",
                     "action": "IncantationTrigger",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8876748e-3cbc-45af-a4ff-c7125d91704a",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "fb8a66f7-5d76-4010-8a4b-0d93b0a6003a",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "IncantationTrigger",
+                    "groups": "",
+                    "action": "CastSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eada5d00-2cfd-4fa5-a710-1ad033168cfd",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CastSpell",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

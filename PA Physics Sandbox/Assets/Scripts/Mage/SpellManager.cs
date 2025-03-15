@@ -32,7 +32,15 @@ namespace Mage
             this.name = name;
             this.inputs = inputs;
             schema = false;
-            _onCastTrigger = new List<ISpellEvent>();
+            _onCastTrigger = new List<ISpellEvent>();         }
+
+        public Spell(int id, string name, List<SpellDirections> inputs, bool schema)
+        {
+            this.id = id;
+            this.name = name;
+            this.inputs = inputs;
+            this.schema = schema;
+            _onCastTrigger = new List<ISpellEvent>(); 
         }
 
         public void Cast()
@@ -56,13 +64,19 @@ namespace Mage
         {
             List<Spell> test = new List<Spell>()
             {
+                new Spell(4, "EchecUp", new List<SpellDirections>() { SpellDirections.Up }, true),
                 new Spell(0, "Grimoire", new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Left, SpellDirections.Up, SpellDirections.Right }),
                 new Spell(1, "SkyView", new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }),
-                new Spell(1, "SkyViewExe", new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }),
-                new Spell(1, "Konami", new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up }),
+                new Spell(2, "SkyViewExe", new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }),
+                new Spell(3, "Konami", new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up }),
             };
             
             this._spellList = test;
+        }
+
+        public Spell GetSpellById(int id)
+        {
+            return _spellList.Find(x => x.id == id);
         }
 
         public List<Spell> GetSpells()

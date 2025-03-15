@@ -22,7 +22,8 @@ namespace Mage
         public PlayerInput player;
         public Slider timeBarSlider;
         public SpellManager spellManager;
-        [FormerlySerializedAs("inputs")] public RectTransform inputsParent;
+        [FormerlySerializedAs("inputs")] 
+        public RectTransform inputsParent;
         [Header("QTE values")]
         public ControllerInputType controllerInputType;
         [Range(0f, 0.9f)]
@@ -30,6 +31,8 @@ namespace Mage
         public float timeLimit = 15f;
         public float bonusTimePerInput = 0.1f;
 
+        [Header("UI Debugger")]
+        public Image pentacte;
 
         private readonly List<Image> _playerInputs = new List<Image>();
         private Vector3 _inputsPosition;
@@ -47,6 +50,9 @@ namespace Mage
         private InputAction _incantationTrigger;
         private InputAction _actionMove;
         private InputAction _incantationMove;
+        
+        private readonly Color _castDefaultColor = Color.white;
+        private readonly Color _castActiveColor = Color.black;
 
         private void Start()
         {
@@ -65,8 +71,10 @@ namespace Mage
             _incantationTrigger.started += _ => IncantationRestart();
             _incantationTrigger.canceled += _ => _isIncanting = false;
 
-            _actionMove = player.actions["move"];
+            _actionMove = player.actions["Look_GP"];
             _incantationMove = player.actions["IncantationMove"];
+            
+            player.actions["CastSpell"].started += _ => CastSpell();
             
             switch (controllerInputType)
             {
@@ -136,6 +144,7 @@ namespace Mage
         private void Update()
         {
             IncantationCheck();
+            pentacte.color = _isIncanting ? _castActiveColor : _castDefaultColor;
         }
         
         private void IncantationDisplay()
@@ -178,8 +187,9 @@ namespace Mage
             if (!(_spellsAvailable.Count > 0) || _inputTimer >= timeLimit)
             {
                 CastSpell();
-                Debug.Log("Failed");
             }
+
+            if (!_isIncanting) return;
 
             // Prevent triggering the input while in it
             if (_inputPrevious == _inputCurrent) return;
@@ -237,10 +247,7 @@ namespace Mage
                 _inputTimer += Time.deltaTime;
                 
             }
-            if (_isIncanting)
-            {
-                Incanting();
-            }
+            Incanting();
         }
     }
 }
