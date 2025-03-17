@@ -10,11 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1843405136009378281}
   - component: {fileID: 4894445244274935820}
-  - component: {fileID: 6532801415030171721}
   - component: {fileID: 6160326396458198664}
-  - component: {fileID: 3679554940066143750}
-  - component: {fileID: 6369782909684977473}
   - component: {fileID: 4325146951703348004}
+  - component: {fileID: 5759013563499735119}
   m_Layer: 0
   m_Name: Script
   m_TagString: Untagged
@@ -51,23 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterAnimator: {fileID: 0}
   player: {fileID: 4325146951703348004}
---- !u!114 &6532801415030171721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873972789769361740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28096f354571cbc4189de940d2a32e72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterTransform: {fileID: 0}
-  onUpdate: 0
-  canMove: 1
-  MoveSpeed: 1
-  footList: []
 --- !u!114 &6160326396458198664
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,39 +62,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 0}
-  player: {fileID: 0}
+  player: {fileID: 4325146951703348004}
   cameraTarget: {fileID: 0}
---- !u!114 &3679554940066143750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873972789769361740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e3a00129260ee2e46b1eb2be19c9176f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  angleTolerance: 10
-  standingGameObjects: []
---- !u!114 &6369782909684977473
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873972789769361740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb4aaa61f26acf1498800280a4b2d95e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leaders: []
-  followers: []
-  limit: []
-  onlyY: 
-  speed: []
 --- !u!114 &4325146951703348004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,3 +94,17 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &5759013563499735119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873972789769361740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b3a28168732fde429a0fedae1e3c774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionSetter: {fileID: 4894445244274935820}
+  target: {fileID: 0}

@@ -91,7 +91,7 @@ namespace script
         private static float RotateAngle(float angle, float target, float speed)
         {
             var dis = (target - angle) % 360;
-            if (angleDistanceTo_0(dis) < speed)
+            if (angleDistanceTo_0(dis) < speed * 2)
                 return target;
             if (dis < - 180)
                 return angle + speed;
