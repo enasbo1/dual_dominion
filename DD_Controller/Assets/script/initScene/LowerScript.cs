@@ -15,6 +15,7 @@ namespace script.initScene
             {
                 Apply();
             }
+            Destroy(this);
         }
 
         private void Apply()
@@ -27,7 +28,6 @@ namespace script.initScene
 
             foreach (var rb in RigidbodiesToDestroy)
                 Destroy(rb);
-            Destroy(this);
         }
     }
 }
