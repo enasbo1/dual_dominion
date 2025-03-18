@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 using System.Linq;
-using Mage;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace script.Mage.SpellListener
+namespace Mage.SpellListener
 {
     public class Grimoire : MonoBehaviour
     {
         public SpellManager spellManager;
-        public RectTransform grimoire;
+        [FormerlySerializedAs("grimoire")] public RectTransform grimoireUI;
         [Range(0.1f, 3f)]
-        public float transitionSpeed = 0.15f;
+        public float transitionSpeed = 0.5f;
+        public float scrollFreezeTime = 2f;
 
         private float _timer;
         private List<Spell> _spellList;
@@ -23,9 +24,15 @@ namespace script.Mage.SpellListener
         private RectTransform _spellsUI;
         private Vector2 _spellsUIStartPosition;
         private Vector2 _spellsUIEndPosition;
-        private Vector2 _sizeDelta; // Used for width and height
+
+        private Vector2 _spellScroll;
+        private Vector2 _grimoireUISizeScroll; // Used for width and height of grimoireUI and spellsUI
         
         private bool _spellCasted;
+        
+        private const float GrimoireUIMinHeight = 95f;
+        private const float GrimoireUIMaxHeight = 200f;
+        private const float SpellUIHeight = 70f;
         
         private void InputDisplay(Image img, string hexColor, float rotationAngle)
         {
@@ -66,18 +73,18 @@ namespace script.Mage.SpellListener
                 else Destroy(inputUI.gameObject);
             }
         }
-        
-        void Start()
+
+        private void RefreshSpellsUI()
         {
-            _spellList = spellManager.GetSpells();
-            
-            _sizeDelta = grimoire.sizeDelta;
-            _spellsDisplayUI = grimoire.GetChild(0).GetComponentInChildren<RectTransform>();
-            _spellsUI = _spellsDisplayUI.GetChild(0).GetComponentInChildren<RectTransform>();
-            _spellsUIStartPosition = _spellsUI.anchoredPosition;
             int i = 0;
             foreach (Transform spellUI in _spellsUI.transform)
             {
+                RectTransform spellUIPosition = spellUI.GetComponent<RectTransform>();
+
+                Vector2 spellUINewPosition = spellUIPosition.anchoredPosition;
+                spellUINewPosition.y = -2.5f - i * SpellUIHeight;
+                spellUIPosition.anchoredPosition = spellUINewPosition;
+                
                 if (i < _spellList.Count)
                 {
                     Spell spellForThisUI = _spellList[i];
@@ -87,14 +94,26 @@ namespace script.Mage.SpellListener
                     spellNameUI.text = spellForThisUI.name;
                 
                     Transform spellInputsUI = spellUI.Find("SpellInputs");
-                    List<Image> inputs = (from Transform child in spellInputsUI.transform select child.GetComponent<Image>()).ToList();
+                    List<Image> inputsUI = (from Transform inputUI in spellInputsUI.transform select inputUI.GetComponent<Image>()).ToList();
 
-                    SetInputs(inputs, spellForThisUI);
+                    SetInputs(inputsUI, spellForThisUI);
                     
                     i++;
                 }
-                else Destroy(spellUI.gameObject); // May be replaced by setActive(), so that we can increase spell in book during party
+                else spellUI.gameObject.SetActive(false);
             }
+        }
+        
+        void Start()
+        {
+            _spellList = spellManager.GetSpells();
+            
+            _grimoireUISizeScroll = grimoireUI.sizeDelta;
+            _spellsDisplayUI = grimoireUI.GetChild(0).GetComponentInChildren<RectTransform>();
+            _spellsUI = _spellsDisplayUI.GetChild(0).GetComponentInChildren<RectTransform>();
+            _spellsUIStartPosition = _spellsUI.anchoredPosition;
+
+            RefreshSpellsUI();
             
             spellManager.GetSpellById(0).AddSpellListener(_ => SpellCasted());
             
@@ -103,16 +122,11 @@ namespace script.Mage.SpellListener
 
         void SpellCasted()
         {
-            _timeLimit = 5 + 3 * (_spellList.Count - 2) / (17 *  math.pow(transitionSpeed, 2.8f));
+            _timeLimit = 4 + scrollFreezeTime + 3 * (_spellList.Count - 2) / (17 *  math.pow(transitionSpeed, 2.8f));
             Debug.Log(_timeLimit);
             _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellList.Count - 2) * 70);
             
             _timer = _timeLimit;
-            
-            _sizeDelta.y = 200;
-            grimoire.sizeDelta = _sizeDelta;
-            _sizeDelta.y = 180;
-            _spellsDisplayUI.sizeDelta = _sizeDelta;
             
             _spellCasted = true;
         }
@@ -121,30 +135,38 @@ namespace script.Mage.SpellListener
         {
             _spellCasted = false;
             
-            _sizeDelta.y = 95;
-            grimoire.sizeDelta = _sizeDelta;
-            _sizeDelta.y = 75;
-            _spellsDisplayUI.sizeDelta = _sizeDelta;
-            _spellsUI.anchoredPosition = _spellsUIStartPosition;
-        }
-
-        // Update is called once per frame
-        void FixedUpdate()
-        {
-            if (!_spellCasted) return;
-            
-            _timer -= Time.fixedDeltaTime;
-            if (_timer <= 0)
+            if (_spellsUI.anchoredPosition.y > _spellsUIStartPosition.y)
             {
-                CastEnd();
+                _spellScroll = _spellsUI.anchoredPosition - new Vector2(0f, transitionSpeed);
+                _spellsUI.anchoredPosition = _spellScroll;
                 return;
             }
+
+            if (grimoireUI.sizeDelta.y <= GrimoireUIMinHeight) return;
             
-            if (_spellList.Count > 2 && _timer <= _timeLimit - 1)
+            _grimoireUISizeScroll.y -= transitionSpeed;
+            grimoireUI.sizeDelta = _grimoireUISizeScroll;
+            _spellsDisplayUI.sizeDelta = _grimoireUISizeScroll - new Vector2(0, 20);
+        }
+
+        void FixedUpdate()
+        {
+            if (_timer <= 0 && grimoireUI.sizeDelta.y >= GrimoireUIMinHeight) CastEnd();
+            if (!_spellCasted) return;
+            
+            if (grimoireUI.sizeDelta.y < GrimoireUIMaxHeight)
             {
-                Vector2 inputMovements = _spellsUI.anchoredPosition + new Vector2(0f, transitionSpeed);
-                if (inputMovements.y < _spellsUIEndPosition.y) _spellsUI.anchoredPosition = inputMovements;
+                _grimoireUISizeScroll.y += transitionSpeed;
+                grimoireUI.sizeDelta = _grimoireUISizeScroll;
+                _spellsDisplayUI.sizeDelta = _grimoireUISizeScroll - new Vector2(0, 20);
             }
+            
+            _timer -= Time.deltaTime;
+
+            if (_spellList.Count <= 2 || _timer > _timeLimit - scrollFreezeTime || _spellsUI.anchoredPosition.y >= _spellsUIEndPosition.y) return;
+            
+            _spellScroll = _spellsUI.anchoredPosition + new Vector2(0f, transitionSpeed);
+            _spellsUI.anchoredPosition = _spellScroll;
         }
     }
 }

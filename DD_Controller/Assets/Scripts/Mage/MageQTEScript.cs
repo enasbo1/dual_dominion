@@ -45,6 +45,7 @@ namespace Mage
         private float _timeBarWidthMax;
         
         private InputAction _incantationTrigger;
+        private InputAction _spellTrigger;
         private InputAction _actionMove;
         private InputAction _incantationMove;
 
@@ -61,10 +62,12 @@ namespace Mage
                 throw new Exception("Number of inputs insufficient");
             }
             _incantationTrigger = player.actions["IncantationTrigger"];
-            _incantationTrigger.started += _ => IncantationRestart();
-            _incantationTrigger.canceled += _ => CastSpell(_spellParent);
+            _incantationTrigger.started += _ => IncantationRecover();
+            
+            _spellTrigger = player.actions["CastSpell"];
+            _spellTrigger.started += _ => CastSpell(_spellParent);
 
-            _actionMove = player.actions["move"];
+            _actionMove = player.actions["Move"];
             _incantationMove = player.actions["IncantationMove"];
             
             switch (controllerInputType)
@@ -96,7 +99,7 @@ namespace Mage
             return _isIncanting;
         }
         
-        private void IncantationRestart()
+        private void IncantationRecover()
         {
             _inputPrevious = SpellDirections.None;
             _isIncanting = true;
@@ -201,26 +204,27 @@ namespace Mage
                 return true;
             }).ToList();
 
-            if (_isIncanting)
-            {
-                _inputStep += 1;
-                _inputTimer -= bonusTimePerInput;
-                _inputTimer = Mathf.Max(_inputTimer, 0);
+            if (!_isIncanting) return;
+            
+            _inputStep += 1;
+            _inputTimer -= bonusTimePerInput;
+            _inputTimer = Mathf.Max(_inputTimer, 0);
 
-                if (_inputStep > 6)
-                {
-                    Vector2 inputMovements = inputsUI.anchoredPosition + new Vector2(-40f, 0f);
-                    inputsUI.anchoredPosition = inputMovements;
-                }
-            }
+            if (_inputStep <= 6) return;
+            
+            Vector2 inputMovements = inputsUI.anchoredPosition + new Vector2(-40f, 0f);
+            inputsUI.anchoredPosition = inputMovements;
         }
 
         private void CastSpell(Spell? spellToCast, bool castAsError = false)
         {
             _isIncanting = false;
             
-            if (spellToCast == null) return;
-
+            if (spellToCast == null)
+            {
+                IncantationEnd();
+                return;
+            }
 
             if (castAsError) spellToCast.Value.CastFailure();
             else spellToCast.Value.Cast(); 
