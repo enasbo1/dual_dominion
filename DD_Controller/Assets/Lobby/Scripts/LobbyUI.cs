@@ -1,15 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour {
-
+    private struct SceneAsset
+    {
+        public string name;
+        public SceneAsset(string name)
+        {
+            this.name = name;
+        }
+    }
 
     public static LobbyUI Instance { get; private set; }
 
@@ -27,8 +31,8 @@ public class LobbyUI : MonoBehaviour {
     [SerializeField] private Button changeGameModeButton;
     [SerializeField] private Button launchGameButton;
     [Header("Scenes to Loads")]
-    public SceneAsset multiPlayerScene;
-    public SceneAsset monoPlayerScene;
+    private SceneAsset multiPlayerScene = new SceneAsset("MultiPlayerScene");
+    private SceneAsset monoPlayerScene = new SceneAsset("MonoPlayerScene");
     
 
     public void LoadNextScene()
