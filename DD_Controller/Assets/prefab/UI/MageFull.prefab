@@ -13870,7 +13870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 02a3cb35aa142c24aaef648fb7cfaf43, type: 3}
+  m_Actions: {fileID: 0}
   m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -13895,7 +13895,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f91a5abcf218f4a4ab3d4e4b193b78ed, type: 3}
   m_Name: 
@@ -13918,7 +13918,7 @@ MonoBehaviour:
   timeBarSlider: {fileID: 4399219090906342657}
   spellManager: {fileID: 8986099243556552578}
   inputsUI: {fileID: 5864730731692220108}
-  controllerInputType: 2
+  controllerInputType: 1
   crossDetectionSensibility: 0.65
   timeLimit: 15
   bonusTimePerInput: 0.1

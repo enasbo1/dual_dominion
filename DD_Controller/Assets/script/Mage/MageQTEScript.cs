@@ -90,6 +90,11 @@ namespace Mage
             _spellsAvailable = spellManager.GetSpells().GetRange(0, spellManager.GetSpells().Count);
             IncantationEnd();
         }
+
+        public bool GetIncantingState()
+        {
+            return _isIncanting;
+        }
         
         private void IncantationRestart()
         {

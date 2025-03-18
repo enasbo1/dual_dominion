@@ -62,16 +62,21 @@ namespace Mage
                 ),
                 new Spell(
                     1,
+                    "Run",
+                    new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up}
+                    ),
+                new Spell(
+                    2,
                     "SkyView",
                     new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }
                 ),
                 new Spell(
-                    1,
+                    3,
                     "SkyViewExe",
                     new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }
                 ),
                 new Spell(
-                    1,
+                    4,
                     "Konami",
                     new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up }
                 ),
