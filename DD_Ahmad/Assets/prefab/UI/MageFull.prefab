@@ -607,8 +607,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 672736874924035162}
-  - component: {fileID: 297860618370770460}
-  - component: {fileID: 8123731773455513444}
+  - component: {fileID: 4304110806504322842}
+  - component: {fileID: 8209213893369321932}
   m_Layer: 5
   m_Name: SpellInputs
   m_TagString: Untagged
@@ -651,7 +651,7 @@ RectTransform:
   m_AnchoredPosition: {x: -60, y: 10}
   m_SizeDelta: {x: 170, y: 40}
   m_Pivot: {x: 0, y: 1}
---- !u!222 &297860618370770460
+--- !u!222 &4304110806504322842
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -659,7 +659,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124456248747898374}
   m_CullTransparentMesh: 1
---- !u!114 &8123731773455513444
+--- !u!114 &8209213893369321932
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14060,7 +14060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c385d236f84ae3e4097efb42abb396a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8483468413111735732}
+  player: {fileID: 0}
   spellManager: {fileID: 8986099243556552578}
   grimoireUI: {fileID: 1004673356339403257}
   transitionSpeed: 1.73

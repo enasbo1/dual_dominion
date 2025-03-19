@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +10,7 @@ public class AuthenticateUI : MonoBehaviour {
     private void Awake() {
         authenticateButton.onClick.AddListener(() => {
             LobbyManager.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
+            LobbyListUI.Instance.Show();
             Hide();
         });
     }
