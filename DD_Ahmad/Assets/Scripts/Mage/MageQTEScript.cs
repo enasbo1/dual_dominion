@@ -39,7 +39,7 @@ namespace Mage
         private float _inputTimer;
         private Vector2 _moveVector;
         private List<Spell> _spellsAvailable = new List<Spell>();
-        private Spell? _spellParent;
+        private Spell _spellParent;
         private bool _isIncanting;
         private float _timeBarWidth;
         private float _timeBarWidthMax;
@@ -61,11 +61,14 @@ namespace Mage
             {
                 throw new Exception("Number of inputs insufficient");
             }
+
+            _spellParent = spellManager.GetSpellById(0);
+            
             _incantationTrigger = player.actions["IncantationTrigger"];
             _incantationTrigger.started += _ => IncantationRecover();
             
             _spellTrigger = player.actions["CastSpell"];
-            _spellTrigger.started += _ => CastSpell(_spellParent);
+            _spellTrigger.started += _ => { if (_isIncanting) CastSpell(_spellParent); };
 
             _actionMove = player.actions["Move"];
             _incantationMove = player.actions["IncantationMove"];
@@ -216,7 +219,7 @@ namespace Mage
             inputsUI.anchoredPosition = inputMovements;
         }
 
-        private void CastSpell(Spell? spellToCast, bool castAsError = false)
+        private void CastSpell(Spell spellToCast, bool castAsError = false)
         {
             _isIncanting = false;
             
@@ -225,11 +228,11 @@ namespace Mage
                 IncantationEnd();
                 return;
             }
-
-            if (castAsError) spellToCast.Value.CastFailure();
-            else spellToCast.Value.Cast(); 
             
-            _spellParent = null;
+            if (castAsError) spellToCast.CastFailure();
+            else if (spellToCast.canRecastWhileInCast || (!spellToCast.canRecastWhileInCast && !spellToCast.isInCast)) spellToCast.Cast(); 
+            
+            _spellParent = spellManager.GetSpellById(0);
             IncantationEnd();
         }
                 
@@ -238,7 +241,6 @@ namespace Mage
             if (_inputStep > 0)
             {
                 _inputTimer += Time.deltaTime;
-                
             }
             if (_isIncanting)
             {
@@ -246,12 +248,11 @@ namespace Mage
             }
             
             // Condition to fail an incantation
-            if (!(_spellsAvailable.Count > 0) || _inputTimer >= timeLimit)
-            {
-                CastSpell(_spellParent, true);
-                IncantationEnd();
-                Debug.Log("Failed");
-            }
+            if (_spellsAvailable.Count > 0 && _inputTimer < timeLimit) return;
+            
+            CastSpell(_spellParent, true);
+            IncantationEnd();
+            Debug.Log("Failed");
         }
     }
 }
