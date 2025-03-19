@@ -13,19 +13,23 @@ namespace Mage
         Left
     }
 
-    public struct Spell
+    public class Spell
     {
-        public int id;
-        public string name;
+        public readonly int id;
+        public readonly string name;
+        public readonly bool canRecastWhileInCast;
+        public bool isInCast;
         public readonly List<SpellDirections> inputs;
         private readonly List<Action<Spell>> _spellEvents;
         private readonly List<Action<Spell>> _spellFailureEvents;
         
-        public Spell(int id, string name, List<SpellDirections> inputs)
+        public Spell(int id, string name, List<SpellDirections> inputs, bool canRecastWhileInCast)
         {
             this.id = id;
             this.name = name;
             this.inputs = inputs;
+            this.canRecastWhileInCast = canRecastWhileInCast;
+            isInCast = false;
             _spellEvents = new List<Action<Spell>>();
             _spellFailureEvents = new List<Action<Spell>>();
         }
@@ -58,27 +62,32 @@ namespace Mage
                 new Spell(
                     0,
                     "Grimoire",
-                    new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Left, SpellDirections.Up, SpellDirections.Right }
+                    new List<SpellDirections>(),
+                    false
                 ),
                 new Spell(
                     1,
                     "Run",
-                    new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up}
+                    new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up},
+                    true
                     ),
                 new Spell(
                     2,
                     "SkyView",
-                    new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }
+                    new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down },
+                    true
                 ),
                 new Spell(
                     3,
                     "SkyViewExe",
-                    new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down }
+                    new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down },
+                    true
                 ),
                 new Spell(
                     4,
                     "Konami",
-                    new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up }
+                    new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up },
+                    true
                 ),
             };
             

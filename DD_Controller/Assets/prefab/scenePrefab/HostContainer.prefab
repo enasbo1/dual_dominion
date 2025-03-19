@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1962102811
+  GlobalObjectIdHash: 2793386540
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 2
@@ -502,6 +502,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5831827844683759926, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 10055327008314166}
     - target: {fileID: 6553289717767932084, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: m_RenderMode
       value: 0
