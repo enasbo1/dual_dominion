@@ -448,6 +448,10 @@ PrefabInstance:
       propertyPath: GlobalObjectIdHash
       value: 1962102811
       objectReference: {fileID: 0}
+    - target: {fileID: 3176182982283331232, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 2793386540
+      objectReference: {fileID: 0}
     - target: {fileID: 4305453172761329476, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -478,6 +482,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5313604575902248990, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6110237759414914894, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7080664337766263259, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}

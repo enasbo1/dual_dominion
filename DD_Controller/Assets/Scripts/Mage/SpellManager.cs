@@ -72,6 +72,12 @@ namespace Mage
                     true
                     ),
                 new Spell(
+                    5,
+                    "Jump",
+                    new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Down, SpellDirections.Up },
+                    true
+                ),
+                new Spell(
                     2,
                     "SkyView",
                     new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down },

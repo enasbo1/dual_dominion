@@ -219,6 +219,16 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5390244634552519927, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
   m_PrefabInstance: {fileID: 707137759972952131}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &5313604575902248990 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4642636438767089757, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+  m_PrefabInstance: {fileID: 707137759972952131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &6110237759414914894 stripped
+Rigidbody:
+  m_CorrespondingSourceObject: {fileID: 6709148302592362253, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+  m_PrefabInstance: {fileID: 707137759972952131}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6392893781989120572 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5866040828760674943, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
@@ -377,6 +387,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1873972789769361740, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3355670657881779470}
+    - targetCorrespondingSourceObject: {fileID: 1873972789769361740, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5872652464580515456}
+    - targetCorrespondingSourceObject: {fileID: 1873972789769361740, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 862395617218075379}
   m_SourcePrefab: {fileID: 100100000, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
 --- !u!114 &10055327008314166 stripped
 MonoBehaviour:
@@ -430,6 +446,38 @@ MonoBehaviour:
   MageAnimator: {fileID: 7628375691049233573}
   GrimoryAnimator: {fileID: 7830610934939258330}
   MageQTEScript: {fileID: 1238990604846020576}
+--- !u!114 &5872652464580515456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748333948680096094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80e6c33a90ebe54cbf9af2bfb88b044, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameOverPrefab: {fileID: 5822105737752487427, guid: a3532bee04263744a960813e6595d752, type: 3}
+  objectToDelete:
+  - {fileID: 2601907536832713260}
+  objectLimited:
+  - {fileID: 5313604575902248990}
+  deathBottom: -100
+--- !u!114 &862395617218075379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748333948680096094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025dfe1c94ca08f429522909ead0a9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 4718062114245178048}
+  characterRigidbody: {fileID: 6110237759414914894}
 --- !u!1001 &4453186847628578114
 PrefabInstance:
   m_ObjectHideFlags: 0
