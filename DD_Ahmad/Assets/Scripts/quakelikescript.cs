@@ -19,7 +19,6 @@ public class Quakelikescript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
         player.actions["move"].performed += ctx => addMove(ctx.ReadValue<Vector2>());
         player.actions["move"].canceled += ctx => addMove(ctx.ReadValue<Vector2>());
         player.actions["look_GP"].performed += ctx => RotateCamera(ctx.ReadValue<Vector2>());

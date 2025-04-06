@@ -316,6 +316,7 @@ public class LobbyManager : MonoBehaviour {
                 OnLeftLobby?.Invoke(this, EventArgs.Empty);
             } catch (LobbyServiceException e) {
                 Debug.Log(e);
+                Debug.Log(e);
             }
         }
     }

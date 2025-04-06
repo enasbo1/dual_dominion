@@ -79,6 +79,9 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"st: col:PauseTable"
+	"st:"
+	"st: grp:\"String Table\""
 	"st: col:CommonTable"
 	"st: col:LobbyTable"
 ]
