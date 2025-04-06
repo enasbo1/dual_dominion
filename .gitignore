@@ -222,7 +222,7 @@ pip-log.txt
 [Tt]emp/
 [Ll]ibrary
 Assets/StreamingAssets*
-./DD_Controller/UserSettings/Layouts/default-6000.dwlt
+./DD_Controller/UserSettings/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
