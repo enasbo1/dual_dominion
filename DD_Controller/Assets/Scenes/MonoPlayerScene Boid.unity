@@ -4407,6 +4407,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5872652464580515456, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872652464580515456, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: gameOverCanvas
       value: 
       objectReference: {fileID: 1806853924}
