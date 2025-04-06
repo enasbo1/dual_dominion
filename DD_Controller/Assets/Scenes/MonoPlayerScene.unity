@@ -940,6 +940,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
+      propertyPath: playerInputs
+      value: 
+      objectReference: {fileID: 2092014683}
+    - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
       propertyPath: pauseTimeFlow
       value: 0.01
       objectReference: {fileID: 0}
@@ -1034,6 +1038,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2748333948680096094, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
   m_PrefabInstance: {fileID: 1491969996}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2092014683 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 10055327008314166, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+  m_PrefabInstance: {fileID: 1491969996}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092014682}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2115601854
 PrefabInstance:
   m_ObjectHideFlags: 0

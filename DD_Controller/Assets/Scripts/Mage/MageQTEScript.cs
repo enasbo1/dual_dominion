@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mage
@@ -17,8 +18,8 @@ namespace Mage
         }
         
         // public Transform playerTransform;
-        [Header("GameObjects needed")]
-        public PlayerInput player;
+        [FormerlySerializedAs("player")] [Header("GameObjects needed")]
+        public PlayerInput playerInputs;
         public Slider timeBarSlider;
         public SpellManager spellManager;
         public RectTransform inputsUI;
@@ -64,14 +65,14 @@ namespace Mage
 
             _spellParent = spellManager.GetSpellById(0);
             
-            _incantationTrigger = player.actions["IncantationTrigger"];
+            _incantationTrigger = playerInputs.actions["IncantationTrigger"];
             _incantationTrigger.started += _ => IncantationRecover();
             
-            _spellTrigger = player.actions["CastSpell"];
+            _spellTrigger = playerInputs.actions["CastSpell"];
             _spellTrigger.started += _ => { if (_isIncanting) CastSpell(_spellParent); };
 
-            _actionMove = player.actions["Move"];
-            _incantationMove = player.actions["IncantationMove"];
+            _actionMove = playerInputs.actions["Move"];
+            _incantationMove = playerInputs.actions["IncantationMove"];
             
             switch (controllerInputType)
             {

@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PauseMenuScript : MonoBehaviour
 {
+    public PlayerInput playerInputs;
+    
     [Range(0.01f, 3f)]
     public float neutralTimeFlow = 1f;
     [Range(0.01f, 3f)]
@@ -15,29 +18,41 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField] private Button leavePartyButton;
     [SerializeField] private Button leaveGameButton;
     
+    private InputAction _pauseTrigger;
+    private bool _isPauseActive;
+    
     private void Awake() {
-        resumeButton.onClick.AddListener(() => {
-            Time.timeScale = neutralTimeFlow;
-            canvas.SetActive(false);
-            objectsToDisable.ForEach(x => x.SetActive(true));
-            Cursor.lockState = CursorLockMode.Locked;
-        });
+        resumeButton.onClick.AddListener(CloseMenu);
 
         leavePartyButton.onClick.AddListener(() => {
             SceneManagerScript.ChangeToScene(SceneName.Lobby);
         });
         
         leaveGameButton.onClick.AddListener(Application.Quit);
+        
+        _pauseTrigger = playerInputs.actions["Escape"];
+        _pauseTrigger.started += _ =>
+        {
+            if (_isPauseActive) CloseMenu();
+            else OpenMenu();
+        };
     }
 
-    void Update()
+    private void OpenMenu()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
-        {
-            Time.timeScale = pauseTimeFlow;
-            canvas.SetActive(true);
-            objectsToDisable.ForEach(x => x.SetActive(false));
-            Cursor.lockState = CursorLockMode.None;
-        }
+        Time.timeScale = pauseTimeFlow;
+        canvas.SetActive(true);
+        objectsToDisable.ForEach(x => x.SetActive(false));
+        Cursor.lockState = CursorLockMode.None;
+        _isPauseActive = true;
+    }
+    
+    private void CloseMenu()
+    {
+        Time.timeScale = neutralTimeFlow;
+        canvas.SetActive(false);
+        objectsToDisable.ForEach(x => x.SetActive(true));
+        Cursor.lockState = CursorLockMode.Locked;
+        _isPauseActive = false;
     }
 }
