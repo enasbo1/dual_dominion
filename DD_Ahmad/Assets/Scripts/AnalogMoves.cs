@@ -17,7 +17,6 @@ public class AnalogMoves : MonoBehaviour
         _targetStart = target.position;
         player.actions["move"].performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
         player.actions["move"].canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
-        Cursor.lockState = CursorLockMode.Locked;
     }
     
     // Update is called once per frame

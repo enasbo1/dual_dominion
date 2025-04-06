@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
@@ -25,6 +24,8 @@ public class LobbyListUI : MonoBehaviour {
 
         refreshButton.onClick.AddListener(RefreshButtonClick);
         createLobbyButton.onClick.AddListener(CreateLobbyButtonClick);
+        lobbySingleTemplate.gameObject.SetActive(false);
+        Hide();
     }
 
     private void Start() {
@@ -77,7 +78,7 @@ public class LobbyListUI : MonoBehaviour {
         gameObject.SetActive(false);
     }
 
-    private void Show() {
+    public void Show() {
         gameObject.SetActive(true);
     }
 

@@ -20,7 +20,6 @@ namespace script
             player.actions["look_GP"].canceled += _ => RotateCamera(Vector2.zero);
             player.actions["look_mouse"].performed += ctx => RotateCameraFromMouse(ctx.ReadValue<Vector2>());
             player.actions["look_mouse"].canceled += _ => RotateCameraFromMouse(Vector2.zero);
-            Cursor.lockState = CursorLockMode.Locked;
         }
 
         private void RotateCamera(Vector2 direction)

@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -316,6 +315,7 @@ public class LobbyManager : MonoBehaviour {
 
                 OnLeftLobby?.Invoke(this, EventArgs.Empty);
             } catch (LobbyServiceException e) {
+                Debug.Log(e);
                 Debug.Log(e);
             }
         }
