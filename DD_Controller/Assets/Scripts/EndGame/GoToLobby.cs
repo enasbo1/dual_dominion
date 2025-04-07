@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace script.end_game
+namespace end_game
 {
     public class GoToLobby : MonoBehaviour
     {

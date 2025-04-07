@@ -7,7 +7,6 @@ namespace Move
         public AnimationChanger directionSetter;
         public Transform target;
 
-        // Update is called once per frame
         void Update()
         {
             var currentDirection = directionSetter.GetCurrentWalkDirection();

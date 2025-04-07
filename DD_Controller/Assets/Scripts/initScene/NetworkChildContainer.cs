@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-namespace script.initScene
+namespace initScene
 {
     public class NetworkChildContainer : MonoBehaviour
     {

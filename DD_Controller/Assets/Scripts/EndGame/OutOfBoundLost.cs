@@ -1,8 +1,7 @@
-using System;
 using JetBrains.Annotations;
 using UnityEngine;
 
-namespace script.end_game
+namespace end_game
 {
     public class OutOfBoundLost : MonoBehaviour
     {

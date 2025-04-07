@@ -1,7 +1,6 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace script.initScene
+namespace initScene
 {
     public class CameraContainer : MonoBehaviour
     {
