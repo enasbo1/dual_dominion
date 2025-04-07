@@ -11,6 +11,7 @@ namespace script.move
 
         private int _animationState;
         private static readonly int WalkState = Animator.StringToHash("WalkState");
+        private static readonly int Melee = Animator.StringToHash("Melee");
         private Vector2 _walkDirection = Vector2.zero;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -19,6 +20,7 @@ namespace script.move
             characterAnimator.SetInteger(WalkState, 0);
             player.actions["move"].performed += ctx => SetWalkState(ctx.ReadValue<Vector2>());
             player.actions["move"].canceled += _ => StopWalking();
+            player.actions["attack"].started += _ => Attack();
         }
 
         private void StopWalking()
@@ -50,6 +52,12 @@ namespace script.move
             _animationState = walkState;
         }
 
+        private void Attack()
+        {
+            characterAnimator.SetTrigger(Melee);
+        }
+
+
         public float GetTargetWalkDirection()
         {
             return Mathf.Atan2(_walkDirection.x, _walkDirection.y) * Mathf.Rad2Deg;
@@ -60,6 +68,7 @@ namespace script.move
             if (_animationState == 0) return null;
             return (_animationState - 1) * 90;
         }
+        
     }
 
 }
