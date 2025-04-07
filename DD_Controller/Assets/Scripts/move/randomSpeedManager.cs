@@ -1,34 +1,34 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace move
+namespace Move
 {
     public class RandomSpeedManager : MonoBehaviour
     {
         public Animator[] animators;
         
-        public float speed_target;
-        public string speed_target_param = "walkSpeed";
+        [FormerlySerializedAs("speed_target")] public float speedTarget;
+        [FormerlySerializedAs("speed_target_param")] public string speedTargetParam = "walkSpeed";
 
-        private float[] _c_speed;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        private float[] _currentSpeed;
+        
         void Start()
         {
-            _c_speed = new float[animators.Length];
-            for(int i = 0; i < _c_speed.Length; i++)
-                _c_speed[i] = animators[i].GetFloat(speed_target_param);
+            _currentSpeed = new float[animators.Length];
+            for(int i = 0; i < _currentSpeed.Length; i++)
+                _currentSpeed[i] = animators[i].GetFloat(speedTargetParam);
         }
 
-        // Update is called once per frame
         void FixedUpdate()
         {
             var i = 0;
             foreach (var anim in animators)
             {
-                _c_speed[i] += Random.Range(-speed_target, speed_target)/20;
-                _c_speed[i] *= 0.999f;
-                if (_c_speed[i] * 2 < speed_target)
-                    _c_speed[i] = speed_target/2;
-                anim.SetFloat(speed_target_param, _c_speed[i]);
+                _currentSpeed[i] += Random.Range(-speedTarget, speedTarget)/20;
+                _currentSpeed[i] *= 0.999f;
+                if (_currentSpeed[i] * 2 < speedTarget)
+                    _currentSpeed[i] = speedTarget/2;
+                anim.SetFloat(speedTargetParam, _currentSpeed[i]);
             }
         }
     }

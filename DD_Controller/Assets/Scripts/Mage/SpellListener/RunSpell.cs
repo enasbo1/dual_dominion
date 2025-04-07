@@ -1,14 +1,15 @@
-using Mage;
+using Move;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace script.Mage.SpellListener
+namespace Mage.SpellListener
 {
     public class RunSpell : MonoBehaviour
     {
         public SpellManager spellManager;
         public FootMove footMoveScript;
         public Material effectMaterial;
-        public SkinnedMeshRenderer effectBarrer;
+        [FormerlySerializedAs("effectBarrer")] public SkinnedMeshRenderer effectRenderer;
         
         private float _timer;
 
@@ -18,8 +19,8 @@ namespace script.Mage.SpellListener
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            _initialValue = footMoveScript.MoveSpeed;
-            _originalMaterial = effectBarrer.material;
+            _initialValue = footMoveScript.movementSpeed;
+            _originalMaterial = effectRenderer.material;
             spellManager.GetSpellById(1).AddSpellListener(OnSpell);
         }
 
@@ -27,9 +28,9 @@ namespace script.Mage.SpellListener
         {
             _timer = 5;
             if (_active) return;
-            _initialValue = footMoveScript.MoveSpeed;
-            footMoveScript.MoveSpeed = _initialValue*2;
-            effectBarrer.material = effectMaterial;
+            _initialValue = footMoveScript.movementSpeed;
+            footMoveScript.movementSpeed = _initialValue*2;
+            effectRenderer.material = effectMaterial;
             _active = true;
         }
         // Update is called once per frame
@@ -39,8 +40,8 @@ namespace script.Mage.SpellListener
             _timer -= Time.fixedDeltaTime;
             if (_timer < 0)
             {
-                footMoveScript.MoveSpeed = _initialValue;
-                effectBarrer.material = _originalMaterial;
+                footMoveScript.movementSpeed = _initialValue;
+                effectRenderer.material = _originalMaterial;
                 _active = false;
             }
         }

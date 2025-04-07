@@ -10,7 +10,7 @@ namespace Mage.SpellListener
         {
             foreach (Spell spell in spellManager.GetSpells())
             {
-                spell.AddSpellListener(spell => Debug.Log(spell.name));
+                spell.AddSpellListener(x => Debug.Log(x.name));
             }
         }
     }

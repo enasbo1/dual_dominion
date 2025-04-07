@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
-namespace script
+namespace Move
 {
     public class FollowRotationManager : MonoBehaviour
     {
@@ -13,7 +12,7 @@ namespace script
         public bool[] onlyY;
         public float[] speed;
         
-        private List<Rigidbody> _rigidbodies;
+        private List<Rigidbody> _rigidBodies;
         private Quaternion[] _start;
         private Vector3[] _offsets;
         private bool[] _hasRB;
@@ -38,7 +37,7 @@ namespace script
                 Debug.LogError("followers and limits must have the same length");
                 return;
             }
-            _rigidbodies = new List<Rigidbody>();
+            _rigidBodies = new List<Rigidbody>();
             var i = 0;
             _offsets = new Vector3[leaders.Length];
             _hasRB = new bool[leaders.Length];
@@ -49,13 +48,13 @@ namespace script
                 var rb = follow.GetComponent<Rigidbody>();
                 if (rb != null) {
                     _hasRB[i] = true;
-                    _rigidbodies.Add(rb);
+                    _rigidBodies.Add(rb);
                 }
                 else
                     _hasRB[i] = false;
                 _offsets[i] = follow.rotation.eulerAngles - leaders[i++].rotation.eulerAngles;
             }
-            Debug.Log(_rigidbodies.Count);
+            Debug.Log(_rigidBodies.Count);
         }
 
         private static float angleDistanceTo_0(float angle)
@@ -131,7 +130,7 @@ namespace script
             {
                 if (_hasRB[i])
                 {
-                    _rigidbodies[rb].rotation = RotationApply(follow, leaders[i].rotation.eulerAngles, _offsets[i], speed[i], onlyY[i]);
+                    _rigidBodies[rb].rotation = RotationApply(follow, leaders[i].rotation.eulerAngles, _offsets[i], speed[i], onlyY[i]);
                     ++rb;
                 }
                 else

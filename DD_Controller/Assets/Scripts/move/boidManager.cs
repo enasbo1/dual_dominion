@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace move
+namespace Move
 {
     public class BoidsManager : MonoBehaviour
     {
@@ -23,9 +23,9 @@ namespace move
             
             
             var i = 0;
-            foreach (var boidT in boids)
+            foreach (Transform bidT in boids)
             {
-                var rb = boidT.GetComponent<Rigidbody>();
+                var rb = bidT.GetComponent<Rigidbody>();
                 if (rb!= null)
                 {
                     _boidsRb.Add(rb);
@@ -40,10 +40,10 @@ namespace move
             return  a.y * b.x-a.x * b.y;
         }
         
-        private static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle, float fact = 1)
+        private static float BidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle, float fact = 1)
         {
             angle += Random.Range(-2, 3) * fact;
-            var side = 0f;
+            float side;
             switch (dist)
             {
                 case < 1:
@@ -94,9 +94,9 @@ namespace move
             var angleList = _angleList;
             var i = 0;
             var rbIndex = 0;
-            foreach (var boid in boids)
+            foreach (Transform bidT in boids)
             {
-                var tamp = boid.position;
+                var tamp = bidT.position;
                 posList[i].x = tamp.x;
                 posList[i].y = tamp.z;
                 if (_hasRb[i])
@@ -105,7 +105,7 @@ namespace move
                     ++rbIndex;
                 }
                 else
-                    angleList[i] = boid.rotation.eulerAngles.y;
+                    angleList[i] = bidT.rotation.eulerAngles.y;
                 ++i;
             }
             
@@ -117,9 +117,7 @@ namespace move
                 var (n, near) = LookForNearest(j, posList);
                 if (n == null) return;
 
-                var newAngle = BoidRuleApply(birdV, angleList[j], near, posList[n??0], angleList[n??0], Time.deltaTime*6);
-
-
+                var newAngle = BidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
                 
                 if (_hasRb[j])
                 {
