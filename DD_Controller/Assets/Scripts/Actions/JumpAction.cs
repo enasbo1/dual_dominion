@@ -1,33 +1,37 @@
 ﻿using UnityEngine;
 
-namespace actions
+namespace Actions
 {
     public struct JumpAction : IDdAction
     {
-        private Rigidbody rb;
-        private Animator animator;
-        private float jumpForce;
+        private readonly Rigidbody _rb;
+        private readonly Animator _animator;
+        private readonly float _jumpForce;
         public int id { get;  set;}
         
         private static readonly int Jump = Animator.StringToHash("Jump");
+        private float _jumpTimer;
 
-        JumpAction(Rigidbody rb, Animator animator, float jumpForce)
+        public JumpAction(Rigidbody rb, Animator animator, float jumpForce)
         {
             id = 0;
-            this.rb = rb;
-            this.animator = animator;
-            this.jumpForce = jumpForce;
+            _rb = rb;
+            _animator = animator;
+            _jumpForce = jumpForce;
+            _jumpTimer = 0f;
         }
 
 
         public void launch()
         {
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            animator.SetTrigger(Jump);
+            _jumpTimer = Time.time;
+            _animator.SetTrigger(Jump);
         }
 
         public bool update()
         {
+            if (Time.time < _jumpTimer + 0.1f) return false;
+            _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             return true;
         }
 

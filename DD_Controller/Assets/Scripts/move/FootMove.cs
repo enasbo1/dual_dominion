@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,7 +11,7 @@ namespace Move
         public bool onUpdate;
         public bool canMove = true;
         [FormerlySerializedAs("MoveSpeed")] public float movementSpeed = 1.0f;
-        public List<Transform> footList = new List<Transform>();
+        public List<Transform> footList = new ();
 
 
         private Vector3 _lastFootPosition=Vector3.zero;
@@ -24,14 +25,15 @@ namespace Move
             {
                 var move = (_footTransform.position - characterTransform.position) - _lastFootPosition ;
                 move.y = 0;
-                characterTransform.localPosition -= move * movementSpeed;
+                characterTransform.position -= move * movementSpeed;
             }
             var floorFoot = footList[0];
             var rot = characterTransform.rotation;
-            var y = (rot * floorFoot.position).y;
-            foreach (var foot in footList)
+            var unit = rot * Vector3.up;
+            var y = Vector3.Dot(unit, floorFoot.position - characterTransform.position);
+            foreach (var foot in footList.Where(t => t != floorFoot))
             {
-                var i = (rot * foot.position).y;
+                var i = Vector3.Dot(unit, foot.position - characterTransform.position);
                 if (i < y)
                 {
                     y = i;

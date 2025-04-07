@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace actions
+namespace Actions
 {
     public struct HeavyAttackAction : IDdAction
     {
@@ -9,7 +9,7 @@ namespace actions
         
         private static readonly int Melee = Animator.StringToHash("melee");
 
-        HeavyAttackAction(Animator animator)
+        public HeavyAttackAction(Animator animator)
         {
             id = 0;
             _animator = animator;

@@ -1,19 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace actions
+namespace Actions
 {
-    public interface IDdAction
-    {
-        public int id { get; set; }
-
-        public void launch();
-        /*
-         * return true if action ended
-         */
-        public bool update();
-        public void end();
-    }
     
     public class ActionManager : MonoBehaviour
     {
@@ -49,14 +38,21 @@ namespace actions
 
         private void FixedUpdate()
         {
-            _actions.ForEach(action =>
-            {
-                if (!action.update()) return;
-                
-                
-                action.end();
-                _actions.Remove(action);
-            });
+            
+            _actions.RemoveAll(action => action.update());
         }
     }
+    public interface IDdAction
+    {
+        public int id { get; set; }
+
+        public void launch();
+        /*
+         * return true if action ended
+         */
+        public bool update();
+        public void end();
+    }
+    
+
 }

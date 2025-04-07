@@ -2,21 +2,23 @@
 
 namespace Actions
 {
-    public struct MeleeAttackAction : IDdAction
+    public struct ShieldAction : IDdAction
     {
         private readonly Animator _animator;
         public int id { get;  set;}
-        private static readonly int Melee = Animator.StringToHash("Melee");
+        private static readonly int Shield = Animator.StringToHash("shield");
+        public bool Active;
 
-        public MeleeAttackAction(Animator animator)
+        public ShieldAction(Animator animator)
         {
             id = 0;
             _animator = animator;
+            Active = true;
         }
         
         public void launch()
         {
-            _animator.SetTrigger(Melee);
+            _animator.SetBool(Shield, true);
         }
 
         public bool update()
@@ -26,6 +28,7 @@ namespace Actions
 
         public void end()
         {
+            _animator.SetBool(Shield, false);
         }
     }
 }

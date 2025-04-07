@@ -1,27 +1,34 @@
 using System;
+using Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace Move
 {
-    public class AnimationChanger : MonoBehaviour
+    public class MageController : MonoBehaviour
     {
-        public Animator characterAnimator;
+        [SerializeField] private Animator characterAnimator;
+        [SerializeField] private Rigidbody characterBody;
         [FormerlySerializedAs("player")] public PlayerInput playerInputs;
+        [SerializeField] private ActionManager actionManager;
 
         private int _animationState;
         private static readonly int WalkState = Animator.StringToHash("WalkState");
-        private static readonly int Melee = Animator.StringToHash("Melee");
+        private static ShieldAction _shieldAction;
         private Vector2 _walkDirection = Vector2.zero;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            _shieldAction = new ShieldAction(characterAnimator);
             characterAnimator.SetInteger(WalkState, 0);
             playerInputs.actions["move"].performed += ctx => SetWalkState(ctx.ReadValue<Vector2>());
             playerInputs.actions["move"].canceled += _ => StopWalking();
             playerInputs.actions["attack"].started += _ => Attack();
+            playerInputs.actions["jump"].started += _ => Jump();
+            playerInputs.actions["shield"].started += _ => _shieldAction.launch();
+            playerInputs.actions["shield"].canceled += _ => _shieldAction.end();
         }
 
         private void StopWalking()
@@ -55,7 +62,12 @@ namespace Move
 
         private void Attack()
         {
-            characterAnimator.SetTrigger(Melee);
+            actionManager.AddAction(new MeleeAttackAction(characterAnimator));
+        }
+
+        private void Jump()
+        {
+            actionManager.AddAction(new JumpAction(characterBody, characterAnimator, 10));
         }
 
 

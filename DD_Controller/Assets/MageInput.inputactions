@@ -54,7 +54,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -126,6 +126,15 @@
                     "name": "Escape",
                     "type": "Button",
                     "id": "63b799c0-1975-4428-92f5-122537842637",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shield",
+                    "type": "Button",
+                    "id": "a730e445-8856-49a0-9336-5390847487a7",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -614,6 +623,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "CastSpell",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a3340a38-8295-4012-8563-8cb5acb6d4fb",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Shield",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b68dd5e0-0a26-49f1-b741-1232a0e6037c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Shield",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

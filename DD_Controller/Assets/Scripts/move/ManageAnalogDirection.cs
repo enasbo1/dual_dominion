@@ -4,7 +4,7 @@ namespace Move
 {
     public class ManageAnalogDirection : MonoBehaviour
     {
-        public AnimationChanger directionSetter;
+        public MageController directionSetter;
         public Transform target;
 
         void Update()
