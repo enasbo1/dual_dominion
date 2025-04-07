@@ -1,12 +1,12 @@
-using Mage;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace script.Mage.SpellListener
+namespace Mage.SpellListener
 {
     public class JumpSpell : MonoBehaviour
     {
         public SpellManager spellManager;
-        public Rigidbody characterRigidbody;
+        [FormerlySerializedAs("characterRigidbody")] public Rigidbody characterRigidBody;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -16,7 +16,7 @@ namespace script.Mage.SpellListener
 
         private void OnSpell(Spell spell)
         {
-            characterRigidbody.AddForce((Vector3.up * 80), ForceMode.Impulse);
+            characterRigidBody.AddForce((Vector3.up * 80), ForceMode.Impulse);
         }
     }
 }

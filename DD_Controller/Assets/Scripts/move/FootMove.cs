@@ -1,29 +1,30 @@
 using System.Collections.Generic;
-using TMPro.EditorUtilities;
 using UnityEngine;
-namespace script
+using UnityEngine.Serialization;
 
+namespace Move
 {
     public class FootMove : MonoBehaviour
     {
         public Transform characterTransform;
-        public bool onUpdate = false;
+        public bool onUpdate;
         public bool canMove = true;
-        public float MoveSpeed = 1.0f;
+        [FormerlySerializedAs("MoveSpeed")] public float movementSpeed = 1.0f;
         public List<Transform> footList = new List<Transform>();
 
 
-        private Vector3 lastFootPosition=Vector3.zero;
-        private Transform footTransform=null;
-        private void move()
+        private Vector3 _lastFootPosition=Vector3.zero;
+        private Transform _footTransform;
+        
+        private void Move()
         {
             if (footList.Count == 0) return;
             if (!canMove) return;
-            if (lastFootPosition != Vector3.zero)
+            if (_lastFootPosition != Vector3.zero)
             {
-                var move = (footTransform.position - characterTransform.position) - lastFootPosition ;
+                var move = (_footTransform.position - characterTransform.position) - _lastFootPosition ;
                 move.y = 0;
-                characterTransform.localPosition -= move * MoveSpeed;
+                characterTransform.localPosition -= move * movementSpeed;
             }
             var floorFoot = footList[0];
             var rot = characterTransform.rotation;
@@ -37,17 +38,17 @@ namespace script
                     floorFoot = foot;
                 }
             }
-            footTransform = floorFoot;
-            lastFootPosition =  footTransform.position-characterTransform.position;
+            _footTransform = floorFoot;
+            _lastFootPosition =  _footTransform.position-characterTransform.position;
         }
 
         private void Update()
         {
-            if (onUpdate) move();
+            if (onUpdate) Move();
         }
         private void FixedUpdate()
         {
-            move();
+            Move();
         }
     }
 }

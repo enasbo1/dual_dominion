@@ -1,13 +1,14 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
-namespace script.move
+namespace Move
 {
     public class AnimationChanger : MonoBehaviour
     {
         public Animator characterAnimator;
-        public PlayerInput player;
+        [FormerlySerializedAs("player")] public PlayerInput playerInputs;
 
         private int _animationState;
         private static readonly int WalkState = Animator.StringToHash("WalkState");
@@ -18,9 +19,9 @@ namespace script.move
         void Start()
         {
             characterAnimator.SetInteger(WalkState, 0);
-            player.actions["move"].performed += ctx => SetWalkState(ctx.ReadValue<Vector2>());
-            player.actions["move"].canceled += _ => StopWalking();
-            player.actions["attack"].started += _ => Attack();
+            playerInputs.actions["move"].performed += ctx => SetWalkState(ctx.ReadValue<Vector2>());
+            playerInputs.actions["move"].canceled += _ => StopWalking();
+            playerInputs.actions["attack"].started += _ => Attack();
         }
 
         private void StopWalking()

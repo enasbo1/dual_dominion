@@ -1,21 +1,24 @@
-using Mage;
-using UnityEditor.UI;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace script.Mage.SpellListener
+namespace Mage.SpellListener
 {
     public class GrimoryAnimation : MonoBehaviour
     {
-        public Animator MageAnimator;
-        public Animator GrimoryAnimator;
-        public MageQTEScript MageQTEScript;
+        [FormerlySerializedAs("MageAnimator")] public Animator mageAnimator;
+        [FormerlySerializedAs("GrimoryAnimator")] public Animator grimoryAnimator;
+        [FormerlySerializedAs("MageQTEScript")] public MageQTEScript mageQTEScript;
 
-        private static string INCANTING = "Incanting";
-        private static string SPELL = "Spell";
+        private const string INCANTING = "Incanting";
+        private const string SPELL = "Spell";
+        
+        private static readonly int Spell1 = Animator.StringToHash(SPELL);
+        private static readonly int Incanting1 = Animator.StringToHash(INCANTING);
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            foreach (var spell in MageQTEScript.spellManager.GetSpells())
+            foreach (var spell in mageQTEScript.spellManager.GetSpells())
             {
                 spell.AddSpellListener(Cast);                
             }
@@ -24,16 +27,16 @@ namespace script.Mage.SpellListener
 
         private void Cast(Spell spell)
         {
-            MageAnimator.SetTrigger(SPELL);
-            GrimoryAnimator.SetBool(INCANTING, false);
+            mageAnimator.SetTrigger(Spell1);
+            grimoryAnimator.SetBool(Incanting1, false);
         }
 
         // Update is called once per frame
         void Update()
         {
-            var b = MageQTEScript.GetIncantingState();
-            MageAnimator.SetBool(INCANTING, b);
-            GrimoryAnimator.SetBool(INCANTING, b);
+            var b = mageQTEScript.GetIncantingState();
+            mageAnimator.SetBool(Incanting1, b);
+            grimoryAnimator.SetBool(Incanting1, b);
         }
     }
 }

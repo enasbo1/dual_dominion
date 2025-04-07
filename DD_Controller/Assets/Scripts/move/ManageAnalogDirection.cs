@@ -1,16 +1,11 @@
 using UnityEngine;
 
-namespace script.move
+namespace Move
 {
-    public class ManageAnalogicDirection : MonoBehaviour
+    public class ManageAnalogDirection : MonoBehaviour
     {
         public AnimationChanger directionSetter;
         public Transform target;
-    
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-        }
 
         // Update is called once per frame
         void Update()
@@ -21,7 +16,7 @@ namespace script.move
             var targetDirection = directionSetter.GetTargetWalkDirection();
             
             var rot  = target.localRotation.eulerAngles;
-            rot.y = targetDirection - (currentDirection??0f);
+            rot.y = targetDirection - ((float)currentDirection);
             
             target.localRotation = Quaternion.Euler(rot);
         }

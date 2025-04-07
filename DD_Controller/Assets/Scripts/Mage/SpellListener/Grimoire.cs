@@ -37,9 +37,9 @@ namespace Mage.SpellListener
         private InputAction _incantationTrigger;
         private InputAction _spellTrigger;
         
-        private const float GrimoireUIMinHeight = 95f;
-        private const float GrimoireUIMaxHeight = 200f;
-        private const float SpellUIHeight = 70f;
+        private const float GRIMOIRE_UI_MIN_HEIGHT = 95f;
+        private const float GRIMOIRE_UI_MAX_HEIGHT = 200f;
+        private const float SPELL_UI_HEIGHT = 70f;
         
         private static void InputDisplay(Graphic img, string hexColor, float rotationAngle)
         {
@@ -89,7 +89,7 @@ namespace Mage.SpellListener
                 RectTransform spellUIPosition = spellUI.GetComponent<RectTransform>();
 
                 Vector2 spellUINewPosition = spellUIPosition.anchoredPosition;
-                spellUINewPosition.y = -2.5f - i * SpellUIHeight;
+                spellUINewPosition.y = -2.5f - i * SPELL_UI_HEIGHT;
                 spellUIPosition.anchoredPosition = spellUINewPosition;
                 
                 if (i < _spellList.Count)
@@ -157,7 +157,7 @@ namespace Mage.SpellListener
                 return;
             }
 
-            if (grimoireUI.sizeDelta.y <= GrimoireUIMinHeight) return;
+            if (grimoireUI.sizeDelta.y <= GRIMOIRE_UI_MIN_HEIGHT) return;
             
             _grimoireUISizeScroll.y -= transitionSpeed;
             grimoireUI.sizeDelta = _grimoireUISizeScroll;
@@ -168,10 +168,10 @@ namespace Mage.SpellListener
 
         private void FixedUpdate()
         {
-            if (_timer <= 0 && grimoireUI.sizeDelta.y >= GrimoireUIMinHeight) CastEnd();
+            if (_timer <= 0 && grimoireUI.sizeDelta.y >= GRIMOIRE_UI_MIN_HEIGHT) CastEnd();
             if (_timer <= 0) return;
             
-            if (grimoireUI.sizeDelta.y < GrimoireUIMaxHeight)
+            if (grimoireUI.sizeDelta.y < GRIMOIRE_UI_MAX_HEIGHT)
             {
                 _grimoireUISizeScroll.y += transitionSpeed;
                 grimoireUI.sizeDelta = _grimoireUISizeScroll;
