@@ -58,7 +58,7 @@ namespace Move
                 else
                     if (reflux < 0f)
                         reflux *= 1.5f;
-                characterBody.AddForce((normalizedDirection + nV * reflux) * (moveScript.movementSpeed * speedFactor * 5), ForceMode.Acceleration);
+                characterBody.AddForce((normalizedDirection + nV * reflux) * (moveScript.movementSpeed * speedFactor * 10), ForceMode.Acceleration);
             }
         }
         
