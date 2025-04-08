@@ -12,9 +12,13 @@ namespace Move
         [SerializeField] private Rigidbody characterBody;
         [FormerlySerializedAs("player")] public PlayerInput playerInputs;
         [SerializeField] private ActionManager actionManager;
+        [SerializeField] private LayerMask opponentLayerMask;
+        [SerializeField] private Transform characterTransform;
+        [SerializeField] private MoveScript moveScript;
 
         private int _animationState;
         private static readonly int WalkState = Animator.StringToHash("WalkState");
+        private static readonly int MidAir = Animator.StringToHash("mid-air");
         private static ShieldAction _shieldAction;
         private Vector2 _walkDirection = Vector2.zero;
 
@@ -37,7 +41,27 @@ namespace Move
             _walkDirection = Vector2.zero;
             _animationState = 0;
         }
+        
+        private void AirControl(Vector3 directionIntent, float speedFactor)
+        {
+           
+            if (directionIntent.magnitude != 0f){
+                var normalizedDirection = directionIntent.normalized;
 
+                var nV = characterBody.linearVelocity.normalized;
+                var reflux = -Vector3.Dot(normalizedDirection, nV);
+                
+                reflux = (reflux < 2f) ? reflux : 2f;
+                if (characterBody.linearVelocity.sqrMagnitude <
+                    (moveScript.movementSpeed * moveScript.movementSpeed * speedFactor * speedFactor))
+                    reflux = (reflux > 0f) ? reflux : 0f;
+                else
+                    if (reflux < 0f)
+                        reflux *= 1.5f;
+                characterBody.AddForce((normalizedDirection + nV * reflux) * (moveScript.movementSpeed * speedFactor * 5), ForceMode.Acceleration);
+            }
+        }
+        
         private void SetWalkState(Vector2 walkInput)
         {
             _walkDirection = walkInput;
@@ -62,12 +86,13 @@ namespace Move
 
         private void Attack()
         {
-            actionManager.AddAction(new MeleeAttackAction(characterAnimator));
+            actionManager.AddAction(new MeleeAttackAction(characterAnimator, characterTransform, opponentLayerMask));
         }
 
         private void Jump()
         {
-            actionManager.AddAction(new JumpAction(characterBody, characterAnimator, 10));
+            if (!characterAnimator.GetBool(MidAir))
+                actionManager.AddAction(new JumpAction(characterBody, 15));
         }
 
 
@@ -81,7 +106,14 @@ namespace Move
             if (_animationState == 0) return null;
             return (_animationState - 1) * 90;
         }
-        
+
+
+        public void FixedUpdate()
+        {
+            if (characterAnimator.GetBool(MidAir))
+                AirControl(characterTransform.rotation * new Vector3(_walkDirection.x, 0, _walkDirection.y), 0.5f);
+
+        }
     }
 
 }

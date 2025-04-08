@@ -5,23 +5,26 @@ using UnityEngine.Serialization;
 
 namespace Move
 {
-    public class FootMove : MonoBehaviour
+    public class FootMove : MoveScript
     {
         public Transform characterTransform;
         public bool onUpdate;
-        public bool canMove = true;
-        [FormerlySerializedAs("MoveSpeed")] public float movementSpeed = 1.0f;
         public List<Transform> footList = new ();
 
 
         private Vector3 _lastFootPosition=Vector3.zero;
         private Transform _footTransform;
+        private bool _couldMove;
         
         private void Move()
         {
             if (footList.Count == 0) return;
-            if (!canMove) return;
-            if (_lastFootPosition != Vector3.zero)
+            if (!canMove)
+            {
+                _couldMove = false;
+                return;
+            }
+            if (_couldMove && (_lastFootPosition != Vector3.zero))
             {
                 var move = (_footTransform.position - characterTransform.position) - _lastFootPosition ;
                 move.y = 0;
@@ -42,6 +45,7 @@ namespace Move
             }
             _footTransform = floorFoot;
             _lastFootPosition =  _footTransform.position-characterTransform.position;
+            _couldMove = canMove;
         }
 
         private void Update()
@@ -52,5 +56,11 @@ namespace Move
         {
             Move();
         }
+    }
+
+    public abstract class MoveScript : MonoBehaviour
+    {
+        [FormerlySerializedAs("MoveSpeed")] public float movementSpeed = 1.0f;
+        public bool canMove = true;
     }
 }
