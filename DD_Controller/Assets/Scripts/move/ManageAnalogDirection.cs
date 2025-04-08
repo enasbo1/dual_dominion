@@ -10,12 +10,11 @@ namespace Move
         void Update()
         {
             var currentDirection = directionSetter.GetCurrentWalkDirection();
-            if (currentDirection is null) return;
             
             var targetDirection = directionSetter.GetTargetWalkDirection();
             
             var rot  = target.localRotation.eulerAngles;
-            rot.y = targetDirection - ((float)currentDirection);
+            rot.y = targetDirection - currentDirection;
             
             target.localRotation = Quaternion.Euler(rot);
         }

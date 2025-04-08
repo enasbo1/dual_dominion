@@ -78,6 +78,18 @@ namespace Mage
                     true
                 ),
                 new Spell(
+                    6,
+                    "UnnamedSpell",
+                    new List<SpellDirections>() { SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down },
+                    true
+                ),
+                new Spell(
+                    7,
+                    "UnnamedSpell 2",
+                    new List<SpellDirections>() { SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down, SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down },
+                    true
+                ),
+                new Spell(
                     2,
                     "SkyView",
                     new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down },

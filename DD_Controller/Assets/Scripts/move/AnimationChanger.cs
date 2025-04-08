@@ -64,9 +64,9 @@ namespace Move
             return Mathf.Atan2(_walkDirection.x, _walkDirection.y) * Mathf.Rad2Deg;
         }
 
-        public float? GetCurrentWalkDirection()
+        public float GetCurrentWalkDirection()
         {
-            if (_animationState == 0) return null;
+            if (_animationState == 0) return 0;
             return (_animationState - 1) * 90;
         }
         

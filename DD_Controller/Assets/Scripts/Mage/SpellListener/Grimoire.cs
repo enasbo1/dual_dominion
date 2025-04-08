@@ -143,7 +143,6 @@ namespace Mage.SpellListener
             _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellList.Count - 2) * 70);
             
             _timer = _timeLimit;
-            
         }
 
         private void CastEnd()
@@ -168,8 +167,13 @@ namespace Mage.SpellListener
 
         private void FixedUpdate()
         {
-            if (_timer <= 0 && grimoireUI.sizeDelta.y >= GRIMOIRE_UI_MIN_HEIGHT) CastEnd();
-            if (_timer <= 0) return;
+            if (!_grimoireSpell.isInCast) return;
+            
+            if (_timer <= 0)
+            {
+                CastEnd();
+                return;
+            }
             
             if (grimoireUI.sizeDelta.y < GRIMOIRE_UI_MAX_HEIGHT)
             {
