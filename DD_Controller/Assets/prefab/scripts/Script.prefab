@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1843405136009378281}
   - component: {fileID: 4894445244274935820}
-  - component: {fileID: 6160326396458198664}
+  - component: {fileID: 3314839490608186021}
   - component: {fileID: 4325146951703348004}
   - component: {fileID: 5759013563499735119}
   m_Layer: 0
@@ -48,8 +48,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterAnimator: {fileID: 0}
-  player: {fileID: 4325146951703348004}
---- !u!114 &6160326396458198664
+  characterBody: {fileID: 0}
+  playerInputs: {fileID: 4325146951703348004}
+  actionManager: {fileID: 0}
+  opponentLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  characterTransform: {fileID: 0}
+  moveScript: {fileID: 0}
+--- !u!114 &3314839490608186021
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,12 +65,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1873972789769361740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8de89db43ca3e1f41b8205c24960432a, type: 3}
+  m_Script: {fileID: 11500000, guid: c7e4f7c8e9719a84898234ff08434e7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 0}
-  player: {fileID: 4325146951703348004}
+  directionMain: {fileID: 0}
+  playerInputs: {fileID: 4325146951703348004}
   cameraTarget: {fileID: 0}
+  cameraOffset: {x: 0, y: 0, z: 0}
+  isRotable: 1
 --- !u!114 &4325146951703348004
 MonoBehaviour:
   m_ObjectHideFlags: 0

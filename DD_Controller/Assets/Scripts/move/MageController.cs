@@ -1,11 +1,18 @@
 using System;
 using Actions;
+using Shared;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace Move
 {
+    public enum MoveMode
+    {
+        ThirdPerson,
+        UpView
+    }
+    
     public class MageController : MonoBehaviour
     {
         [SerializeField] private Animator characterAnimator;
@@ -13,21 +20,24 @@ namespace Move
         [FormerlySerializedAs("player")] public PlayerInput playerInputs;
         [SerializeField] private ActionManager actionManager;
         [SerializeField] private LayerMask opponentLayerMask;
+        [SerializeField] private Transform directionMain;
         [SerializeField] private Transform characterTransform;
         [SerializeField] private MoveScript moveScript;
-
+        [SerializeField] public MoveMode moveMode = MoveMode.ThirdPerson;
+        
         private int _animationState;
         private static readonly int WalkState = Animator.StringToHash("WalkState");
         private static readonly int MidAir = Animator.StringToHash("mid-air");
         private static ShieldAction _shieldAction;
         private Vector2 _walkDirection = Vector2.zero;
+        private Vector2 _inputDirection = Vector2.zero;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _shieldAction = new ShieldAction(characterAnimator);
             characterAnimator.SetInteger(WalkState, 0);
-            playerInputs.actions["move"].performed += ctx => SetWalkState(ctx.ReadValue<Vector2>());
+            playerInputs.actions["move"].performed += ctx => _inputDirection = ctx.ReadValue<Vector2>();
             playerInputs.actions["move"].canceled += _ => StopWalking();
             playerInputs.actions["attack"].started += _ => Attack();
             playerInputs.actions["jump"].started += _ => Jump();
@@ -39,42 +49,46 @@ namespace Move
         {
             characterAnimator.SetInteger(WalkState, 0);
             _walkDirection = Vector2.zero;
+            _inputDirection = Vector2.zero;
             _animationState = 0;
         }
         
         private void AirControl(Vector3 directionIntent, float speedFactor)
         {
-           
-            if (directionIntent.magnitude != 0f){
-                var normalizedDirection = directionIntent.normalized;
+            if (directionIntent.magnitude == 0f) return;
+            Vector3 normalizedDirection = directionIntent.normalized;
 
-                var nV = characterBody.linearVelocity.normalized;
-                var reflux = -Vector3.Dot(normalizedDirection, nV);
+            Vector3 nV = characterBody.linearVelocity.normalized;
+            float reflux = -Vector3.Dot(normalizedDirection, nV);
                 
-                reflux = (reflux < 2f) ? reflux : 2f;
-                if (characterBody.linearVelocity.sqrMagnitude <
-                    (moveScript.movementSpeed * moveScript.movementSpeed * speedFactor * speedFactor))
-                    reflux = (reflux > 0f) ? reflux : 0f;
-                else
-                    if (reflux < 0f)
-                        reflux *= 1.5f;
-                characterBody.AddForce((normalizedDirection + nV * reflux) * (moveScript.movementSpeed * speedFactor * 10), ForceMode.Acceleration);
-            }
+            reflux = (reflux < 2f) ? reflux : 2f;
+            if (characterBody.linearVelocity.sqrMagnitude <
+                (moveScript.movementSpeed * moveScript.movementSpeed * speedFactor * speedFactor))
+                reflux = (reflux > 0f) ? reflux : 0f;
+            else
+            if (reflux < 0f)
+                reflux *= 1.5f;
+            characterBody.AddForce((normalizedDirection + nV * reflux) * (moveScript.movementSpeed * speedFactor * 10), ForceMode.Acceleration);
         }
         
-        private void SetWalkState(Vector2 walkInput)
+        private void SetWalkState()
         {
-            _walkDirection = walkInput;
-            if (walkInput == Vector2.zero)
+            _walkDirection = moveMode switch
+            {
+                MoveMode.ThirdPerson => _inputDirection,
+                MoveMode.UpView => Vector2Extension.RotateDeg(_inputDirection, directionMain.rotation.eulerAngles.y),
+                _ => _inputDirection
+            };
+            if (_inputDirection == Vector2.zero)
             {
                 characterAnimator.SetInteger(WalkState, 0);
             }
             else
             {
-                if ((Math.Abs(walkInput.y)+.3) >= Math.Abs(walkInput.x))
-                    SetWalkStateTo(walkInput.y > 0 ? 1 : 3);
+                if ((Math.Abs(_walkDirection.y)+.3) >= Math.Abs(_walkDirection.x))
+                    SetWalkStateTo(_walkDirection.y > 0 ? 1 : 3);
                 else
-                    SetWalkStateTo(walkInput.x > 0 ? 2 : 4);
+                    SetWalkStateTo(_walkDirection.x > 0 ? 2 : 4);
             }
         }
 
@@ -110,6 +124,7 @@ namespace Move
 
         public void FixedUpdate()
         {
+            SetWalkState();
             if (characterAnimator.GetBool(MidAir))
                 AirControl(characterTransform.rotation * new Vector3(_walkDirection.x, 0, _walkDirection.y), 0.5f);
 

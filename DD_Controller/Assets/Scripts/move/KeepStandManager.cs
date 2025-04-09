@@ -3,67 +3,70 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class KeepStandManager : MonoBehaviour
+namespace Move
 {
-    struct StandingObject
+    public class KeepStandManager : MonoBehaviour
     {
-        public Transform transform;
-        public bool hasRigidBody;
-        public Rigidbody rigidBody;
-    }
-        
-    public float angleTolerance = 10.0f;
-
-    public List<GameObject> standingGameObjects = new List<GameObject>();
-        
-    private readonly List<StandingObject> _standingObjects = new List<StandingObject>();
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        foreach (var standing in from standingObject in standingGameObjects 
-                 let rBody = standingObject.GetComponent<Rigidbody>() 
-                 select new StandingObject
-                 {
-                     transform = standingObject.transform,
-                     hasRigidBody = rBody != null,
-                     rigidBody = rBody
-                 })
+        struct StandingObject
         {
-            _standingObjects.Add(standing);
+            public Transform Transform;
+            public bool HasRigidBody;
+            public Rigidbody RigidBody;
         }
-    }
         
+        public float angleTolerance = 10.0f;
+
+        public List<GameObject> standingGameObjects = new List<GameObject>();
         
-    static float angleDistanceTo_0(float angle)
-    {
-        return Math.Abs((angle + 180) % 360 - 180);
-    }
-        
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-        foreach (StandingObject standingObject in _standingObjects)
+        private readonly List<StandingObject> _standingObjects = new List<StandingObject>();
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        void Start()
         {
-            var objectTransform = standingObject.transform;
-            var rotation = objectTransform.localRotation.eulerAngles;
-            var change = false;
-            if (angleDistanceTo_0(rotation.x) > angleTolerance)
+            foreach (var standing in from standingObject in standingGameObjects 
+                     let rBody = standingObject.GetComponent<Rigidbody>() 
+                     select new StandingObject
+                     {
+                         Transform = standingObject.transform,
+                         HasRigidBody = rBody != null,
+                         RigidBody = rBody
+                     })
             {
-                rotation.x = rotation.x < 180 ? angleTolerance : -angleTolerance;
-                change = true;
+                _standingObjects.Add(standing);
             }
-
-            if (angleDistanceTo_0(rotation.z) > angleTolerance)
+        }
+        
+        
+        static float angleDistanceTo_0(float angle)
+        {
+            return Math.Abs((angle + 180) % 360 - 180);
+        }
+        
+        // Update is called once per frame
+        void FixedUpdate()
+        {
+            foreach (StandingObject standingObject in _standingObjects)
             {
-                rotation.z = rotation.z < 180 ? angleTolerance : -angleTolerance;
-                change = true;
-            }
+                var objectTransform = standingObject.Transform;
+                var rotation = objectTransform.localRotation.eulerAngles;
+                var change = false;
+                if (angleDistanceTo_0(rotation.x) > angleTolerance)
+                {
+                    rotation.x = rotation.x < 180 ? angleTolerance : -angleTolerance;
+                    change = true;
+                }
 
-            if (change)
-            {
-                objectTransform.localRotation = Quaternion.Euler(rotation);
-                if (standingObject.hasRigidBody)
-                    standingObject.rigidBody.rotation = Quaternion.Euler(Vector3.zero);
+                if (angleDistanceTo_0(rotation.z) > angleTolerance)
+                {
+                    rotation.z = rotation.z < 180 ? angleTolerance : -angleTolerance;
+                    change = true;
+                }
+
+                if (change)
+                {
+                    objectTransform.localRotation = Quaternion.Euler(rotation);
+                    if (standingObject.HasRigidBody)
+                        standingObject.RigidBody.rotation = Quaternion.Euler(Vector3.zero);
+                }
             }
         }
     }
