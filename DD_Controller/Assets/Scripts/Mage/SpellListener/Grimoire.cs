@@ -168,7 +168,7 @@ namespace Mage.SpellListener
         {
             _grimoireSpell.isInCast = true;
             
-            _timeLimit = 2 + scrollFreezeTime + SPELL_UI_HEIGHT * _spellsAvailable.Count * Time.fixedDeltaTime / transitionSpeed;
+            _timeLimit = 3 + scrollFreezeTime + SPELL_UI_HEIGHT * _spellsAvailable.Count * Time.fixedDeltaTime / transitionSpeed;
             Debug.Log(_timeLimit);
             _timer = 0;
         }

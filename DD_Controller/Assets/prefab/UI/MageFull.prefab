@@ -14004,6 +14004,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb17557e749d4f0bad949abbee8b165c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isIncanting: 0
 --- !u!114 &1564173966971634065
 MonoBehaviour:
   m_ObjectHideFlags: 0
