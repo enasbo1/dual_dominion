@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,38 +15,35 @@ namespace Move
 
         private Vector3 _lastFootPosition=Vector3.zero;
         private Transform _footTransform;
-        private bool _couldMove;
-        
+
         private void Move()
         {
             if (footList.Count == 0) return;
             if (!canMove)
             {
-                _couldMove = false;
+                couldMove = false;
                 return;
             }
-            if (_couldMove && (_lastFootPosition != Vector3.zero))
+            if (couldMove && (_lastFootPosition != Vector3.zero))
             {
-                var move = (_footTransform.position - characterTransform.position) - _lastFootPosition ;
+                Vector3 move = (_footTransform.position - characterTransform.position) - _lastFootPosition ;
                 move.y = 0;
                 characterTransform.position -= move * movementSpeed;
             }
-            var floorFoot = footList[0];
-            var rot = characterTransform.rotation;
-            var unit = rot * Vector3.up;
-            var y = Vector3.Dot(unit, floorFoot.position - characterTransform.position);
-            foreach (var foot in footList.Where(t => t != floorFoot))
+            Transform floorFoot = footList[0];
+            Quaternion rot = characterTransform.rotation;
+            Vector3 unit = rot * Vector3.up;
+            float y = Vector3.Dot(unit, floorFoot.position - characterTransform.position);
+            foreach (Transform foot in footList.Where(t => t != floorFoot))
             {
-                var i = Vector3.Dot(unit, foot.position - characterTransform.position);
-                if (i < y)
-                {
-                    y = i;
-                    floorFoot = foot;
-                }
+                float i = Vector3.Dot(unit, foot.position - characterTransform.position);
+                if (!(i < y)) continue;
+                y = i;
+                floorFoot = foot;
             }
             _footTransform = floorFoot;
             _lastFootPosition =  _footTransform.position-characterTransform.position;
-            _couldMove = canMove;
+            couldMove = canMove;
         }
 
         private void Update()
@@ -62,5 +60,6 @@ namespace Move
     {
         [FormerlySerializedAs("MoveSpeed")] public float movementSpeed = 1.0f;
         public bool canMove = true;
+        [DoNotSerialize] public bool couldMove;
     }
 }
