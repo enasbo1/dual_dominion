@@ -271,7 +271,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2672353333652428462, guid: a3532bee04263744a960813e6595d752, type: 3}
       propertyPath: m_Name
-      value: Defete
+      value: Defeat
       objectReference: {fileID: 0}
     - target: {fileID: 2672353333652428462, guid: a3532bee04263744a960813e6595d752, type: 3}
       propertyPath: m_IsActive
@@ -1171,6 +1171,10 @@ PrefabInstance:
     - target: {fileID: 7830610934939258330, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7863906580587891828, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: scrollFreezeTime
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 7873164007028624354, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Name

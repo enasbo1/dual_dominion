@@ -9639,7 +9639,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 50, y: -50}
-  m_SizeDelta: {x: 260, y: 200}
+  m_SizeDelta: {x: 260, y: 95}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &1528086890344918358
 CanvasRenderer:
@@ -13931,7 +13931,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7378392924821820562}
-  - component: {fileID: 8483468413111735732}
   - component: {fileID: 5108773919738165402}
   - component: {fileID: 3241785497805355682}
   - component: {fileID: 8986099243556552578}
@@ -13959,36 +13958,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3443804139737688913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8483468413111735732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
-  m_NotificationBehavior: 0
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!114 &5108773919738165402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14002,7 +13971,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 2922125449342376463}
-  player: {fileID: 8483468413111735732}
+  player: {fileID: 0}
 --- !u!114 &3241785497805355682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14015,7 +13984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5400a3d28a04f146bf674e99b743289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8483468413111735732}
+  playerInputs: {fileID: 0}
   timeBarSlider: {fileID: 4399219090906342657}
   spellManager: {fileID: 8986099243556552578}
   inputsUI: {fileID: 5864730731692220108}
@@ -14064,7 +14033,7 @@ MonoBehaviour:
   spellManager: {fileID: 8986099243556552578}
   grimoireUI: {fileID: 1004673356339403257}
   transitionSpeed: 1.73
-  scrollFreezeTime: 2
+  scrollFreezeTime: 1.75
 --- !u!1 &5129525911974879812
 GameObject:
   m_ObjectHideFlags: 0
@@ -25531,7 +25500,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 240, y: 180}
+  m_SizeDelta: {x: 240, y: 75}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4079993246337740368
 CanvasRenderer:

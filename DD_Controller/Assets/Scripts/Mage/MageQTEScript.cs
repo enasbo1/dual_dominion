@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace Mage
@@ -17,8 +16,7 @@ namespace Mage
             Both,
         }
         
-        // public Transform playerTransform;
-        [FormerlySerializedAs("player")] [Header("GameObjects needed")]
+        [Header("GameObjects needed")]
         public PlayerInput playerInputs;
         public Slider timeBarSlider;
         public SpellManager spellManager;
@@ -32,16 +30,16 @@ namespace Mage
         public float bonusTimePerInput = 0.1f;
 
 
-        private readonly List<Image> _playerInputs = new List<Image>();
+        private readonly List<Image> _inputsPerformedUI = new List<Image>();
         private Vector2 _inputsStartPosition;
         private SpellDirections _inputCurrent = SpellDirections.None;
         private SpellDirections _inputPrevious = SpellDirections.None;
         private int _inputStep;
         private float _inputTimer;
         private Vector2 _moveVector;
+        
         private List<Spell> _spellsAvailable = new List<Spell>();
-        private Spell _spellParent;
-        private bool _isIncanting;
+        
         private float _timeBarWidth;
         private float _timeBarWidthMax;
         
@@ -49,27 +47,57 @@ namespace Mage
         private InputAction _spellTrigger;
         private InputAction _actionMove;
         private InputAction _incantationMove;
-
+        
+        private void IncantationEnd()
+        {
+            spellManager.isIncanting = false;
+            
+            _inputStep = 0;
+            _inputTimer = 0f;
+            
+            spellManager.ResetSpellsAvailable();
+            spellManager.spellToCast = spellManager.defaultSpell;
+            
+            _inputsPerformedUI.ForEach(input => input.gameObject.SetActive(false));
+            inputsUI.anchoredPosition = _inputsStartPosition;
+        }
+        
+        private void CastSpell(bool castAsError = false)
+        {
+            Spell spellToCast = spellManager.spellToCast;
+            
+            if (spellToCast == null)
+            {
+                IncantationEnd();
+                return;
+            }
+            
+            if (castAsError) spellToCast.CastFailure();
+            else if (!spellToCast.isInCast || spellToCast.canRecastWhileInCast) spellToCast.Cast();
+            
+            IncantationEnd();
+        }
+        
         private void Start()
         {
             _inputsStartPosition = inputsUI.anchoredPosition;
-            foreach (Transform child in inputsUI.transform)
-            {
-                _playerInputs.Add(child.GetComponent<Image>());
-            }
             
-            if (_playerInputs.Count < 15)
+            foreach (Transform inputUI in inputsUI.transform)
+            {
+                _inputsPerformedUI.Add(inputUI.GetComponent<Image>());
+            }
+
+            int longestInputs = spellManager.GetSpells().Max(spell => spell.inputs.Count);
+            if (_inputsPerformedUI.Count < longestInputs)
             {
                 throw new Exception("Number of inputs insufficient");
             }
-
-            _spellParent = spellManager.GetSpellById(0);
             
             _incantationTrigger = playerInputs.actions["IncantationTrigger"];
             _incantationTrigger.started += _ => IncantationRecover();
             
             _spellTrigger = playerInputs.actions["CastSpell"];
-            _spellTrigger.started += _ => { if (_isIncanting) CastSpell(_spellParent); };
+            _spellTrigger.started += _ => { if (spellManager.isIncanting) CastSpell(); };
 
             _actionMove = playerInputs.actions["Move"];
             _incantationMove = playerInputs.actions["IncantationMove"];
@@ -94,38 +122,26 @@ namespace Mage
                     throw new ArgumentOutOfRangeException();
             }
      
-            _spellsAvailable = spellManager.GetSpells().GetRange(0, spellManager.GetSpells().Count);
+            _spellsAvailable = spellManager.spellsAvailable;
             IncantationEnd();
         }
 
         public bool GetIncantingState()
         {
-            return _isIncanting;
+            return spellManager.isIncanting;
         }
         
         private void IncantationRecover()
         {
             _inputPrevious = SpellDirections.None;
-            _isIncanting = true;
+            spellManager.isIncanting = true;
+            spellManager.isIncanting = true;
         }
 
-        private void IncantationEnd()
-        {
-            _isIncanting = false;
-            
-            _inputStep = 0;
-            _inputTimer = 0f;
-            
-            _spellsAvailable.Clear();
-            _spellsAvailable.AddRange(spellManager.GetSpells());
-            
-            _playerInputs.ForEach(input => input.gameObject.SetActive(false));
-            inputsUI.anchoredPosition = _inputsStartPosition;
-        }
 
         private void IncantationCheck()
         {
-            if (!_isIncanting) return;
+            if (!spellManager.isIncanting) return;
 
             if (_moveVector.y > crossDetectionSensibility)
                 _inputCurrent = SpellDirections.Up;
@@ -139,18 +155,18 @@ namespace Mage
                 _inputCurrent = SpellDirections.None;
         }
 
+        private void Update()
+        {
+            IncantationCheck();
+        }
+        
         private void InputDisplay(string hexColor, float rotationAngle)
         {
             if (!ColorUtility.TryParseHtmlString(hexColor, out Color color)) return;
             
-            _playerInputs[_inputStep].gameObject.SetActive(true);
-            _playerInputs[_inputStep].color = color;
-            _playerInputs[_inputStep].rectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
-        }
-
-        private void Update()
-        {
-            IncantationCheck();
+            _inputsPerformedUI[_inputStep].gameObject.SetActive(true);
+            _inputsPerformedUI[_inputStep].color = color;
+            _inputsPerformedUI[_inputStep].rectTransform.rotation = Quaternion.Euler(0, 0, rotationAngle);
         }
         
         private void IncantationDisplay()
@@ -158,7 +174,7 @@ namespace Mage
             timeBarSlider.value = (timeLimit -_inputTimer) / timeLimit;
             timeBarSlider.gameObject.SetActive(_inputTimer > 0f);
 
-            if (!_isIncanting && _inputStep == 0) return;
+            if (!spellManager.isIncanting && _inputStep == 0) return;
             
             if (_inputPrevious == _inputCurrent) return;
             
@@ -196,19 +212,19 @@ namespace Mage
 
             if (_inputCurrent == SpellDirections.None) return;
             
-            _spellsAvailable = _spellsAvailable.Where(spell =>
+            spellManager.SetSpellsAvailable(_spellsAvailable.Where(spell =>
             {
                 if (spell.inputs.Count <= _inputStep) return false;
 
                 // If input not for this spell, remove it from the available ones
                 if (_inputCurrent != spell.inputs[_inputStep]) return false;
 
-                if (_inputStep == spell.inputs.Count - 1) _spellParent = spell;
+                if (_inputStep == spell.inputs.Count - 1) spellManager.spellToCast = spell;
                 
                 return true;
-            }).ToList();
+            }).ToList());
 
-            if (!_isIncanting) return;
+            if (!spellManager.isIncanting) return;
             
             _inputStep += 1;
             _inputTimer -= bonusTimePerInput;
@@ -219,23 +235,6 @@ namespace Mage
             Vector2 inputMovements = inputsUI.anchoredPosition + new Vector2(-40f, 0f);
             inputsUI.anchoredPosition = inputMovements;
         }
-
-        private void CastSpell(Spell spellToCast, bool castAsError = false)
-        {
-            _isIncanting = false;
-            
-            if (spellToCast == null)
-            {
-                IncantationEnd();
-                return;
-            }
-            
-            if (castAsError) spellToCast.CastFailure();
-            else if (spellToCast.canRecastWhileInCast || (!spellToCast.canRecastWhileInCast && !spellToCast.isInCast)) spellToCast.Cast(); 
-            
-            _spellParent = spellManager.GetSpellById(0);
-            IncantationEnd();
-        }
                 
         private void FixedUpdate()
         {
@@ -243,7 +242,7 @@ namespace Mage
             {
                 _inputTimer += Time.deltaTime;
             }
-            if (_isIncanting)
+            if (spellManager.isIncanting)
             {
                 Incanting();
             }
@@ -251,8 +250,7 @@ namespace Mage
             // Condition to fail an incantation
             if (_spellsAvailable.Count > 0 && _inputTimer < timeLimit) return;
             
-            CastSpell(_spellParent, true);
-            IncantationEnd();
+            CastSpell(true);
             Debug.Log("Failed");
         }
     }

@@ -17,10 +17,11 @@ namespace Mage.SpellListener
         public Transform playerCamera;
         
         [Header("Parameters")]
-        public Vector3 targetPosition = new (0, 40, -4);
-        public Vector3 targetEulerRotation = new (85, 0, 0);
+        public Vector3 targetPosition = new Vector3(0, 40, -4);
+        public Vector3 targetEulerRotation = new Vector3(85, 0, 0);
 
         private Spell _skyView;
+        private Spell _endSkyView;
         
         private float _timer;
         private float _timeLimit;
@@ -33,6 +34,7 @@ namespace Mage.SpellListener
         private void SpellCasted()
         {
             _skyView.isInCast = true;
+            _endSkyView.isActive = true;
             
             _timeLimit = 20f;
             _timer = _timeLimit;
@@ -51,15 +53,16 @@ namespace Mage.SpellListener
             playerCamera.localRotation = _playerCameraDefaultRotation;
             
             mageController.moveMode = _defaultMoveMode;
-            
             playerCameraController.moveMode = _defaultMoveMode;
             
             _skyView.isInCast = false;
+            _endSkyView.isActive = false;
         }
     
         void Start()
         {
             _skyView = spellManager.GetSpellById(2);
+            _endSkyView = spellManager.GetSpellById(3);
             
             _directionMain = playerCameraController.directionMain;
             _defaultMoveMode = mageController.moveMode;
@@ -67,6 +70,7 @@ namespace Mage.SpellListener
             _playerCameraDefaultRotation = playerCamera.localRotation;
             
             _skyView.AddSpellListener(_ => SpellCasted());
+            _endSkyView.AddSpellListener(_ => _timer = 0);
         }
     
         void FixedUpdate()

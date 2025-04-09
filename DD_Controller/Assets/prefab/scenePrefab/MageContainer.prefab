@@ -302,7 +302,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4017629836185086095, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
       propertyPath: m_Name
-      value: characterControlled
+      value: CharacterControlled
       objectReference: {fileID: 0}
     - target: {fileID: 5866040828760674943, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
       propertyPath: m_LocalPosition.x
@@ -343,6 +343,10 @@ PrefabInstance:
     - target: {fileID: 5866040828760674943, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7247236249103172513, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+      propertyPath: m_Name
+      value: Character
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3473531652284557279, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
@@ -735,8 +739,7 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 4836229264326083764}
-    m_RemovedComponents:
-    - {fileID: 4325146951703348004, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -993,8 +996,7 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8483468413111735732, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
