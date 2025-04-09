@@ -2,9 +2,9 @@
 
 namespace Shared
 {
-    public abstract class Manager : MonoBehaviour
+    public abstract class Manager<TDealer> : MonoBehaviour
     {
-        public abstract void AddElement(ComponentDdDealer element);
-        public abstract void DisableElement(ComponentDdDealer element);
+        public abstract void AddElement(TDealer element);
+        public abstract void DisableElement(TDealer element);
     }
 }

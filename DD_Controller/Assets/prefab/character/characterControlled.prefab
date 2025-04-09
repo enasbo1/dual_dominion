@@ -110,6 +110,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4447209554796945175, guid: cf21202375fc5d746982667516d53148, type: 3}
+      propertyPath: movementSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447209554796945175, guid: cf21202375fc5d746982667516d53148, type: 3}
       propertyPath: characterTransform
       value: 
       objectReference: {fileID: 4642636438767089757}
@@ -347,6 +351,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4282755264056445539, guid: 88886643aaa9fbc47929d66f278f6d28, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 3e6fd8c9da7939a48823d82d307b322f, type: 2}
     - target: {fileID: 4552429742425527192, guid: 88886643aaa9fbc47929d66f278f6d28, type: 3}
       propertyPath: m_LocalScale.z
       value: 1

@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Move
 {
-    public class MidAirManager : Manager
+    public class MidAirManager : Manager<WalkerDdDealer>
     {
-        private readonly List<ComponentDdDealer> _componentDealers = new();
+        private readonly List<WalkerDdDealer> _componentDealers = new();
         
         private readonly List<Animator> _animators = new();
         private readonly List<Transform> _transforms = new();
@@ -18,7 +18,7 @@ namespace Move
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private static readonly int Mid_air = Animator.StringToHash("mid-air");
         
-        public override void AddElement(ComponentDdDealer element)
+        public override void AddElement(WalkerDdDealer element)
         {
             var i = _componentDealers.FindIndex(d => d == element);
 
@@ -37,7 +37,7 @@ namespace Move
             _isActive.Add(true);
         }
 
-        public override void DisableElement(ComponentDdDealer element)
+        public override void DisableElement(WalkerDdDealer element)
         {
             var i = _componentDealers.FindIndex(d => d == element);
 

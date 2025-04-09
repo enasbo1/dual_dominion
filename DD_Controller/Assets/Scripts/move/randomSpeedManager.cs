@@ -7,9 +7,9 @@ using Random = UnityEngine.Random;
 
 namespace Move
 {
-    public class RandomSpeedManager : Manager
+    public class RandomSpeedManager : Manager<WalkerDdDealer>
     {
-        private readonly List<ComponentDdDealer> _componentDealers = new();
+        private readonly List<WalkerDdDealer> _componentDealers = new();
         private readonly List<Animator> _animators = new();
         private bool[] _isActive = Array.Empty<bool>();
         
@@ -18,9 +18,9 @@ namespace Move
 
         private float[] _currentSpeed =  Array.Empty<float>();
         
-        public override void AddElement(ComponentDdDealer element)
+        public override void AddElement(WalkerDdDealer element)
         {
-            var i = _componentDealers.FindIndex(d => d == element);
+            int i = _componentDealers.FindIndex(d => d == element);
 
             if (i != -1)
             {
@@ -36,7 +36,7 @@ namespace Move
             
         }
 
-        public override void DisableElement(ComponentDdDealer element)
+        public override void DisableElement(WalkerDdDealer element)
         {
             var i = _componentDealers.FindIndex(d => d == element);
             if (i != -1)

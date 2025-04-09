@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Shared
 {
-    public class ComponentDdDealer :MonoBehaviour
+    public class WalkerDdDealer : MonoBehaviour
     {
         [SerializeField] [CanBeNull] public Rigidbody body;
         [SerializeField] [CanBeNull] public Transform mainTransform;

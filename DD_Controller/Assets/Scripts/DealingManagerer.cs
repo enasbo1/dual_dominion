@@ -4,79 +4,83 @@ using JetBrains.Annotations;
 using Shared;
 using UnityEngine;
 
-public class DealingManager : MonoBehaviour
+
+public class WalkerDealingManager : DealingManager<WalkerDdDealer>
 {
-    [SerializeField] private Manager[] managers;
-    [SerializeField] private List<ComponentDdDealer> objectsDealers;
-    private ListWithListener<ComponentDdDealer> _objectsDealers;
+}
+public class DealingManager<TDealer> : MonoBehaviour
+{
+    [SerializeField] private Manager<TDealer>[] managers;
+    [SerializeField] private List<TDealer> objectsDealers;
+    private ListWithListener<TDealer> _objectsDealed;
 
     void Start()
     {
-        _objectsDealers = new(AddElement, RemoveElement);
-        _objectsDealers.AddRange(objectsDealers);
-        foreach (var m in managers)
+        _objectsDealed = new ListWithListener<TDealer>(AddElement, RemoveElement);
+        _objectsDealed.AddRange(objectsDealers);
+        foreach (Manager<TDealer> m in managers)
         {
-            _objectsDealers.ForEach(od => m.AddElement(od));
+            _objectsDealed.ForEach(od => m.AddElement(od));
         }
     }
 
 
-    public void Add(ComponentDdDealer element)
+    public void Add(TDealer element)
     {
-        _objectsDealers.Add(element);
+        _objectsDealed.Add(element);
     }
 
-    public void Remove(ComponentDdDealer element)
+    public void Remove(TDealer element)
     {
-        _objectsDealers.Remove(element);
+        _objectsDealed.Remove(element);
     }
 
-    private void AddElement(ComponentDdDealer element)
+    private void AddElement(TDealer element)
     {
         if (!objectsDealers.Contains(element))
             objectsDealers.Add(element);
-        foreach (var manager in managers)
+        foreach (Manager<TDealer> manager in managers)
         {
             manager.AddElement(element);
         }
     }
 
-    private void RemoveElement(ComponentDdDealer element)
+    private void RemoveElement(TDealer element)
     {
         objectsDealers.Remove(element);
-        foreach (var manager in managers)
+        foreach (Manager<TDealer> manager in managers)
         {
             manager.DisableElement(element);
         }
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if (objectsDealers.SequenceEqual(_objectsDealers)) return;
+        if (objectsDealers.SequenceEqual(_objectsDealed)) return;
 
         objectsDealers.ForEach(cdd =>
         {
-            if (_objectsDealers.Contains(cdd)) return;
-            _objectsDealers.AddSilently(cdd);
-            foreach (var manager in managers)
+            if (_objectsDealed.Contains(cdd)) return;
+            _objectsDealed.AddSilently(cdd);
+            foreach (Manager<TDealer> manager in managers)
             {
                 manager.AddElement(cdd);
             }
         });
 
-        _objectsDealers.ForEach(cdd =>
+        _objectsDealed.ForEach(cdd =>
         {
             if (objectsDealers.Contains(cdd)) return;
-            _objectsDealers.RemoveSilently(cdd);
-            foreach (var manager in managers)
+            _objectsDealed.RemoveSilently(cdd);
+            foreach (Manager<TDealer> manager in managers)
                 manager.DisableElement(cdd);
 
         });
 
-        if (objectsDealers.SequenceEqual(_objectsDealers)) return;
-        _objectsDealers.Clear();
-        _objectsDealers.AddRange(objectsDealers);
+        if (objectsDealers.SequenceEqual(_objectsDealed)) return;
+        _objectsDealed.Clear();
+        _objectsDealed.AddRange(objectsDealers);
     }
 }
 

@@ -7,9 +7,9 @@ using Random = UnityEngine.Random;
 
 namespace Move
 {
-    public class BoidsManager : Manager
+    public class BoidsManager : Manager<WalkerDdDealer>
     {
-        private readonly List<ComponentDdDealer> _boids = new();
+        private readonly List<WalkerDdDealer> _boids = new();
         private readonly List<Transform> _transform = new();
         private bool[] _hasRb = Array.Empty<bool>();
         private readonly List<Rigidbody> _boidsRb = new();
@@ -17,7 +17,7 @@ namespace Move
         private float[] _angleList;
         private bool[] _active = Array.Empty<bool>();
 
-        public override void AddElement(ComponentDdDealer element)
+        public override void AddElement(WalkerDdDealer element)
         {
             var i = _boids.FindIndex(d => d == element);
 
@@ -41,7 +41,7 @@ namespace Move
             _active = _active.Append(true).ToArray();
         }
 
-        public override void DisableElement(ComponentDdDealer element)
+        public override void DisableElement(WalkerDdDealer element)
         {
             var i = _boids.FindIndex(d => d == element);
 
