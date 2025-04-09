@@ -1,46 +1,60 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using Shared;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Move
 {
-    public class BoidsManager : MonoBehaviour
+    public class BoidsManager : Manager
     {
-        public Transform[] boids;
-        
-
-        private bool[] _hasRb;
-        private readonly List<Rigidbody> _boidsRb = new List<Rigidbody>();
+        private readonly List<ComponentDdDealer> _boids = new();
+        private readonly List<Transform> _transform = new();
+        private bool[] _hasRb = Array.Empty<bool>();
+        private readonly List<Rigidbody> _boidsRb = new();
         private Vector2[] _boidsPos;
         private float[] _angleList;
-        
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
-            _hasRb = new bool[boids.Length];
-            _boidsPos = new Vector2[boids.Length];
-            _angleList = new float[boids.Length];
-            
-            
-            var i = 0;
-            foreach (Transform bidT in boids)
-            {
-                var rb = bidT.GetComponent<Rigidbody>();
-                if (rb!= null)
-                {
-                    _boidsRb.Add(rb);
-                    _hasRb[i] = true;
-                }
+        private bool[] _active = Array.Empty<bool>();
 
-                ++i;
+        public override void AddElement(ComponentDdDealer element)
+        {
+            var i = _boids.FindIndex(d => d == element);
+
+            if (i != -1)
+            {
+                _active[i] = true;
+                return;
             }
+
+            var rb = element.body;
+
+            _hasRb = _hasRb.Append(rb!=null).ToArray();
+            if (rb)
+                _boidsRb.Add(rb);
+            
+            _boids.Add(element);
+            _transform.Add(element.transform);
+            _boidsPos = new Vector2[_boids.Count];
+            _angleList= new float[_boids.Count];
+            
+            _active = _active.Append(true).ToArray();
         }
 
+        public override void DisableElement(ComponentDdDealer element)
+        {
+            var i = _boids.FindIndex(d => d == element);
+
+            if (i != -1)
+                _active[i] = false;
+        }
+        
+        
         private static float normal_scalar(Vector2 a, Vector2 b){
             return  a.y * b.x-a.x * b.y;
         }
         
-        private static float BidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle, float fact = 1)
+        private static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle, float fact = 1)
         {
             angle += Random.Range(-2, 3) * fact;
             float side;
@@ -66,7 +80,7 @@ namespace Move
         }
 
         
-        private static (int?, float) LookForNearest(int current, Vector2[] targetList)
+        private static (int?, float) LookForNearest(int current, Vector2[] targetList, bool[] actives)
         {
             var birdV = targetList[current];
 
@@ -74,7 +88,7 @@ namespace Move
             float near = 0;
             int? i = null;
 
-            for (var k = 0; k < targetList.Length; ++k) if (k != current){
+            for (var k = 0; k < targetList.Length; ++k) if ((k != current) && actives[k]) {
                 var bV= targetList[k];
                 var dist = (bV - birdV).SqrMagnitude();
                 if ((nearestV == null) | (near > (bV - birdV).SqrMagnitude())){
@@ -94,30 +108,33 @@ namespace Move
             var angleList = _angleList;
             var i = 0;
             var rbIndex = 0;
-            foreach (Transform bidT in boids)
+            foreach (Transform bidT in _transform)
             {
-                var tamp = bidT.position;
-                posList[i].x = tamp.x;
-                posList[i].y = tamp.z;
-                if (_hasRb[i])
+                if (_active[i])
                 {
-                    angleList[i] = _boidsRb[rbIndex].rotation.eulerAngles.y;
-                    ++rbIndex;
+                    var tamp = bidT.position;
+                    posList[i].x = tamp.x;
+                    posList[i].y = tamp.z;
+                    if (_hasRb[i])
+                    {
+                        angleList[i] = _boidsRb[rbIndex].rotation.eulerAngles.y;
+                        ++rbIndex;
+                    }
+                    else
+                        angleList[i] = bidT.rotation.eulerAngles.y;   
                 }
-                else
-                    angleList[i] = bidT.rotation.eulerAngles.y;
                 ++i;
             }
             
             rbIndex = 0;
-            for (var j = 0; j < boids.Length; ++j)
+            for (var j = 0; j < _transform.Count; ++j) if (_active[j])
             {
                 var birdV = posList[j];
 
-                var (n, near) = LookForNearest(j, posList);
+                var (n, near) = LookForNearest(j, posList, _active);
                 if (n == null) return;
 
-                var newAngle = BidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
+                var newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
                 
                 if (_hasRb[j])
                 {
@@ -128,11 +145,12 @@ namespace Move
                 }
                 else
                 {
-                    var rot = boids[j].rotation.eulerAngles;
+                    var rot = _transform[j].rotation.eulerAngles;
                     rot.y = newAngle;
-                    boids[j].rotation = Quaternion.Euler(rot);
+                    _transform[j].rotation = Quaternion.Euler(rot);
                 }
-            }
+            } else if (_hasRb[j]) ++rbIndex;
+
         }
     }
 }

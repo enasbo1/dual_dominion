@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace Move
 {
-    public class MidAirManager : MonoBehaviour
+    public class MidAirManager : Manager
     {
-        [SerializeField] private List<ComponentDdDealer> componentDealers;
+        private readonly List<ComponentDdDealer> _componentDealers = new();
         
         private readonly List<Animator> _animators = new();
         private readonly List<Transform> _transforms = new();
@@ -17,19 +17,32 @@ namespace Move
         private readonly List<Vector3> _lastPosition = new();
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private static readonly int Mid_air = Animator.StringToHash("mid-air");
-        private void Start()
+        
+        public override void AddElement(ComponentDdDealer element)
         {
-            componentDealers.ForEach(AddNewObject);
+            var i = _componentDealers.FindIndex(d => d == element);
+
+            if (i != -1)
+            {
+                _isActive[i] = true;
+                return;
+            }
+
+            _componentDealers.Add(element);
+            _animators.Add(element.animator);
+            _transforms.Add(element.mainTransform);
+            _body.Add(element.body);
+            _lastPosition.Add(element.transform.position);
+            _moveScript.Add(element.moveScript);
+            _isActive.Add(true);
         }
 
-        public void AddNewObject(ComponentDdDealer componentDdDealer)
+        public override void DisableElement(ComponentDdDealer element)
         {
-            _animators.Add(componentDdDealer.animator);
-            _transforms.Add(componentDdDealer.mainTransform);
-            _body.Add(componentDdDealer.body);
-            _lastPosition.Add(componentDdDealer.transform.position);
-            _moveScript.Add(componentDdDealer.moveScript);
-            _isActive.Add(true);
+            var i = _componentDealers.FindIndex(d => d == element);
+
+            if (i != -1)
+                _isActive[i] = false;
         }
 
         private void FixedUpdate()
