@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using UnityEditor;
@@ -10,6 +11,7 @@ public class LobbyUI : MonoBehaviour {
 
 
     public static LobbyUI Instance { get; private set; }
+    private bool isSurvivor = false;
 
 
     [SerializeField] private Transform playerSingleTemplate;
@@ -33,8 +35,15 @@ public class LobbyUI : MonoBehaviour {
     {
         if(playerCountText.text.StartsWith("1"))
             SceneManager.LoadScene(monoPlayerScene.name);
-        else if(playerCountText.text.StartsWith("2")) 
-            SceneManager.LoadScene(multiPlayerScene.name);
+        else if(playerCountText.text.StartsWith("2"))
+        {
+            if(isSurvivor)
+            {
+                GameMultiplayer.Instance.StartHost();
+                NetworkManager.Singleton.SceneManager.LoadScene(multiPlayerScene.name, LoadSceneMode.Single);
+            }
+            else GameMultiplayer.Instance.StartClient();
+        }
     }
 
 
@@ -48,9 +57,11 @@ public class LobbyUI : MonoBehaviour {
         });
         changeNinjaButton.onClick.AddListener(() => {
             LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Ninja);
+            isSurvivor = true;
         });
         changeZombieButton.onClick.AddListener(() => {
             LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Zombie);
+            isSurvivor = false;
         });
 
         leaveLobbyButton.onClick.AddListener(() => {
