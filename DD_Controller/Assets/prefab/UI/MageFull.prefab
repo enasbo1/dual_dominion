@@ -13932,10 +13932,11 @@ GameObject:
   m_Component:
   - component: {fileID: 7378392924821820562}
   - component: {fileID: 8483468413111735732}
-  - component: {fileID: 5108773919738165402}
   - component: {fileID: 3241785497805355682}
   - component: {fileID: 8986099243556552578}
   - component: {fileID: 1564173966971634065}
+  - component: {fileID: 8833459904852836569}
+  - component: {fileID: 2262175925447487693}
   - component: {fileID: 5831827844683759926}
   m_Layer: 0
   m_Name: ScriptsMage
@@ -13989,20 +13990,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &5108773919738165402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f91a5abcf218f4a4ab3d4e4b193b78ed, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 2922125449342376463}
-  player: {fileID: 8483468413111735732}
 --- !u!114 &3241785497805355682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14015,7 +14002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5400a3d28a04f146bf674e99b743289, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 8483468413111735732}
+  playerInputs: {fileID: 8483468413111735732}
   timeBarSlider: {fileID: 4399219090906342657}
   spellManager: {fileID: 8986099243556552578}
   inputsUI: {fileID: 5864730731692220108}
@@ -14048,6 +14035,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spellManager: {fileID: 8986099243556552578}
+--- !u!114 &8833459904852836569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025dfe1c94ca08f429522909ead0a9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 8986099243556552578}
+  characterRigidBody: {fileID: 0}
+--- !u!114 &2262175925447487693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 640668bc4a98a8e4da2ee695d7d07645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 8986099243556552578}
+  footMoveScript: {fileID: 0}
+  effectMaterial: {fileID: 2100000, guid: e69bcbb1ef3e2224fb7722d4193c9005, type: 2}
+  effectRenderer: {fileID: 0}
 --- !u!114 &5831827844683759926
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5866040828760674943}
   m_Layer: 0
-  m_Name: characterControlled
+  m_Name: CharacterControlled
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,11 +61,90 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1905868644512645168}
   - {fileID: 3612784567877303271}
   - {fileID: 4642636438767089757}
   - {fileID: 5390244634552519927}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7308932193733417018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905868644512645168}
+  - component: {fileID: 2962280517506063166}
+  - component: {fileID: 1258835571856384151}
+  - component: {fileID: 4280526064297249855}
+  m_Layer: 0
+  m_Name: Move2DScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1905868644512645168
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308932193733417018}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5866040828760674943}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2962280517506063166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308932193733417018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6f04faedff70274490f4d3c28263edc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputs: {fileID: 0}
+  playerCharacter: {fileID: 4642636438767089757}
+--- !u!114 &1258835571856384151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308932193733417018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3a00129260ee2e46b1eb2be19c9176f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  angleTolerance: 10
+  standingGameObjects:
+  - {fileID: 7247236249103172513}
+--- !u!114 &4280526064297249855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7308932193733417018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e680704066ead541893a6d3f03c43a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputs: {fileID: 0}
+  characterTransform: {fileID: 4642636438767089757}
+  movementSpeed: 4
 --- !u!1 &8021036538461081278
 GameObject:
   m_ObjectHideFlags: 0
@@ -105,8 +184,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5866040828760674943}
     m_Modifications:
+    - target: {fileID: 856072989276309108, guid: cf21202375fc5d746982667516d53148, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 714949339561640472}
     - target: {fileID: 4447209554796945175, guid: cf21202375fc5d746982667516d53148, type: 3}
       propertyPath: MoveSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447209554796945175, guid: cf21202375fc5d746982667516d53148, type: 3}
+      propertyPath: movementSpeed
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4447209554796945175, guid: cf21202375fc5d746982667516d53148, type: 3}
@@ -142,16 +229,8 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4573552822797170719, guid: cf21202375fc5d746982667516d53148, type: 3}
-      propertyPath: 'limit.Array.data[1]'
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573552822797170719, guid: cf21202375fc5d746982667516d53148, type: 3}
       propertyPath: 'onlyY.Array.data[0]'
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573552822797170719, guid: cf21202375fc5d746982667516d53148, type: 3}
-      propertyPath: 'speed.Array.data[0]'
-      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 4573552822797170719, guid: cf21202375fc5d746982667516d53148, type: 3}
       propertyPath: followers.Array.size

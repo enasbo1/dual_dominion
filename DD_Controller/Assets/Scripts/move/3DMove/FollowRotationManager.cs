@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Move
+namespace Move._3DMove
 {
     public class FollowRotationManager : MonoBehaviour
     {

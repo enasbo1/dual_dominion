@@ -5,50 +5,42 @@ namespace Move
 {
     public class MageCameraManager : MonoBehaviour
     {
+        public Transform directionMain;
         public Transform playerCamera;
-        public PlayerInput player;
+        public PlayerInput playerInputs;
         public Transform cameraTarget;
         
         public bool isRotable = true;
         
         private Vector2 _lookVector;
         private bool _mouse;
-        private Vector3 skyViewHeight = Vector3.zero;
 
         
         public void SetRotable(bool newState)
         {
             isRotable = newState;
         }
-        public void SetNewHeight(float newHeight)
+        
+        public void SetRotationY(float newRot, Transform objectTransform)
         {
-            skyViewHeight.y = newHeight;
+            Quaternion cameraRotation = objectTransform.rotation;
+            Vector3 cameraEulerRotation = cameraRotation.eulerAngles;
+            objectTransform.rotation = Quaternion.Euler(cameraEulerRotation.x, newRot, cameraEulerRotation.z);
         }
         
-        public Quaternion GetCameraRotation()
+        public void SetRotationX(float newRot, Transform objectTransform)
         {
-            return this.playerCamera.rotation;
-        }
-        public void SetRotationY(float newRot)
-        {
-            Quaternion cameraRotation = playerCamera.rotation;
+            Quaternion cameraRotation = objectTransform.rotation;
             Vector3 cameraEulerRotation = cameraRotation.eulerAngles;
-            playerCamera.rotation = Quaternion.Euler(cameraEulerRotation.x, newRot, cameraEulerRotation.z);
-        }
-        
-        public void SetRotationX(float newRot)
-        {
-            Quaternion cameraRotation = playerCamera.rotation;
-            Vector3 cameraEulerRotation = cameraRotation.eulerAngles;
-            playerCamera.rotation = Quaternion.Euler(newRot, cameraEulerRotation.y, cameraEulerRotation.z);
+            objectTransform.rotation = Quaternion.Euler(newRot, cameraEulerRotation.y, cameraEulerRotation.z);
         }
         
         void Start()
         {
-            player.actions["look_GP"].performed += ctx => RotateCamera(ctx.ReadValue<Vector2>());
-            player.actions["look_GP"].canceled += _ => RotateCamera(Vector2.zero);
-            player.actions["look_mouse"].performed += ctx => RotateCameraFromMouse(ctx.ReadValue<Vector2>());
-            player.actions["look_mouse"].canceled += _ => RotateCameraFromMouse(Vector2.zero);
+            playerInputs.actions["look_GP"].performed += ctx => RotateCamera(ctx.ReadValue<Vector2>());
+            playerInputs.actions["look_GP"].canceled += _ => RotateCamera(Vector2.zero);
+            playerInputs.actions["look_mouse"].performed += ctx => RotateCameraFromMouse(ctx.ReadValue<Vector2>());
+            playerInputs.actions["look_mouse"].canceled += _ => RotateCameraFromMouse(Vector2.zero);
             Cursor.lockState = CursorLockMode.Locked;
         }
 
@@ -58,7 +50,6 @@ namespace Move
             {
                 _lookVector = direction;
             }
-            
         }    
         
         private void RotateCameraFromMouse(Vector2 direction)
@@ -82,7 +73,7 @@ namespace Move
                 _mouse = false;
             }
 
-            Quaternion cameraRotation = playerCamera.rotation;
+            Quaternion cameraRotation = directionMain.rotation;
             Vector3 cameraEulerRotation = cameraRotation.eulerAngles;
 
             if (isRotable)
@@ -91,9 +82,9 @@ namespace Move
                 cameraEulerRotation.x -= _lookVector.y * 90 * Time.deltaTime;
                 cameraRotation = Quaternion.Euler(cameraEulerRotation);
             
-                playerCamera.rotation = cameraRotation;
+                directionMain.rotation = cameraRotation;
             }
-            playerCamera.position = cameraTarget.position + skyViewHeight;
+            directionMain.position = cameraTarget.position;
         }
     }
 }

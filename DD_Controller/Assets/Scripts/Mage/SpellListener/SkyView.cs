@@ -1,4 +1,3 @@
-using System;
 using Move;
 using UnityEngine;
 
@@ -6,51 +5,64 @@ namespace Mage.SpellListener
 {
     public class SkyView : MonoBehaviour
     {
-        public GameObject cameraDefaultScripts;
-        public MageCameraManager playerCameraManager;
         public SpellManager spellManager;
-        
-        [Range(0.1f, 3f)]
-        public float transitionSpeed = 0.5f;
+        public Transform playerCharacterController;
+        public MageCameraManager playerCameraManager;
+        public GameObject movementScripts2D;
+        public GameObject movementScripts3D;
+        public Vector3 targetPosition = new Vector3(0, 40, -4);
+        public Vector3 targetEulerRotation = new Vector3(85, 0, 0);
+
+        private Spell _skyView;
         
         private float _timer;
         private float _timeLimit;
         
-        public float CAMERA_MAX_HEIGHT = 40f;
-        private float _cameraPositionY;
+        private Transform _directionMain;
+        private Transform _playerCamera;
         
-        private Quaternion playerCamera;
-        private float _cameraRotationY;
-        private float _cameraRotationX;
-    
-        private Spell _skyView;
+        private Vector3 _playerCameraDefaultPosition;
+        private Quaternion _playerCameraDefaultRotation;
     
         private void SpellCasted()
         {
             _skyView.isInCast = true;
-            _timeLimit = 10f;
+            
+            _timeLimit = 20f;
             _timer = _timeLimit;
             
+            movementScripts3D.SetActive(false);
+            movementScripts2D.SetActive(true);
+            
             playerCameraManager.SetRotable(false);
+            // playerCameraManager.playerCamera.SetParent(playerCharacterController, true);
         }
         
         private void CastEnd()
         {
-            if (_cameraPositionY > 0)
-            {
-                _cameraPositionY -= transitionSpeed;
-                playerCameraManager.SetNewHeight(_cameraPositionY);
-                return;
-            }
+            // playerCameraManager.playerCamera.SetParent(_directionMain, true);
+            
+            _playerCamera.localPosition = _playerCameraDefaultPosition;
+            _playerCamera.localRotation = _playerCameraDefaultRotation;
+            
+            movementScripts3D.SetActive(true);
+            movementScripts2D.SetActive(false);
             
             playerCameraManager.SetRotable(true);
+            
             _skyView.isInCast = false;
         }
     
         void Start()
         {
             _skyView = spellManager.GetSpellById(2);
-
+            
+            _directionMain = playerCameraManager.directionMain;
+            _playerCamera = playerCameraManager.playerCamera;
+                
+            _playerCameraDefaultPosition = _playerCamera.localPosition;
+            _playerCameraDefaultRotation = _playerCamera.localRotation;
+            
             _skyView.AddSpellListener(_ => SpellCasted());
         }
     
@@ -58,36 +70,17 @@ namespace Mage.SpellListener
         {
             if (!_skyView.isInCast) return;
             
+            _timer -= Time.deltaTime;
             if (_timer <= 0)
             {
                 CastEnd();
                 return;
             }
             
-            if (_cameraPositionY < CAMERA_MAX_HEIGHT)
-            {
-                _cameraPositionY += transitionSpeed;
-                playerCameraManager.SetNewHeight(_cameraPositionY);
-            }
+            _playerCamera.localPosition = targetPosition;
 
-            playerCamera = playerCameraManager.GetCameraRotation();
-            Vector3 eulerCamera = playerCamera.eulerAngles;
-            
-            float currentX = eulerCamera.x > 180 ? eulerCamera.x - 360 : eulerCamera.x;
-            if (Mathf.Abs(currentX - 85f) > 0.2f)
-            {
-                float newX = currentX > 85f ? currentX - transitionSpeed : currentX + transitionSpeed;
-                playerCameraManager.SetRotationX(newX);
-            }
-            
-            float currentY = eulerCamera.y > 180 ? eulerCamera.y - 360 : eulerCamera.y;
-            if (Mathf.Abs(currentY - 0f) > 0.2f)
-            {
-                float newY = currentY > 0f ? currentY - transitionSpeed : currentY + transitionSpeed;
-                playerCameraManager.SetRotationY(newY);
-            }
-            
-            _timer -= Time.deltaTime;
+            playerCameraManager.SetRotationY(targetEulerRotation.y,_playerCamera);
+            playerCameraManager.SetRotationX(targetEulerRotation.x,_playerCamera);
         }
     }
 }
