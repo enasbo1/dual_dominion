@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Mage
@@ -35,9 +36,9 @@ namespace Mage
             this.id = id;
             this.name = name;
             this.canRecastWhileInCast = canRecastWhileInCast;
-            this.isInCast = false;
+            isInCast = false;
             this.recastDelay = recastDelay;
-            this.isActive = enableByDefault;
+            isActive = enableByDefault;
             
             this.inputs = inputs;
             
@@ -67,10 +68,10 @@ namespace Mage
     public class SpellManager : MonoBehaviour
     {
         private readonly List<Spell> _spellList;
-        public readonly List<Spell> spellsAvailable;
-        public readonly Spell defaultSpell;
-        public Spell spellToCast;
-        public bool isIncanting;
+        public readonly List<Spell> SpellsAvailable;
+        public readonly Spell DefaultSpell;
+        public Spell SpellToCast;
+        [DoNotSerialize] public bool isIncanting;
         
         public SpellManager()
         {
@@ -136,16 +137,16 @@ namespace Mage
                     4,
                     "Konami",
                     new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up },
-                    0,
+                    10,
                     true,
                     true
                 ),
             };
             
             this._spellList = test;
-            this.spellsAvailable = test.Where(spell => spell.isActive).ToList();
-            this.defaultSpell = this.GetSpellById(0);
-            this.spellToCast = defaultSpell;
+            this.SpellsAvailable = test.Where(spell => spell.isActive).ToList();
+            this.DefaultSpell = this.GetSpellById(0);
+            this.SpellToCast = DefaultSpell;
         }
 
         public Spell GetSpellById(int id)
@@ -160,28 +161,28 @@ namespace Mage
         
         public void SetSpellsAvailable(List<Spell> spellsAvailable)
         {
-            this.spellsAvailable.Clear();
-            this.spellsAvailable.AddRange(spellsAvailable);
+            this.SpellsAvailable.Clear();
+            this.SpellsAvailable.AddRange(spellsAvailable);
         }
         
         public void ResetSpellsAvailable()
         {
-            this.spellsAvailable.Clear();
-            this.spellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
+            this.SpellsAvailable.Clear();
+            this.SpellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
         }
 
         private void FixedUpdate()
         {
             float timeIncrement = Time.deltaTime;
             
-            for (int i = spellsAvailable.Count - 1; i >= 0; i--)
+            for (int i = SpellsAvailable.Count - 1; i >= 0; i--)
             {
-                Spell spell = spellsAvailable[i];
+                Spell spell = SpellsAvailable[i];
 
                 if (spell.cooldown < spell.recastDelay) spell.cooldown += timeIncrement;
                 spell.canBeCast = (!spell.isInCast || spell.canRecastWhileInCast) && spell.cooldown >= spell.recastDelay;
 
-                if (!spell.isActive) spellsAvailable.RemoveAt(i);
+                if (!spell.isActive) SpellsAvailable.RemoveAt(i);
             }
         }
     }

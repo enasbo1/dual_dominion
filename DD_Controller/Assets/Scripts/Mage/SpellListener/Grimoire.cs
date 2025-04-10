@@ -143,7 +143,7 @@ namespace Mage.SpellListener
             _spellsUIStartPosition = _spellsUI.anchoredPosition;
 
             SetAllSpellsInUI(spellManager.GetSpells());
-            _spellsAvailable = spellManager.spellsAvailable;
+            _spellsAvailable = spellManager.SpellsAvailable;
 
             _grimoireSpell.AddSpellListener(_ => SpellCasted());
         }
@@ -192,7 +192,7 @@ namespace Mage.SpellListener
         
         private void RefreshSpellsUI()
         {
-            Spell spellToCast = spellManager.spellToCast;
+            Spell spellToCast = spellManager.SpellToCast;
             SpellUI spellToCastUI = _spellsForSpellsUI[spellToCast.id];
             int spellToCastId = spellToCast.id;
             

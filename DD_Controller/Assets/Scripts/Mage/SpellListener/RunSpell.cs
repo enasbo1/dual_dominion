@@ -32,6 +32,7 @@ namespace Mage.SpellListener
             footMoveScript.movementSpeed = _initialValue*2;
             effectRenderer.material = effectMaterial;
             _active = true;
+            spell.isInCast = true;
         }
         // Update is called once per frame
         private void FixedUpdate()
@@ -43,6 +44,7 @@ namespace Mage.SpellListener
                 footMoveScript.movementSpeed = _initialValue;
                 effectRenderer.material = _originalMaterial;
                 _active = false;
+                spellManager.GetSpellById(1).isInCast = false;
             }
         }
     }
