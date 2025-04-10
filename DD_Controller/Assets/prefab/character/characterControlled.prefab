@@ -391,6 +391,10 @@ PrefabInstance:
       propertyPath: 'm_Bones.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7358728863486967174, guid: 88886643aaa9fbc47929d66f278f6d28, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7896937485631841418, guid: 88886643aaa9fbc47929d66f278f6d28, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
@@ -402,6 +406,10 @@ PrefabInstance:
     - target: {fileID: 8127956591756037984, guid: 88886643aaa9fbc47929d66f278f6d28, type: 3}
       propertyPath: 'm_Bones.Array.data[0]'
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016075173826288723, guid: 88886643aaa9fbc47929d66f278f6d28, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

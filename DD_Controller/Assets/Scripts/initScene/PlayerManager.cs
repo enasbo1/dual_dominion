@@ -6,7 +6,6 @@ namespace initScene
     public class PlayerManager : MonoBehaviour
     {
         public GameObject playerPrefab;
-        public GameObject shadowPrefab;
         public Transform spawnPoint;
         public NetworkObject networkObject;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
