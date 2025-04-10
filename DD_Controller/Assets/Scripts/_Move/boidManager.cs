@@ -19,7 +19,7 @@ namespace Move
 
         public override void AddElement(WalkerDdDealer element)
         {
-            var i = _boids.FindIndex(d => d == element);
+            int i = _boids.FindIndex(d => d == element);
 
             if (i != -1)
             {
@@ -27,9 +27,9 @@ namespace Move
                 return;
             }
 
-            var rb = element.body;
+            Rigidbody rb = element.body;
 
-            _hasRb = _hasRb.Append(rb!=null).ToArray();
+            _hasRb = _hasRb.Append(rb).ToArray();
             if (rb)
                 _boidsRb.Add(rb);
             
@@ -43,7 +43,7 @@ namespace Move
 
         public override void DisableElement(WalkerDdDealer element)
         {
-            var i = _boids.FindIndex(d => d == element);
+            int i = _boids.FindIndex(d => d == element);
 
             if (i != -1)
                 _active[i] = false;
@@ -82,37 +82,35 @@ namespace Move
         
         private static (int?, float) LookForNearest(int current, Vector2[] targetList, bool[] actives)
         {
-            var birdV = targetList[current];
+            Vector2 birdV = targetList[current];
 
             Vector2? nearestV = null;
             float near = 0;
             int? i = null;
 
-            for (var k = 0; k < targetList.Length; ++k) if ((k != current) && actives[k]) {
-                var bV= targetList[k];
-                var dist = (bV - birdV).SqrMagnitude();
-                if ((nearestV == null) | (near > (bV - birdV).SqrMagnitude())){
-                    nearestV = bV;
-                    i = k;
-                    near = dist;
-                }
+            for (int k = 0; k < targetList.Length; ++k) if ((k != current) && actives[k]) {
+                Vector2 bV= targetList[k];
+                float dist = (bV - birdV).SqrMagnitude();
+                if (!((nearestV == null) | (near > (bV - birdV).SqrMagnitude()))) continue;
+                nearestV = bV;
+                i = k;
+                near = dist;
             }
             
             return (i, near);
         }
         
         // Update is called once per frame
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            var posList = _boidsPos;
-            var angleList = _angleList;
-            var i = 0;
-            var rbIndex = 0;
-            foreach (Transform bidT in _transform)
+            Vector2[] posList = _boidsPos;
+            float[] angleList = _angleList;
+            int i = 0;
+            int rbIndex = 0;
+            foreach (Transform bidT in _transform)  if (_active[i])
             {
-                if (_active[i])
                 {
-                    var tamp = bidT.position;
+                    Vector3 tamp = bidT.position;
                     posList[i].x = tamp.x;
                     posList[i].y = tamp.z;
                     if (_hasRb[i])
@@ -124,28 +122,33 @@ namespace Move
                         angleList[i] = bidT.rotation.eulerAngles.y;   
                 }
                 ++i;
+            } else
+            {
+                if (_hasRb[i])
+                    ++rbIndex;
+                ++i;
             }
             
             rbIndex = 0;
-            for (var j = 0; j < _transform.Count; ++j) if (_active[j])
+            for (int j = 0; j < _transform.Count; ++j) if (_active[j])
             {
-                var birdV = posList[j];
+                Vector2 birdV = posList[j];
 
-                var (n, near) = LookForNearest(j, posList, _active);
+                (int? n, float near) = LookForNearest(j, posList, _active);
                 if (n == null) return;
 
-                var newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
+                float newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
                 
                 if (_hasRb[j])
                 {
-                    var rot = _boidsRb[rbIndex].rotation.eulerAngles;
+                    Vector3 rot = _boidsRb[rbIndex].rotation.eulerAngles;
                     rot.y = newAngle;
                     _boidsRb[rbIndex].rotation = Quaternion.Euler(rot);
                     ++rbIndex;
                 }
                 else
                 {
-                    var rot = _transform[j].rotation.eulerAngles;
+                    Vector3 rot = _transform[j].rotation.eulerAngles;
                     rot.y = newAngle;
                     _transform[j].rotation = Quaternion.Euler(rot);
                 }

@@ -24,6 +24,10 @@ public class DealingManager<TDealer> : MonoBehaviour
         }
     }
 
+     public int getNbDealers()
+    {
+        return _objectsDealed.Count;
+    }
 
     public void Add(TDealer element)
     {

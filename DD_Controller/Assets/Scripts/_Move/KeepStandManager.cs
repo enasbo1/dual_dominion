@@ -7,7 +7,7 @@ namespace Move
 {
     public class KeepStandManager : MonoBehaviour
     {
-        struct StandingObject
+        private struct StandingObject
         {
             public Transform Transform;
             public bool HasRigidBody;
@@ -20,35 +20,35 @@ namespace Move
         
         private readonly List<StandingObject> _standingObjects = new List<StandingObject>();
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Start()
         {
-            foreach (var standing in from standingObject in standingGameObjects 
+            foreach (StandingObject standing in from standingObject in standingGameObjects 
                      let rBody = standingObject.GetComponent<Rigidbody>() 
                      select new StandingObject
                      {
                          Transform = standingObject.transform,
-                         HasRigidBody = rBody != null,
+                         HasRigidBody = rBody,
                          RigidBody = rBody
                      })
             {
                 _standingObjects.Add(standing);
             }
         }
-        
-        
-        static float angleDistanceTo_0(float angle)
+
+
+        private static float angleDistanceTo_0(float angle)
         {
             return Math.Abs((angle + 180) % 360 - 180);
         }
         
         // Update is called once per frame
-        void FixedUpdate()
+        private void FixedUpdate()
         {
             foreach (StandingObject standingObject in _standingObjects)
             {
-                var objectTransform = standingObject.Transform;
-                var rotation = objectTransform.localRotation.eulerAngles;
-                var change = false;
+                Transform objectTransform = standingObject.Transform;
+                Vector3 rotation = objectTransform.localRotation.eulerAngles;
+                bool change = false;
                 if (angleDistanceTo_0(rotation.x) > angleTolerance)
                 {
                     rotation.x = rotation.x < 180 ? angleTolerance : -angleTolerance;
@@ -61,12 +61,14 @@ namespace Move
                     change = true;
                 }
 
-                if (change)
-                {
-                    objectTransform.localRotation = Quaternion.Euler(rotation);
-                    if (standingObject.HasRigidBody)
-                        standingObject.RigidBody.rotation = Quaternion.Euler(Vector3.zero);
-                }
+                if (!change) return;
+                
+                objectTransform.localRotation = Quaternion.Euler(rotation);
+                
+                if (!standingObject.HasRigidBody) return;
+                
+                standingObject.RigidBody.rotation = Quaternion.Euler(Vector3.zero);
+                standingObject.RigidBody.angularVelocity = Vector3.zero;
             }
         }
     }

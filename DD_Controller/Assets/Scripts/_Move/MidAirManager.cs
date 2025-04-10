@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Actions;
 using Shared;
@@ -20,11 +21,13 @@ namespace Move
         
         public override void AddElement(WalkerDdDealer element)
         {
-            var i = _componentDealers.FindIndex(d => d == element);
+            int i = _componentDealers.FindIndex(d => d == element);
 
             if (i != -1)
             {
                 _isActive[i] = true;
+                _lastPosition[i] = _transforms[i].position;
+                _animators[i].SetBool(Mid_air, true);
                 return;
             }
 
@@ -39,7 +42,7 @@ namespace Move
 
         public override void DisableElement(WalkerDdDealer element)
         {
-            var i = _componentDealers.FindIndex(d => d == element);
+            int i = _componentDealers.FindIndex(d => d == element);
 
             if (i != -1)
                 _isActive[i] = false;
@@ -47,25 +50,21 @@ namespace Move
 
         private void FixedUpdate()
         {
-            for (var i = 0; i < _isActive.Count; i++)
+            for (int i = 0; i < _isActive.Count; i++) if (_isActive[i])
             {
-                if (!_isActive[i]) continue;
-
-                var floored = Physics.SphereCast(_transforms[i].position + (Vector3.up * 0.55f),
+                bool floored = Physics.SphereCast(_transforms[i].position + (Vector3.up * 0.55f),
                     0.45f,
                     Vector3.down,
-                    out var _,
+                    out RaycastHit _,
                     1.0f);
-                var hist = _moveScript[i].canMove;
+                bool hist = _moveScript[i].canMove;
 
                 _animators[i].SetBool(Mid_air , !floored);
                 _moveScript[i].canMove = floored;
                 if (hist && !floored)
-                {
                     _body[i].linearVelocity = (_transforms[i].position - _lastPosition[i])/Time.deltaTime;
-                }
+                
                 _lastPosition[i] = _transforms[i].position;
-
             }
         }
     }
