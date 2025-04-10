@@ -64,21 +64,21 @@ namespace Move
         private static void ApplyLimitedRotation(Transform targetTransform, Quaternion target, Quaternion start, float limit, bool onlyY)
         {
             if (limit == 0) return;
-            var angle = (target * Quaternion.Inverse(start)).eulerAngles;
-            var n = new[] {angle.x, angle.y, angle.z};
-            var i = 0;
+            Vector3 angle = (target * Quaternion.Inverse(start)).eulerAngles;
+            float[] n = new[] {angle.x, angle.y, angle.z};
+            int i = 0;
 
-            foreach (var coord in n)
+            foreach (float coord in n)
             {
                 if (angleDistanceTo_0(coord) > limit)
                     n[i] = (coord<180) ? limit : -limit;
                 ++i;
             }
-            var rotation = Quaternion.Euler(n[0], n[1], n[2])*start;
+            Quaternion rotation = Quaternion.Euler(n[0], n[1], n[2])*start;
             if (onlyY)
             {
-                var rot = rotation.eulerAngles;
-                var fix = target.eulerAngles;
+                Vector3 rot = rotation.eulerAngles;
+                Vector3 fix = target.eulerAngles;
                 rot.x = fix.x;
                 rot.z = fix.z;
                 rotation = Quaternion.Euler(rot);
@@ -120,12 +120,12 @@ namespace Move
         }
     
         // Update is called once per frame
-        void Update()
+        private void Update()
         {
             if (leaders.Length != followers.Length) return;
-            var i = 0;
-            var rb = 0;
-            foreach (var follow in followers)
+            int i = 0;
+            int rb = 0;
+            foreach (Transform follow in followers)
             {
                 if (_hasRB[i])
                 {

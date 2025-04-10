@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Profiling;
 using UnityEngine.Serialization;
 
 namespace Move
@@ -34,7 +35,7 @@ namespace Move
             Quaternion rot = characterTransform.rotation;
             Vector3 unit = rot * Vector3.up;
             float y = Vector3.Dot(unit, floorFoot.position - characterTransform.position);
-            foreach (Transform foot in footList.Where(t => t != floorFoot))
+            foreach (Transform foot in footList) if (foot != floorFoot)
             {
                 float i = Vector3.Dot(unit, foot.position - characterTransform.position);
                 if (!(i < y)) continue;

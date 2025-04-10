@@ -148,7 +148,7 @@ namespace Mage.SpellListener
             _grimoireSpell.AddSpellListener(_ => SpellCasted());
         }
         
-        private void RefreshSpellUIPosition(RectTransform spellUI, int spellIndex)
+        private static void RefreshSpellUIPosition(RectTransform spellUI, int spellIndex)
         {
             spellUI.gameObject.SetActive(true);
             Vector2 spellUINewPosition = spellUI.anchoredPosition;
@@ -156,7 +156,7 @@ namespace Mage.SpellListener
             spellUI.anchoredPosition = spellUINewPosition;
         }
         
-        private void RefreshSpellUIStatus(Image spellStatus, Spell spell)
+        private static void RefreshSpellUIStatus(Image spellStatus, Spell spell)
         {
             if (spell.canBeCast)
             {
@@ -164,7 +164,7 @@ namespace Mage.SpellListener
                 {
                     spellStatus.gameObject.SetActive(true);
                     
-                    string inCastHexColor = "#FFFFFF";
+                    const string inCastHexColor = "#FFFFFF";
                     if (!ColorUtility.TryParseHtmlString(inCastHexColor, out Color inCastColor)) return;
                     spellStatus.color = inCastColor;
                     return;
@@ -176,7 +176,7 @@ namespace Mage.SpellListener
 
             spellStatus.gameObject.SetActive(true);
 
-            string cooldownHexColor = "#4D4D4D";
+            const string cooldownHexColor = "#4D4D4D";
             if (!ColorUtility.TryParseHtmlString(cooldownHexColor, out Color cooldownColor)) return;
             spellStatus.color = cooldownColor;
             
