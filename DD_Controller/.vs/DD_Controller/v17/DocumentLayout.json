@@ -3,19 +3,23 @@
   "WorkspaceRootPath": "D:\\Travail\\dual_dominion\\DD_Controller\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\move\\magecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\move\\magecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\dealingmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dealingmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\monster\\spawnermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\scripts\\monster\\spawnermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\monster\\spawnermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\shared\\walkerdddealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\scripts\\shared\\walkerdddealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\shared\\walkerdddealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -43,19 +47,32 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "MageController.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Move\\MageController.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\Move\\MageController.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Move\\MageController.cs",
+              "RelativeToolTip": "Assets\\Scripts\\Move\\MageController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T09:29:45.149Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "DealingManager.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\DealingManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\DealingManager.cs",
               "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\DealingManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\DealingManager.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAzwBsAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAAwBsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T09:10:21.135Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "WalkerDdDealer.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
@@ -63,12 +80,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T09:06:45.925Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T09:06:45.925Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SpawnerManager.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Monster\\SpawnerManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\Monster\\SpawnerManager.cs",
@@ -76,12 +92,11 @@
               "RelativeToolTip": "Assets\\Scripts\\Monster\\SpawnerManager.cs",
               "ViewState": "AgIAAB8AAAAAAAAAAAAhwDEAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T09:05:42.059Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T09:05:42.059Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "PlayerManager.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\PlayerManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\initScene\\PlayerManager.cs",
@@ -89,12 +104,11 @@
               "RelativeToolTip": "Assets\\Scripts\\initScene\\PlayerManager.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAIBJwA8AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T08:32:42.405Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T08:32:42.405Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "NetworkManager.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs",
               "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs",
@@ -106,7 +120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "GameMultiplayer.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
               "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
@@ -118,7 +132,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "LobbyUI.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
               "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
