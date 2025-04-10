@@ -593,6 +593,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5872652464580515456, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5872652464580515456, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: gameOverCanvas
+      value: 
+      objectReference: {fileID: 1174061826}
     - target: {fileID: 7148764649362112785, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Name
       value: MageContainer
@@ -702,6 +710,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c363bdb5770d41839dd2cbc67724ec29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialCapacity: 0
   managers:
   - {fileID: 703135223}
   objectsDealers:
@@ -896,6 +905,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1919186633}
   m_SourcePrefab: {fileID: 100100000, guid: d7892f0d2c802fe4fbc8e8ee30a69d03, type: 3}
+--- !u!1 &1174061826 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2672353333652428462, guid: a3532bee04263744a960813e6595d752, type: 3}
+  m_PrefabInstance: {fileID: 132776246}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1240719071 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2776759714080716102, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
@@ -1032,6 +1046,14 @@ PrefabInstance:
     - target: {fileID: 1004342748369837748, guid: 0cc49d5e6a322f742ab432998aa66ee5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2395829284567232972, guid: 0cc49d5e6a322f742ab432998aa66ee5, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2920068798508913879, guid: 0cc49d5e6a322f742ab432998aa66ee5, type: 3}
+      propertyPath: initialCapacity
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2920068798508913879, guid: 0cc49d5e6a322f742ab432998aa66ee5, type: 3}
       propertyPath: managers.Array.size

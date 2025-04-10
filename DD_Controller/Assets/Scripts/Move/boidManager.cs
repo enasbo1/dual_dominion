@@ -7,48 +7,76 @@ using Random = UnityEngine.Random;
 
 namespace Move
 {
-    public class BoidsManager : Manager<WalkerDdDealer>
+    public class BoidsManager : Manager<WalkerDdDealer, WalkerEnum>
     {
-        private readonly List<WalkerDdDealer> _boids = new();
-        private readonly List<Transform> _transform = new();
-        private bool[] _hasRb = Array.Empty<bool>();
-        private readonly List<Rigidbody> _boidsRb = new();
-        private Vector2[] _boidsPos;
-        private float[] _angleList;
-        private bool[] _active = Array.Empty<bool>();
+        private readonly TableList<Transform> _transform = new (0);
+        private TableArray<bool> _hasRb = new (0);
+        private readonly TableList<Rigidbody> _boidsRb = new (0);
 
-        public override void AddElement(WalkerDdDealer element)
+        private TableArray<int> _groups = new (0);
+        private TableArray<int?> _lastTarget = new (0);
+        
+        private TableArray<Vector2> _boidsPos = new (0, false);
+        private TableArray<float> _angleList = new (0, false);
+        
+        private int _index;
+        private int _rbSize;
+
+        protected override void _InitializeChunk(int size)
         {
-            int i = _boids.FindIndex(d => d == element);
-
-            if (i != -1)
-            {
-                _active[i] = true;
-                return;
-            }
-
-            Rigidbody rb = element.body;
-
-            _hasRb = _hasRb.Append(rb).ToArray();
-            if (rb)
-                _boidsRb.Add(rb);
+            _transform.AddChunk(size);
+            _boidsRb.AddChunk(size);
+            _groups.AddChunk(size);
+            _lastTarget.AddChunk(size);
+            _hasRb.AddChunk(size);
+            _boidsPos.AddChunk(size);
+            _angleList.AddChunk(size);
             
-            _boids.Add(element);
-            _transform.Add(element.transform);
-            _boidsPos = new Vector2[_boids.Count];
-            _angleList= new float[_boids.Count];
-            
-            _active = _active.Append(true).ToArray();
         }
 
-        public override void DisableElement(WalkerDdDealer element)
+        protected override void InitElement(WalkerDdDealer element)
         {
-            int i = _boids.FindIndex(d => d == element);
-
-            if (i != -1)
-                _active[i] = false;
+            Rigidbody rb = element.body;
+            if (!rb) return;
+            
+            if (_boidsRb.Count == _rbSize)
+                _boidsRb.Add(rb);
+            else 
+                _boidsRb[_rbSize] = rb;
+            ++_rbSize;
         }
         
+        protected override void RestoreElement(int i, WalkerDdDealer element)
+        {
+            _groups[i] = element.group;
+            _lastTarget[i] = null;
+        }
+
+        protected override void AddElementInChunk(WalkerDdDealer element)
+        {
+            _hasRb[Size] = element.body;
+            _transform[Size] = element.transform;
+            _lastTarget[Size] = null;
+            _groups[Size] = element.group;
+        }
+
+        protected override void AddElementInNew(WalkerDdDealer element)
+        {
+            _hasRb.Add(element.body);
+            _transform.Add(element.transform);
+            _boidsPos.Add();
+            _angleList.Add();
+            _lastTarget.Add();
+            _groups.Add(element.group);
+        }
+
+        public void ChangeGroup(WalkerDdDealer element, int? group = null)
+        {
+            int i = Elements.FindIndex(d => d == element);
+            if (i == -1) return;
+            
+            _groups[i] = group??element.group;
+        }
         
         private static float normal_scalar(Vector2 a, Vector2 b){
             return  a.y * b.x-a.x * b.y;
@@ -80,15 +108,17 @@ namespace Move
         }
 
         
-        private static (int?, float) LookForNearest(int current, Vector2[] targetList, bool[] actives)
+        private static (int?, float) LookForNearest(int current, int[] groups, Vector2[] targetList, bool[] actives, int size)
         {
             Vector2 birdV = targetList[current];
+            int g = groups[current];
 
             Vector2? nearestV = null;
             float near = 0;
             int? i = null;
 
-            for (int k = 0; k < targetList.Length; ++k) if ((k != current) && actives[k]) {
+            for (int k = 0; k < size; ++k) if (k != current && actives[k] && (g == 0 || groups[k] == g)) 
+            {
                 Vector2 bV= targetList[k];
                 float dist = (bV - birdV).SqrMagnitude();
                 if (!((nearestV == null) | (near > (bV - birdV).SqrMagnitude()))) continue;
@@ -103,14 +133,13 @@ namespace Move
         // Update is called once per frame
         private void FixedUpdate()
         {
-            Vector2[] posList = _boidsPos;
-            float[] angleList = _angleList;
-            int i = 0;
+            Vector2[] posList = _boidsPos.Values;
+            float[] angleList = _angleList.Values;
             int rbIndex = 0;
-            foreach (Transform bidT in _transform)  if (_active[i])
+            for (int i = 0; i < Size; ++i)  if (Active[i])
             {
                 {
-                    Vector3 tamp = bidT.position;
+                    Vector3 tamp = _transform[i].position;
                     posList[i].x = tamp.x;
                     posList[i].y = tamp.z;
                     if (_hasRb[i])
@@ -119,24 +148,33 @@ namespace Move
                         ++rbIndex;
                     }
                     else
-                        angleList[i] = bidT.rotation.eulerAngles.y;   
+                        angleList[i] = _transform[i].rotation.eulerAngles.y;   
                 }
-                ++i;
-            } else
-            {
-                if (_hasRb[i])
-                    ++rbIndex;
-                ++i;
-            }
+            } else if (_hasRb[i]) ++rbIndex;
+            
+            if (Size != 0)
+                _index %= (1+Size/50);
+
             
             rbIndex = 0;
-            for (int j = 0; j < _transform.Count; ++j) if (_active[j])
+            for (int j = 0; j < Size; ++j) if (Active[j])
             {
                 Vector2 birdV = posList[j];
+                int? n;
+                float near;
 
-                (int? n, float near) = LookForNearest(j, posList, _active);
-                if (n == null) return;
-
+                if (_lastTarget[j] == null || j % (1+Size/50) == _index)
+                {
+                    (n, near) = LookForNearest(j, _groups.Values, posList, Active.Values , Size);
+                    if (n == null) return;
+                    _lastTarget[j] = n;
+                }
+                else
+                {
+                    n = _lastTarget[j];
+                    near = (posList[n??0] - birdV).SqrMagnitude();
+                }
+                
                 float newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
                 
                 if (_hasRb[j])
@@ -153,7 +191,7 @@ namespace Move
                     _transform[j].rotation = Quaternion.Euler(rot);
                 }
             } else if (_hasRb[j]) ++rbIndex;
-
+            ++_index;
         }
     }
 }

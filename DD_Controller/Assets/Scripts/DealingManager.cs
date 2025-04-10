@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
@@ -5,21 +6,27 @@ using Shared;
 using UnityEngine;
 
 
-public class WalkerDealingManager : DealingManager<WalkerDdDealer>
+public class WalkerDealingManager : DealingManager<WalkerDdDealer, WalkerEnum>
 {
 }
-public class DealingManager<TDealer> : MonoBehaviour
+
+public abstract class WalkerManager : Manager<WalkerDdDealer, WalkerEnum> {}
+
+public class DealingManager<TDealer, TEnum> : MonoBehaviour where TDealer : Dealer<TEnum> where TEnum : Enum
 {
-    [SerializeField] private Manager<TDealer>[] managers;
+    [SerializeField] private int initialCapacity;
+    [SerializeField] private Manager<TDealer, TEnum>[] managers;
     [SerializeField] private List<TDealer> objectsDealers;
     private ListWithListener<TDealer> _objectsDealed;
 
-    void Start()
+    private void Start()
     {
         _objectsDealed = new ListWithListener<TDealer>(AddElement, RemoveElement);
         _objectsDealed.AddRange(objectsDealers);
-        foreach (Manager<TDealer> m in managers)
+        int size = initialCapacity > _objectsDealed.Count ? initialCapacity : _objectsDealed.Count;
+        foreach (Manager<TDealer, TEnum> m in managers)
         {
+            m.InitializeChunk(size);
             _objectsDealed.ForEach(od => m.AddElement(od));
         }
     }
@@ -43,7 +50,7 @@ public class DealingManager<TDealer> : MonoBehaviour
     {
         if (!objectsDealers.Contains(element))
             objectsDealers.Add(element);
-        foreach (Manager<TDealer> manager in managers)
+        foreach (Manager<TDealer, TEnum> manager in managers)
         {
             manager.AddElement(element);
         }
@@ -52,7 +59,7 @@ public class DealingManager<TDealer> : MonoBehaviour
     private void RemoveElement(TDealer element)
     {
         objectsDealers.Remove(element);
-        foreach (Manager<TDealer> manager in managers)
+        foreach (Manager<TDealer, TEnum> manager in managers)
         {
             manager.DisableElement(element);
         }
@@ -67,7 +74,7 @@ public class DealingManager<TDealer> : MonoBehaviour
         {
             if (_objectsDealed.Contains(cdd)) return;
             _objectsDealed.AddSilently(cdd);
-            foreach (Manager<TDealer> manager in managers)
+            foreach (Manager<TDealer, TEnum> manager in managers)
             {
                 manager.AddElement(cdd);
             }
@@ -77,7 +84,7 @@ public class DealingManager<TDealer> : MonoBehaviour
         {
             if (objectsDealers.Contains(cdd)) return;
             _objectsDealed.RemoveSilently(cdd);
-            foreach (Manager<TDealer> manager in managers)
+            foreach (Manager<TDealer, TEnum> manager in managers)
                 manager.DisableElement(cdd);
 
         });

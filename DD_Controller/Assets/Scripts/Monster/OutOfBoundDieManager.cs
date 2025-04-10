@@ -7,44 +7,35 @@ using UnityEngine;
 
 namespace Monster
 {
-    public class OutOfBoundDieManager : Manager<WalkerDdDealer>
+    public class OutOfBoundDieManager : WalkerManager
     {
         [SerializeField] [NotNull] private StandByManager<WalkerDdDealer, WalkerEnum> standBy;
         public int deathBottom = -100;
 
-        private bool[] _active = Array.Empty<bool>();
-        private readonly List<Transform> _transform = new();
-        private readonly List<WalkerDdDealer> _dealers = new();
+        private readonly TableList<Transform> _transform = new(0);
 
-        public override void AddElement(WalkerDdDealer element)
+        protected override void _InitializeChunk(int size)
         {
-            int i = _dealers.FindIndex(d => d == element);
+            _transform.AddChunk(size);
+        }
 
-            if (i != -1)
-            {
-                _active[i] = true;
-                return;
-            }
-            
-            _dealers.Add(element);
+        protected override void AddElementInChunk(WalkerDdDealer element)
+        {
+            _transform[Size] = element.transform;
+        }
+
+        protected override void AddElementInNew(WalkerDdDealer element)
+        {
             _transform.Add(element.transform);
-            _active = _active.Append(true).ToArray();
         }
-
-        public override void DisableElement(WalkerDdDealer element)
-        {
-            int i = _dealers.FindIndex(d => d == element);
-
-            if (i != -1)
-                _active[i] = false;
-        }
+        
         
         // Update is called once per frame
         private void FixedUpdate()
         {
-            for (int i = 0 ; i < _dealers.Count ; i++) if (_active[i] & (_transform[i].position.y < deathBottom))
+            for (int i = 0 ; i < Size ; i++) if (Active[i] & (_transform[i].position.y < deathBottom))
             {
-                standBy.Kill(_dealers[i]);
+                standBy.Kill(Elements[i]);
             }
         }
     }

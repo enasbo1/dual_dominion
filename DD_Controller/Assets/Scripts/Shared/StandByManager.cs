@@ -11,7 +11,7 @@ namespace Shared
 
     public abstract class StandByManager<TDealer, TEnum> : MonoBehaviour where  TDealer : Dealer<TEnum> where TEnum : Enum
     {
-        [SerializeField] [CanBeNull] private DealingManager<TDealer> dealingManager;
+        [SerializeField] [CanBeNull] private DealingManager<TDealer, TEnum> dealingManager;
         
         private readonly List<TDealer> _dealers = new ();
         private readonly List<bool> _isDead = new ();

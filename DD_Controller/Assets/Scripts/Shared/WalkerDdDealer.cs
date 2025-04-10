@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Move;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Shared
@@ -13,6 +14,7 @@ namespace Shared
         [SerializeField] [CanBeNull] public MoveScript moveScript;
         [SerializeField] [CanBeNull] public Animator animator;
         [SerializeField] [CanBeNull] public List<Renderer> witnessBlessing;
+        [DoNotSerialize] public int group = 0;
 
 
         public new void Reset(bool respawn)

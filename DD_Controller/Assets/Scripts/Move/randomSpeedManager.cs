@@ -1,67 +1,53 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Shared;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Move
 {
-    public class RandomSpeedManager : Manager<WalkerDdDealer>
+    public class RandomSpeedManager : WalkerManager
     {
-        private readonly List<WalkerDdDealer> _componentDealers = new();
-        private readonly List<Animator> _animators = new();
-        private bool[] _isActive = Array.Empty<bool>();
         
         [SerializeField] private float speedTarget;
         [SerializeField] private  string speedTargetParam = "walkSpeed";
-
-        private float[] _currentSpeed =  Array.Empty<float>();
         
-        public override void AddElement(WalkerDdDealer element)
+        private readonly TableList<Animator> _animators = new (0);
+        private TableArray<float> _currentSpeed =  new (0);
+
+        protected override void _InitializeChunk(int size)
         {
-            int i = _componentDealers.FindIndex(d => d == element);
+            _currentSpeed.AddChunk(size);
+            _animators.AddChunk(size);
+        }
 
-            if (i != -1)
-            {
-                _isActive[i] = true;
-                return;
-            }
+        protected override void AddElementInChunk(WalkerDdDealer element)
+        {
+            _animators[Size] = element.animator;
+            _currentSpeed[Size] = element.animator?.GetFloat(speedTargetParam) ?? 1f;
+        }
 
-            _componentDealers.Add(element);
+        protected override void AddElementInNew(WalkerDdDealer element)
+        {
             _animators.Add(element.animator);
-            _isActive = _isActive.Append(true).ToArray();
-            
-            _currentSpeed = _currentSpeed.Append(element.animator?.GetFloat(speedTargetParam)??1f).ToArray();
-            
+            _currentSpeed.Add(element.animator?.GetFloat(speedTargetParam) ?? 1f);
         }
 
-        public override void DisableElement(WalkerDdDealer element)
-        {
-            var i = _componentDealers.FindIndex(d => d == element);
-            if (i != -1)
-                _isActive[i] = false;
-        }
-        void Start()
+        private void Start()
         {
             
-            for(int i = 0; i < _currentSpeed.Length; i++)
+            for(int i = 0; i < Size; i++)
                 _currentSpeed[i] = _animators[i].GetFloat(speedTargetParam);
         }
 
-        void FixedUpdate()
+        private void FixedUpdate()
         {
-            var i = 0;
-            foreach (var anim in _animators) if (_isActive[i])
+            for (int i =0; i<Size; ++i) if (Active[i])
             {
-                _currentSpeed[i] += Random.Range(-speedTarget, speedTarget)/20;
+                _currentSpeed[i] += Random.Range(-speedTarget, speedTarget) / 20;
                 _currentSpeed[i] *= 0.999f;
                 if (_currentSpeed[i] * 2 < speedTarget)
-                    _currentSpeed[i] = speedTarget/2;
-                anim.SetFloat(speedTargetParam, _currentSpeed[i]);
-                ++i;
-            }else 
-                ++i;
+                    _currentSpeed[i] = speedTarget / 2;
+                _animators[i].SetFloat(speedTargetParam, _currentSpeed[i]);
+            }
         }
     }
 }

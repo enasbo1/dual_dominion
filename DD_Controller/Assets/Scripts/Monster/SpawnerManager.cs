@@ -1,56 +1,50 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using Shared;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Monster
 {
-    public class SpawnerManager : Manager<SpawnerDealer>
+    public class SpawnerManager : Manager<SpawnerDealer, Enum>
     {
-        [SerializeField] private StandByManager<WalkerDdDealer, WalkerEnum> standBy;
+        [SerializeField] private WalkerStandByManager standBy;
         [SerializeField] private WalkerDealingManager walkerDealingManager;
 
-        private readonly List<SpawnerDealer> _spawner = new();
-        private readonly List<Transform> _transform = new();
-        private readonly List<GameObject> _spawned = new();
-        private readonly List<bool> _isActive = new();
-        private readonly List<float> _nextSpawnTime = new();
+        private readonly TableList<Transform> _transform = new(0);
+        private readonly TableList<GameObject> _spawned = new(0);
+        private readonly TableList<float> _nextSpawnTime = new(0);
 
-        
-        public override void AddElement(SpawnerDealer element)
+
+        protected override void _InitializeChunk(int size)
         {
-            int i = _spawner.FindIndex(d => d == element);
-
-            if (i != -1)
-            {
-                _isActive[i] = true;
-                return;
-            }
-            
-            _spawner.Add(element);
-            _isActive.Add(true);
-            _spawned.Add(element.prefabToSpawn);
-            _transform.Add(element.transform);
-            _nextSpawnTime.Add(Time.time + Random.Range(10,30)/30f);
+            _spawned.AddChunk(size);
+            _transform.AddChunk(size);
+            _nextSpawnTime.AddChunk(size);
         }
 
-        public override void DisableElement(SpawnerDealer element)
+        protected override void AddElementInChunk(SpawnerDealer element)
         {
-            int i = _spawner.FindIndex(d => d == element);
-            
-            if (i != -1)
-                _isActive[i] = false;
+            _spawned[Size] = element.prefabToSpawn;
+            _transform[Size] = element.transform;
+            _nextSpawnTime[Size] = Time.time + Random.Range(10, 30) / 30f;
+        }
+
+        protected override void AddElementInNew(SpawnerDealer element)
+        {
+            _spawned.Add(element.prefabToSpawn);
+            _transform.Add(element.transform);
+            _nextSpawnTime.Add(Time.time + Random.Range(10, 30) / 30f);
         }
 
         private void FixedUpdate()
         {
-            for (int i = 0; i < _spawner.Count; i++) if (_isActive[i])
+            for (int i = 0; i < Size; ++i) if (Active[i])
             {
                 if (!(_nextSpawnTime[i] < Time.time)) continue;
                 if (walkerDealingManager.getNbDealers() > 200) return;
-                
+
                 standBy.Spawn(_spawned[i], _transform[i].position, _transform[i].rotation);
-                _nextSpawnTime[i] = Time.time + Random.Range(10,30)/30f;
+                _nextSpawnTime[i] = Time.time + Random.Range(10, 30) / 30f;
             }
         }
     }

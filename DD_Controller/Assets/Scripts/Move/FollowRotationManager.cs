@@ -54,7 +54,6 @@ namespace Move
                     _hasRB[i] = false;
                 _offsets[i] = follow.rotation.eulerAngles - leaders[i++].rotation.eulerAngles;
             }
-            Debug.Log(_rigidBodies.Count);
         }
 
         private static float angleDistanceTo_0(float angle)

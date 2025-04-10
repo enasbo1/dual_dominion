@@ -3,5 +3,6 @@
     public enum WalkerEnum
     {
         DominionArmy,
+        Survivor,
     }
 }
