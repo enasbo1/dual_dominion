@@ -73,7 +73,7 @@ namespace Mage
             }
             
             if (castAsError) spellToCast.CastFailure();
-            else if (!spellToCast.isInCast || spellToCast.canRecastWhileInCast) spellToCast.Cast();
+            else if (spellToCast.canBeCast) spellToCast.Cast();
             
             IncantationEnd();
         }

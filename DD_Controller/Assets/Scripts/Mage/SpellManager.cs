@@ -20,19 +20,27 @@ namespace Mage
         public readonly string name;
         public readonly bool canRecastWhileInCast;
         public bool isInCast;
+        public readonly float recastDelay;
         public bool isActive;
         public readonly List<SpellDirections> inputs;
+        
         private readonly List<Action<Spell>> _spellEvents;
         private readonly List<Action<Spell>> _spellFailureEvents;
         
-        public Spell(int id, string name, List<SpellDirections> inputs, bool canRecastWhileInCast, bool enableByDefault)
+        public bool canBeCast;
+        public float cooldown;
+        
+        public Spell(int id, string name, List<SpellDirections> inputs, float recastDelay, bool canRecastWhileInCast, bool enableByDefault)
         {
             this.id = id;
             this.name = name;
-            this.inputs = inputs;
             this.canRecastWhileInCast = canRecastWhileInCast;
-            isInCast = false;
-            isActive = enableByDefault;
+            this.isInCast = false;
+            this.recastDelay = recastDelay;
+            this.isActive = enableByDefault;
+            
+            this.inputs = inputs;
+            
             _spellEvents = new List<Action<Spell>>();
             _spellFailureEvents = new List<Action<Spell>>();
         }
@@ -44,6 +52,7 @@ namespace Mage
 
         public void Cast()
         {
+            this.cooldown = 0;
             foreach (Action<Spell> action in _spellEvents)
                 action.Invoke(this);
         }
@@ -71,6 +80,7 @@ namespace Mage
                     0,
                     "Grimoire",
                     new List<SpellDirections>(),
+                    0,
                     false,
                     true
                 ),
@@ -78,6 +88,7 @@ namespace Mage
                     1,
                     "Run",
                     new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Up},
+                    2,
                     true,
                     true
                     ),
@@ -85,6 +96,7 @@ namespace Mage
                     5,
                     "Jump",
                     new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Down, SpellDirections.Up },
+                    1,
                     true,
                     false
                 ),
@@ -92,6 +104,7 @@ namespace Mage
                     6,
                     "UnnamedSpell",
                     new List<SpellDirections>() { SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down },
+                    0,
                     true,
                     true
                 ),
@@ -99,6 +112,7 @@ namespace Mage
                     7,
                     "UnnamedSpell 2",
                     new List<SpellDirections>() { SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down, SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down },
+                    0,
                     true,
                     false
                 ),
@@ -106,6 +120,7 @@ namespace Mage
                     2,
                     "SkyView",
                     new List<SpellDirections>() { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down },
+                    1,
                     true,
                     true
                 ),
@@ -113,6 +128,7 @@ namespace Mage
                     3,
                     "End SkyView",
                     new List<SpellDirections>() { SpellDirections.Down },
+                    0,
                     true,
                     false
                 ),
@@ -120,6 +136,7 @@ namespace Mage
                     4,
                     "Konami",
                     new List<SpellDirections>() { SpellDirections.Up, SpellDirections.Up, SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Up },
+                    0,
                     true,
                     true
                 ),
@@ -151,6 +168,21 @@ namespace Mage
         {
             this.spellsAvailable.Clear();
             this.spellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
+        }
+
+        private void FixedUpdate()
+        {
+            float timeIncrement = Time.deltaTime;
+            
+            for (int i = spellsAvailable.Count - 1; i >= 0; i--)
+            {
+                Spell spell = spellsAvailable[i];
+
+                if (spell.cooldown < spell.recastDelay) spell.cooldown += timeIncrement;
+                spell.canBeCast = (!spell.isInCast || spell.canRecastWhileInCast) && spell.cooldown >= spell.recastDelay;
+
+                if (!spell.isActive) spellsAvailable.RemoveAt(i);
+            }
         }
     }
 }
