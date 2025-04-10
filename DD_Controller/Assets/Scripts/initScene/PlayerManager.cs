@@ -11,7 +11,7 @@ namespace initScene
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            if (!NetworkManager.Singleton.IsServer) return;
+            if (!NetworkManager.Singleton.IsHost) return;
             if (!networkObject.IsOwner) return;
             
             var go = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
