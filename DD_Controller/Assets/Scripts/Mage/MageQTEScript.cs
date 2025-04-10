@@ -56,7 +56,7 @@ namespace Mage
             _inputTimer = 0f;
             
             spellManager.ResetSpellsAvailable();
-            spellManager.SpellToCast = spellManager.DefaultSpell;
+            spellManager.spellToCast = spellManager.defaultSpell;
             
             _inputsPerformedUI.ForEach(input => input.gameObject.SetActive(false));
             inputsUI.anchoredPosition = _inputsStartPosition;
@@ -64,7 +64,7 @@ namespace Mage
         
         private void CastSpell(bool castAsError = false)
         {
-            Spell spellToCast = spellManager.SpellToCast;
+            Spell spellToCast = spellManager.spellToCast;
             
             if (spellToCast == null)
             {
@@ -122,7 +122,7 @@ namespace Mage
                     throw new ArgumentOutOfRangeException();
             }
      
-            _spellsAvailable = spellManager.SpellsAvailable;
+            _spellsAvailable = spellManager.spellsAvailable;
             IncantationEnd();
         }
 
@@ -219,7 +219,7 @@ namespace Mage
                 // If input not for this spell, remove it from the available ones
                 if (_inputCurrent != spell.inputs[_inputStep]) return false;
 
-                if (_inputStep == spell.inputs.Count - 1) spellManager.SpellToCast = spell;
+                if (_inputStep == spell.inputs.Count - 1) spellManager.spellToCast = spell;
                 
                 return true;
             }).ToList());

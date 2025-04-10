@@ -1008,6 +1008,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 4154993054957006553}
+    - target: {fileID: 6486229902234863264, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6553289717767932084, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: m_RenderMode
       value: 0
