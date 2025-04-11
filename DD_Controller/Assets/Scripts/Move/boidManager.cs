@@ -1,13 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Monster;
 using Shared;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Move
 {
-    public class BoidsManager : Manager<WalkerDdDealer, WalkerEnum>
+    public class BoidsManager : Manager<WalkerDdDealer, WalkerEnum, MonsterVariants>
     {
         private readonly TableList<Transform> _transform = new (0);
         private TableArray<bool> _hasRb = new (0);
@@ -22,7 +20,7 @@ namespace Move
         private int _index;
         private int _rbSize;
 
-        protected override void _InitializeChunk(int size)
+        protected override void AddChunk(int size)
         {
             _transform.AddChunk(size);
             _boidsRb.AddChunk(size);

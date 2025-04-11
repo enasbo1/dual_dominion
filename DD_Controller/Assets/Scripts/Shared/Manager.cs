@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Shared
 {
-    public abstract class Manager<TDealer, TEnum> : MonoBehaviour where TDealer : Dealer<TEnum> where TEnum : Enum 
+    public abstract class Manager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
         protected int Size { get => _size;}
 
@@ -19,10 +19,10 @@ namespace Shared
         {
             Elements.AddChunk(size);
             Active.AddChunk(size);
-            _InitializeChunk(size);
+            AddChunk(size);
         }
         
-        protected abstract void _InitializeChunk(int size);
+        protected abstract void AddChunk(int size);
         
         
 
@@ -47,7 +47,7 @@ namespace Shared
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    throw new Exception($"Element add in Chunk Failed: {element},\nThe issue is probably from the _InitializeChunk method one of the managers");
+                    throw new Exception($"Element add in Chunk Failed: {element},\nThe issue is probably from the AddChunk method one of the managers");
                 }
 
             }

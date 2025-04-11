@@ -2,7 +2,7 @@
 
 namespace Monster
 {
-    public class SpawnerDealingManager : DealingManager<SpawnerDealer, Enum>
+    public class SpawnerDealingManager : DealingManager<SpawnerDealer, Enum, Enum>
     {
     }
 }

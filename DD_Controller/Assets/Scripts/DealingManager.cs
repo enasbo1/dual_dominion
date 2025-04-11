@@ -6,32 +6,37 @@ using Shared;
 using UnityEngine;
 
 
-public class WalkerDealingManager : DealingManager<WalkerDdDealer, WalkerEnum>
+public class WalkerDealingManager : DealingManager<WalkerDdDealer, WalkerEnum, Monster.MonsterVariants>
 {
 }
 
-public abstract class WalkerManager : Manager<WalkerDdDealer, WalkerEnum> {}
+public abstract class WalkerManager : Manager<WalkerDdDealer, WalkerEnum, Monster.MonsterVariants> {}
 
-public class DealingManager<TDealer, TEnum> : MonoBehaviour where TDealer : Dealer<TEnum> where TEnum : Enum
+public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
 {
     [SerializeField] private int initialCapacity;
-    [SerializeField] private Manager<TDealer, TEnum>[] managers;
+    [SerializeField] private Manager<TDealer, TEnum, TVariant>[] managers;
     [SerializeField] private List<TDealer> objectsDealers;
     private ListWithListener<TDealer> _objectsDealed;
 
     private void Start()
     {
-        _objectsDealed = new ListWithListener<TDealer>(AddElement, RemoveElement);
+        ContextStart(AddElement, RemoveElement);
+    }
+
+    protected void ContextStart(Action<TDealer> addAction, Action<TDealer> removeAction)
+    {
+        _objectsDealed = new ListWithListener<TDealer>(addAction, removeAction);
         _objectsDealed.AddRange(objectsDealers);
         int size = initialCapacity > _objectsDealed.Count ? initialCapacity : _objectsDealed.Count;
-        foreach (Manager<TDealer, TEnum> m in managers)
+        foreach (Manager<TDealer, TEnum, TVariant> m in managers)
         {
             m.InitializeChunk(size);
             _objectsDealed.ForEach(od => m.AddElement(od));
         }
     }
 
-     public int getNbDealers()
+    public int GetNbDealers()
     {
         return _objectsDealed.Count;
     }
@@ -46,20 +51,20 @@ public class DealingManager<TDealer, TEnum> : MonoBehaviour where TDealer : Deal
         _objectsDealed.Remove(element);
     }
 
-    private void AddElement(TDealer element)
+    protected void AddElement(TDealer element)
     {
         if (!objectsDealers.Contains(element))
             objectsDealers.Add(element);
-        foreach (Manager<TDealer, TEnum> manager in managers)
+        foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
         {
             manager.AddElement(element);
         }
     }
 
-    private void RemoveElement(TDealer element)
+    protected void RemoveElement(TDealer element)
     {
         objectsDealers.Remove(element);
-        foreach (Manager<TDealer, TEnum> manager in managers)
+        foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
         {
             manager.DisableElement(element);
         }
@@ -74,7 +79,7 @@ public class DealingManager<TDealer, TEnum> : MonoBehaviour where TDealer : Deal
         {
             if (_objectsDealed.Contains(cdd)) return;
             _objectsDealed.AddSilently(cdd);
-            foreach (Manager<TDealer, TEnum> manager in managers)
+            foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
             {
                 manager.AddElement(cdd);
             }
@@ -84,7 +89,7 @@ public class DealingManager<TDealer, TEnum> : MonoBehaviour where TDealer : Deal
         {
             if (objectsDealers.Contains(cdd)) return;
             _objectsDealed.RemoveSilently(cdd);
-            foreach (Manager<TDealer, TEnum> manager in managers)
+            foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
                 manager.DisableElement(cdd);
 
         });
@@ -97,14 +102,14 @@ public class DealingManager<TDealer, TEnum> : MonoBehaviour where TDealer : Deal
 
 public class ListWithListener<T> : List<T>
 {
-    [CanBeNull] private readonly System.Action<T> _addAction;
-    [CanBeNull] private readonly System.Action<T> _removeAction;
+    [CanBeNull] private readonly Action<T> _addAction;
+    [CanBeNull] private readonly Action<T> _removeAction;
 
-    public ListWithListener(System.Action<T> addAction)
+    public ListWithListener(Action<T> addAction)
     {
         _addAction = addAction;
     }
-    public ListWithListener(System.Action<T> addAction, System.Action<T> removeAction)
+    public ListWithListener(Action<T> addAction, Action<T> removeAction)
     {
         _addAction = addAction;
         _removeAction = removeAction;

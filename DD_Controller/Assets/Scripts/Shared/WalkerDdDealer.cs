@@ -1,23 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
 using JetBrains.Annotations;
+using Monster;
 using Move;
+using Unity.Netcode;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Shared
 {
-    public class WalkerDdDealer : Dealer<WalkerEnum>
+    public class WalkerDdDealer : Dealer<WalkerEnum, MonsterVariants>
     {
         [SerializeField] [CanBeNull] public Rigidbody body;
         [SerializeField] [CanBeNull] public Transform headTransform;
         [SerializeField] [CanBeNull] public MoveScript moveScript;
         [SerializeField] [CanBeNull] public Animator animator;
-        [SerializeField] [CanBeNull] public List<Renderer> witnessBlessing;
-        [DoNotSerialize] public int group = 0;
-
-
-        public new void Reset(bool respawn)
+        [SerializeField] [CanBeNull] public Renderer[] witnessBlessing;
+        [DoNotSerialize] public int group;
+        
+        public override void ResetDealed(bool respawn)
         {
             if (respawn)
             {
@@ -32,12 +32,15 @@ namespace Shared
         }
     }
 
-    public class Dealer<TEnum> : MonoBehaviour where TEnum : Enum
+    public class Dealer<TEnum, TVariant> : MonoBehaviour where TEnum : Enum where TVariant : Enum
     {
-        [SerializeField] [CanBeNull] public TEnum type;
+        [SerializeField] public TEnum type;
         
         [SerializeField] [CanBeNull] public Transform mainTransform;
+        [SerializeField] [CanBeNull] public NetworkObject networkObject;
 
-        public void Reset(bool respawn) {}
+        public virtual void ResetDealed(bool respawn) {}
+        
+        public virtual void ApplyVariant(TVariant variant) {}
     }
 }

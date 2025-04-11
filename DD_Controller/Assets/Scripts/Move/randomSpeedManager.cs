@@ -13,7 +13,7 @@ namespace Move
         private readonly TableList<Animator> _animators = new (0);
         private TableArray<float> _currentSpeed =  new (0);
 
-        protected override void _InitializeChunk(int size)
+        protected override void AddChunk(int size)
         {
             _currentSpeed.AddChunk(size);
             _animators.AddChunk(size);

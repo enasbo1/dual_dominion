@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace Monster
 {
-    public class SpawnerDealer : Dealer<Enum>
+    public class SpawnerDealer : Dealer<Enum, Enum>
     {
-        [SerializeField] [CanBeNull] public GameObject prefabToSpawn;
+        [SerializeField] [CanBeNull] public WalkerEnum[] prefabToSpawn;
     }
 }

@@ -1,22 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
+using Monster;
 using UnityEngine;
 
 namespace Shared
 {
-    public class WalkerStandByManager : StandByManager<WalkerDdDealer, WalkerEnum>
+    public class WalkerStandByManager : StandByManager<WalkerDdDealer, WalkerEnum, MonsterVariants>
     {
     }
 
-    public abstract class StandByManager<TDealer, TEnum> : MonoBehaviour where  TDealer : Dealer<TEnum> where TEnum : Enum
+    public abstract class StandByManager<TDealer, TEnum, TVariant> : MonoBehaviour where  TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
-        [SerializeField] [CanBeNull] private DealingManager<TDealer, TEnum> dealingManager;
+        [SerializeField] [CanBeNull] private DealingManager<TDealer, TEnum, TVariant> dealingManager;
+        [SerializeField] [CanBeNull] private PrefabReferencer<TDealer, TEnum, TVariant> prefabReferencer;
+        [SerializeField] private bool spawnNetworkObject;
         
         private readonly List<TDealer> _dealers = new ();
         private readonly List<bool> _isDead = new ();
 
-        public TDealer Spawn(GameObject objectToSpawn, Vector3 position, Quaternion rotation, bool deal = true)
+        public TDealer Spawn(TEnum typeKey, Vector3 position, Quaternion rotation, TVariant variant = default, bool deal = true)
+        {
+            if (!prefabReferencer)
+                throw new Exception("No DealingManager Set, Can't Spawn");
+            return Spawn(prefabReferencer[typeKey].Item1, position, rotation, variant, deal);
+        }
+        
+        public TDealer Spawn(GameObject objectToSpawn, Vector3 position, Quaternion rotation, TVariant variant = default, bool deal = true)
         {
             int i = -1;
             TEnum type = objectToSpawn.GetComponent<TDealer>().type;
@@ -32,7 +42,7 @@ namespace Shared
             if (i == -1)
             {
                 newDealer = Instantiate(objectToSpawn, Vector3.zero, Quaternion.identity).GetComponent<TDealer>();
-                newDealer.Reset(false);
+                newDealer.ResetDealed(false);
             }
             else
             {
@@ -47,8 +57,15 @@ namespace Shared
             } 
             
             newDealer.gameObject.SetActive(true);
+            newDealer.ApplyVariant(variant);
 
 
+            if (newDealer.networkObject && spawnNetworkObject)
+            {
+                newDealer.networkObject.enabled = true;
+                if (i == -1)
+                    newDealer.networkObject.Spawn();
+            }
             
             if (!newDealer.mainTransform) return newDealer;
 

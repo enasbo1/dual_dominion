@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7889186640494163126}
   - component: {fileID: 5316323550980397887}
   - component: {fileID: 4398536152872382139}
+  - component: {fileID: 1317494823798749453}
   m_Layer: 0
   m_Name: spawner
   m_TagString: Untagged
@@ -100,4 +101,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainTransform: {fileID: 1276250521564485924}
-  prefabToSpawn: {fileID: 7011715027037496875, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+  networkObject: {fileID: 1317494823798749453}
+  prefabToSpawn: 0000000001000000
+--- !u!114 &1317494823798749453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7501999973118854551}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2081287397
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0

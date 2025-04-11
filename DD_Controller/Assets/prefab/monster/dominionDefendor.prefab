@@ -80,9 +80,8 @@ GameObject:
   - component: {fileID: 5044487178346377922}
   - component: {fileID: 5260561388766450755}
   - component: {fileID: 454477076267338107}
-  - component: {fileID: 3798438813408115782}
   m_Layer: 3
-  m_Name: monsterArmy
+  m_Name: dominionDefendor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,7 +98,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 669281913748104307}
   - {fileID: 4466530773375652493}
@@ -165,9 +164,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 752eedf5844f46a1be2ae76cc3514911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 1
   mainTransform: {fileID: 3303784125193199943}
-  networkObject: {fileID: 3798438813408115782}
+  networkObject: {fileID: 0}
   body: {fileID: 5260561388766450755}
   headTransform: {fileID: 8023497051420184029}
   moveScript: {fileID: 1371973196589362988}
@@ -183,32 +182,7 @@ MonoBehaviour:
   - {fileID: 15982241228595130}
   group: 0
   behaviors: 0100000002000000
-  variants: 
---- !u!114 &3798438813408115782
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7011715027037496875}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1687977810
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
+  variants: 0000000001000000
 --- !u!1001 &1063831546620920728
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -341,6 +315,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 1630794972795428178, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1b6bab1f503752245b5b2f1374c62176, type: 2}
     - target: {fileID: 4245845049691730579, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
       propertyPath: m_Layer
       value: 3

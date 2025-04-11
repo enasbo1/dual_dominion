@@ -1,4 +1,4 @@
-﻿using JetBrains.Annotations;
+﻿using Monster.Behavior;
 using Shared;
 using UnityEngine;
 
@@ -6,13 +6,15 @@ namespace Monster
 {
     public class MonsterDealer : WalkerDdDealer
     {
-        [SerializeField][CanBeNull] private Material shameMaterial;
+        [SerializeField] public MonsterBehaviorEnum[] behaviors;
+        [SerializeField] public MonsterVariants[] variants;
         
-        public new void Reset(bool respawn)
+        public override void ApplyVariant(MonsterVariants variant)
         {
-            base.Reset(respawn);
-            if (respawn && shameMaterial)
-                witnessBlessing?.ForEach(rend => rend.material = shameMaterial);
+            if (!mainTransform) return;
+            mainTransform.localScale = Vector3.one * (variant == MonsterVariants.Big ? 2 : 1);
+            if (body)
+                body.mass = variant == MonsterVariants.Big ? 8 : 1;
         }
     }
 }

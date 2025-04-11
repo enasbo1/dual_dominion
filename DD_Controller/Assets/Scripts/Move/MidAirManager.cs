@@ -15,7 +15,7 @@ namespace Move
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private static readonly int Mid_air = Animator.StringToHash("mid-air");
 
-        protected override void _InitializeChunk(int size)
+        protected override void AddChunk(int size)
         {
             _animators.AddChunk(size);
             _transforms.AddChunk(size);
