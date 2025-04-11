@@ -23,9 +23,7 @@ namespace Shared
             {
                 Rigidbody rb = mainTransform?.GetComponent<Rigidbody>();
                 if (rb)
-                {
                     rb.ResetInertiaTensor();
-                }
             }
             
             if (moveScript) moveScript.couldMove = false;

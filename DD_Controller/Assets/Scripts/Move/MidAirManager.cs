@@ -50,7 +50,7 @@ namespace Move
 
         private void FixedUpdate()
         {
-            for (int i = 0; i < Active.Count; i++) if (Active[i])
+            for (int i = 0; i < Size; i++) if (Active[i])
             {
                 bool floored = Physics.SphereCast(_transforms[i].position + (Vector3.up * 0.55f),
                     0.45f,
@@ -61,6 +61,7 @@ namespace Move
 
                 _animators[i].SetBool(Mid_air , !floored);
                 _moveScript[i].canMove = floored;
+                
                 if (hist && !floored)
                     _body[i].linearVelocity = (_transforms[i].position - _lastPosition[i])/Time.deltaTime;
                 

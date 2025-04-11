@@ -164,7 +164,7 @@ namespace Monster.Behavior
     {
         public bool IsAvailable(int index, BehaviorManager behaviorManager)
         {
-            return true;
+            return false;
         }
 
         public float Start(int index, BehaviorManager behaviorManager)

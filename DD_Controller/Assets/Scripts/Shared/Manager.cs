@@ -7,7 +7,7 @@ namespace Shared
 {
     public abstract class Manager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
-        protected int Size { get => _size;}
+        protected int Size  => _size;
 
         private int _size;
 

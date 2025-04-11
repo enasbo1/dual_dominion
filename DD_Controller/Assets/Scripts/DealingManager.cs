@@ -9,7 +9,6 @@ using UnityEngine;
 public class WalkerDealingManager : DealingManager<WalkerDdDealer, WalkerEnum, Monster.MonsterVariants>
 {
 }
-
 public abstract class WalkerManager : Manager<WalkerDdDealer, WalkerEnum, Monster.MonsterVariants> {}
 
 public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
