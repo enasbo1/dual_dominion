@@ -201,8 +201,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7907222497124521009}
   - component: {fileID: 3781714532641467918}
-  - component: {fileID: -1742841209646495813}
   - component: {fileID: 3176182982283331232}
+  - component: {fileID: -1742841209646495813}
   - component: {fileID: 4305453172761329476}
   - component: {fileID: 2776759714080716102}
   m_Layer: 0
@@ -245,20 +245,6 @@ MonoBehaviour:
   directionMain: {fileID: 0}
   directionIntent: {fileID: 0}
   characterAnimator: {fileID: 0}
---- !u!114 &-1742841209646495813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7148764649362112785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a2e34b0f199436eb0f54d57193c4297, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cameraContainer: {fileID: 4836229264326083764}
-  Offset: {x: -2, y: 0, z: 0}
 --- !u!114 &3176182982283331232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,6 +270,20 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &-1742841209646495813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7148764649362112785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a2e34b0f199436eb0f54d57193c4297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraContainer: {fileID: 1863915827460733219}
+  Offset: {x: -2, y: 0, z: 0}
 --- !u!114 &4305453172761329476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,6 +377,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6921238014836532454, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 5265476aa096cdb429a8acccceef3e94, type: 2}
     - target: {fileID: 7247236249103172513, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
       propertyPath: m_Name
       value: Character
@@ -393,6 +397,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7247236249103172513, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
       insertIndex: -1
       addedObject: {fileID: 796813476609555139}
+    - targetCorrespondingSourceObject: {fileID: 8300869294002461873, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4934703298954668282}
   m_SourcePrefab: {fileID: 100100000, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
 --- !u!4 &16959593843051099 stripped
 Transform:
@@ -511,6 +518,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28096f354571cbc4189de940d2a32e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8854884661999097074 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8300869294002461873, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+  m_PrefabInstance: {fileID: 707137759972952131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4934703298954668282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8854884661999097074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 1
+    OriginatingState: 1092759200
+    DestinationState: 1748109174
+    TransitionDuration: 0.25
+    TriggerNameHash: 301916809
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 1
+    OriginatingState: 2081823275
+    DestinationState: 1748109174
+    TransitionDuration: 0.25
+    TriggerNameHash: 301916809
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 2
+    OriginatingState: 1736441620
+    DestinationState: -806913119
+    TransitionDuration: 0.25
+    TriggerNameHash: 237393061
+    TransitionIndex: 2
+  - IsCrossFadeExit: 0
+    Layer: 2
+    OriginatingState: 1270818176
+    DestinationState: -1929447031
+    TransitionDuration: 0.25
+    TriggerNameHash: -1376407236
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 2
+    OriginatingState: 1270818176
+    DestinationState: -806913119
+    TransitionDuration: 0.1
+    TriggerNameHash: 237393061
+    TransitionIndex: 3
+  m_Animator: {fileID: 7628375691049233573}
 --- !u!137 &8936400560889508657 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 8490476056944294770, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}

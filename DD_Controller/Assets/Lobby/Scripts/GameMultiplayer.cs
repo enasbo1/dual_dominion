@@ -62,6 +62,7 @@ public class GameMultiplayer : NetworkBehaviour
         NetworkManager.Singleton.StartServer();
     }
 
+
     private void NetworkManager_Server_OnClientDisconnectCallback(ulong clientId)
     {
         for (int i = 0; i < playerDataNetworkList.Count; i++)
@@ -178,42 +179,6 @@ public class GameMultiplayer : NetworkBehaviour
     public PlayerData GetPlayerDataFromPlayerIndex(int playerIndex)
     {
         return playerDataNetworkList[playerIndex];
-    }
-
-    public void ChangePlayerColor(int colorId)
-    {
-        ChangePlayerColorServerRpc(colorId);
-    }
-
-    [ServerRpc(RequireOwnership = false)]
-    private void ChangePlayerColorServerRpc(int colorId, ServerRpcParams serverRpcParams = default)
-    {
-        if (!IsColorAvailable(colorId))
-        {
-            // Color not available
-            return;
-        }
-
-        int playerDataIndex = GetPlayerDataIndexFromClientId(serverRpcParams.Receive.SenderClientId);
-
-        PlayerData playerData = playerDataNetworkList[playerDataIndex];
-
-        playerData.colorId = colorId;
-
-        playerDataNetworkList[playerDataIndex] = playerData;
-    }
-
-    private bool IsColorAvailable(int colorId)
-    {
-        foreach (PlayerData playerData in playerDataNetworkList)
-        {
-            if (playerData.colorId == colorId)
-            {
-                // Already in use
-                return false;
-            }
-        }
-        return true;
     }
 
     public void KickPlayer(ulong clientId)

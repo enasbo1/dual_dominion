@@ -1,38 +1,40 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 namespace initScene
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : NetworkBehaviour
     {
-        public GameObject playerPrefab;
+        public GameObject mageContainerPrefab;
+        public GameObject godScenePrefab;
         public Transform spawnPoint;
         public NetworkObject networkObject;
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public Transform playerCamera;
+
         private void Start()
         {
-            if (!NetworkManager.Singleton.IsHost) return;
-            if (!networkObject.IsOwner) return;
-            
-            var go = Instantiate(playerPrefab, spawnPoint.position, spawnPoint.rotation);
+            GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godScenePrefab;
+
+            var go = Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
             var no = go.GetComponent<NetworkObject>();
-            
-            if (!no) {
+
+            if (!no)
+            {
                 var ncc = go.GetComponent<NetworkChildContainer>();
                 if (ncc)
                     no = ncc.networkObject;
                 ncc.GetComponent<Transform>().SetParent(null);
             }
+
             if (no)
                 no.Spawn(true);
 
-            var playerCamera = Camera.main;
-            var cc = go.GetComponent<CameraContainer>();
-            if (!cc) return;
-            if (playerCamera == null) return;
-            playerCamera.transform.SetParent(cc.cameraContainer);
-            playerCamera.transform.localPosition = cc.Offset;
-            playerCamera.transform.rotation = Quaternion.identity;
+            var cameraContainer = go.GetComponent<CameraContainer>();
+
+            playerCamera.SetParent(cameraContainer.cameraContainer);
+            playerCamera.localPosition = cameraContainer.Offset;
+            playerCamera.rotation = Quaternion.identity;
         }
     }
 }

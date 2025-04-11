@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "D:\\Travail\\dual_dominion\\DD_Controller\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\dealingmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\dealingmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\monster\\spawnermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\monster\\spawnermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\shared\\walkerdddealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\shared\\walkerdddealer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Travail\\dual_dominion\\DD_Controller\\Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\scripts\\initscene\\cameracontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\initscene\\cameracontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\lobby\\scripts\\gamemultiplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\lobby\\scripts\\gamemultiplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\lobby\\scripts\\playerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\lobby\\scripts\\playerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\lobby\\scripts\\lobbyui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -38,95 +30,69 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DealingManager.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\DealingManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\DealingManager.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\DealingManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\DealingManager.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAzwBsAAAAFAAAAAAAAAA==",
+              "DocumentIndex": 4,
+              "Title": "LobbyUI.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
+              "RelativeToolTip": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAADAAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T09:10:21.135Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "WalkerDdDealer.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Shared\\WalkerDdDealer.cs",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T09:06:45.925Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "SpawnerManager.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Monster\\SpawnerManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\Monster\\SpawnerManager.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\Monster\\SpawnerManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\Monster\\SpawnerManager.cs",
-              "ViewState": "AgIAAB8AAAAAAAAAAAAhwDEAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T09:05:42.059Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-10T07:02:11.466Z",
+              "IsPinned": true
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
+              "Title": "PlayerData.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\PlayerData.cs",
+              "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\PlayerData.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\PlayerData.cs",
+              "RelativeToolTip": "Assets\\Lobby\\Scripts\\PlayerData.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T13:14:43.234Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "CameraContainer.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\CameraContainer.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\initScene\\CameraContainer.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\CameraContainer.cs",
+              "RelativeToolTip": "Assets\\Scripts\\initScene\\CameraContainer.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAUwBIAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T07:14:18.532Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "PlayerManager.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\PlayerManager.cs",
               "RelativeDocumentMoniker": "Assets\\Scripts\\initScene\\PlayerManager.cs",
               "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\PlayerManager.cs",
               "RelativeToolTip": "Assets\\Scripts\\initScene\\PlayerManager.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAIBJwA8AAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAABIAAAAAAAAAAAAQwB0AAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T08:32:42.405Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "NetworkManager.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs",
-              "RelativeDocumentMoniker": "Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs",
-              "RelativeToolTip": "Library\\PackageCache\\com.unity.netcode.gameobjects\\Runtime\\Core\\NetworkManager.cs",
-              "ViewState": "AgIAAIYCAAAAAAAAAAAAwJMCAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T07:52:33.413Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
               "Title": "GameMultiplayer.cs",
               "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
               "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
               "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
               "RelativeToolTip": "Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
-              "ViewState": "AgIAADAAAAAAAAAAAAAQwD0AAAAsAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAuwGwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T07:02:42.099Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "LobbyUI.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "RelativeToolTip": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "ViewState": "AgIAABkAAAAAAAAAAAAQwCoAAABIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T07:02:11.466Z"
             }
           ]
         }

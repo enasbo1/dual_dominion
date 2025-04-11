@@ -223,7 +223,7 @@ pip-log.txt
 [Tt]emp/
 [Ll]ibrary
 Assets/StreamingAssets*
-./DD_Controller/UserSettings/
+DD_Controller/UserSettings/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #

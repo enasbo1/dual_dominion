@@ -10,7 +10,6 @@ public struct PlayerData : IEquatable<PlayerData>, INetworkSerializable
 
 
     public ulong clientId;
-    public int colorId;
     public FixedString64Bytes playerName;
     public FixedString64Bytes playerId;
 
@@ -19,7 +18,6 @@ public struct PlayerData : IEquatable<PlayerData>, INetworkSerializable
     {
         return
             clientId == other.clientId &&
-            colorId == other.colorId &&
             playerName == other.playerName &&
             playerId == other.playerId;
     }

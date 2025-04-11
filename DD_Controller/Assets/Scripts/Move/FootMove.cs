@@ -14,7 +14,7 @@ namespace Move
         public List<Transform> footList = new ();
 
 
-        private Vector3 _lastFootPosition=Vector3.zero;
+        private Vector3 _lastFootPosition = Vector3.zero;
         private Transform _footTransform;
 
         private void Move()

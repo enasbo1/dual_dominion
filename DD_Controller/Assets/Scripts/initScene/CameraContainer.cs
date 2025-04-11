@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Unity.Netcode;
 
 namespace initScene
 {
@@ -6,5 +7,10 @@ namespace initScene
     {
         public Transform cameraContainer;
         public Vector3 Offset;
+
+        private void Start()
+        {
+            
+        }
     }
 }
