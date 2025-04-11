@@ -18,8 +18,9 @@ namespace Mage
         
         [Header("GameObjects needed")]
         public PlayerInput playerInputs;
-        public Slider timeBarSlider;
         public SpellManager spellManager;
+        public MageUIRendererScript mageUIRenderer;
+        public Slider timeBarSlider;
         public RectTransform inputsUI;
         
         [Header("QTE values")]
@@ -160,9 +161,8 @@ namespace Mage
             IncantationCheck();
         }
         
-        private void InputDisplay(string hexColor, float rotationAngle)
+        private void InputDisplay(Color color, float rotationAngle)
         {
-            if (!ColorUtility.TryParseHtmlString(hexColor, out Color color)) return;
             
             _inputsPerformedUI[_inputStep].gameObject.SetActive(true);
             _inputsPerformedUI[_inputStep].color = color;
@@ -181,16 +181,16 @@ namespace Mage
             switch (_inputCurrent)
             {
                 case SpellDirections.Up:
-                    InputDisplay("#FFB600", 0f);
-                    break;
-                case SpellDirections.Down:
-                    InputDisplay("#009DFF", 180f);
-                    break;
-                case SpellDirections.Left:
-                    InputDisplay("#00FF15", 90f);
+                    InputDisplay(mageUIRenderer.upArrowColor, 0f);
                     break;
                 case SpellDirections.Right:
-                    InputDisplay("#FF0080", -90f);
+                    InputDisplay(mageUIRenderer.rightArrowColor, -90f);
+                    break;
+                case SpellDirections.Down:
+                    InputDisplay(mageUIRenderer.downArrowColor, 180f);
+                    break;
+                case SpellDirections.Left:
+                    InputDisplay(mageUIRenderer.leftArrowColor, 90f);
                     break;
                 case SpellDirections.None:
                 default:
