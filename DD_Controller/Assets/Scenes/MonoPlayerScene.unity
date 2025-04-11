@@ -663,8 +663,16 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1863915827460733219, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       insertIndex: -1
       addedObject: {fileID: 92826989}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4064451389469332225, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1654061395}
   m_SourcePrefab: {fileID: 100100000, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+--- !u!4 &670767378 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1456919835783598484, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+  m_PrefabInstance: {fileID: 670767377}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &703135220
 GameObject:
   m_ObjectHideFlags: 0
@@ -999,6 +1007,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6606eb4f5e3435549b4ac81dab5e0752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1511830132 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5313604575902248990, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+  m_PrefabInstance: {fileID: 670767377}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1551707920
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1224,6 +1237,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 813357625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1654061390 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4064451389469332225, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+  m_PrefabInstance: {fileID: 670767377}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1654061395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654061390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91113e6ddc5480843950c5921b9185cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leaders:
+  - {fileID: 1511830132}
+  followers:
+  - {fileID: 670767378}
 --- !u!114 &1715649130 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4398536152872382139, guid: 3353d43881c854c4890518ce8afbfff1, type: 3}
