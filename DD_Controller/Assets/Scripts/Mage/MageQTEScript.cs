@@ -18,8 +18,9 @@ namespace Mage
         
         [Header("GameObjects needed")]
         public PlayerInput playerInputs;
-        public Slider timeBarSlider;
         public SpellManager spellManager;
+        public MageUIRendererScript mageUIRenderer;
+        public Slider timeBarSlider;
         public RectTransform inputsUI;
         
         [Header("QTE values")]
@@ -56,7 +57,7 @@ namespace Mage
             _inputTimer = 0f;
             
             spellManager.ResetSpellsAvailable();
-            spellManager.SpellToCast = spellManager.DefaultSpell;
+            spellManager.spellToCast = spellManager.defaultSpell;
             
             _inputsPerformedUI.ForEach(input => input.gameObject.SetActive(false));
             inputsUI.anchoredPosition = _inputsStartPosition;
@@ -64,7 +65,7 @@ namespace Mage
         
         private void CastSpell(bool castAsError = false)
         {
-            Spell spellToCast = spellManager.SpellToCast;
+            Spell spellToCast = spellManager.spellToCast;
             
             if (spellToCast == null)
             {
@@ -122,7 +123,7 @@ namespace Mage
                     throw new ArgumentOutOfRangeException();
             }
      
-            _spellsAvailable = spellManager.SpellsAvailable;
+            _spellsAvailable = spellManager.spellsAvailable;
             IncantationEnd();
         }
 
@@ -160,9 +161,8 @@ namespace Mage
             IncantationCheck();
         }
         
-        private void InputDisplay(string hexColor, float rotationAngle)
+        private void InputDisplay(Color color, float rotationAngle)
         {
-            if (!ColorUtility.TryParseHtmlString(hexColor, out Color color)) return;
             
             _inputsPerformedUI[_inputStep].gameObject.SetActive(true);
             _inputsPerformedUI[_inputStep].color = color;
@@ -181,16 +181,16 @@ namespace Mage
             switch (_inputCurrent)
             {
                 case SpellDirections.Up:
-                    InputDisplay("#FFB600", 0f);
-                    break;
-                case SpellDirections.Down:
-                    InputDisplay("#009DFF", 180f);
-                    break;
-                case SpellDirections.Left:
-                    InputDisplay("#00FF15", 90f);
+                    InputDisplay(mageUIRenderer.upArrowColor, 0f);
                     break;
                 case SpellDirections.Right:
-                    InputDisplay("#FF0080", -90f);
+                    InputDisplay(mageUIRenderer.rightArrowColor, -90f);
+                    break;
+                case SpellDirections.Down:
+                    InputDisplay(mageUIRenderer.downArrowColor, 180f);
+                    break;
+                case SpellDirections.Left:
+                    InputDisplay(mageUIRenderer.leftArrowColor, 90f);
                     break;
                 case SpellDirections.None:
                 default:
@@ -219,7 +219,7 @@ namespace Mage
                 // If input not for this spell, remove it from the available ones
                 if (_inputCurrent != spell.inputs[_inputStep]) return false;
 
-                if (_inputStep == spell.inputs.Count - 1) spellManager.SpellToCast = spell;
+                if (_inputStep == spell.inputs.Count - 1) spellManager.spellToCast = spell;
                 
                 return true;
             }).ToList());

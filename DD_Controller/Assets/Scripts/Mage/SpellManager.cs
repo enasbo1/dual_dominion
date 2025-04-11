@@ -68,10 +68,14 @@ namespace Mage
     public class SpellManager : MonoBehaviour
     {
         private readonly List<Spell> _spellList;
-        public readonly List<Spell> SpellsAvailable;
-        public readonly Spell DefaultSpell;
-        public Spell SpellToCast;
-        [DoNotSerialize] public bool isIncanting;
+        public readonly List<Spell> spellsAvailable;
+        public readonly Spell defaultSpell;
+        public Spell spellToCast;
+        
+        [SerializeField] public bool forceEnableSpell;
+        private bool _forcedEnabled;
+        
+        [NonSerialized] public bool isIncanting;
         
         public SpellManager()
         {
@@ -144,11 +148,11 @@ namespace Mage
             };
             
             this._spellList = test;
-            this.SpellsAvailable = test.Where(spell => spell.isActive).ToList();
-            this.DefaultSpell = this.GetSpellById(0);
-            this.SpellToCast = DefaultSpell;
+            this.spellsAvailable = test.Where(spell => spell.isActive).ToList();
+            this.defaultSpell = this.GetSpellById(0);
+            this.spellToCast = defaultSpell;
         }
-
+        
         public Spell GetSpellById(int id)
         {
             return _spellList.Find(x => x.id == id);
@@ -161,28 +165,36 @@ namespace Mage
         
         public void SetSpellsAvailable(List<Spell> spellsAvailable)
         {
-            this.SpellsAvailable.Clear();
-            this.SpellsAvailable.AddRange(spellsAvailable);
+            this.spellsAvailable.Clear();
+            this.spellsAvailable.AddRange(spellsAvailable);
         }
         
         public void ResetSpellsAvailable()
         {
-            this.SpellsAvailable.Clear();
-            this.SpellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
+            this.spellsAvailable.Clear();
+            this.spellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
         }
 
         private void FixedUpdate()
         {
+            if (forceEnableSpell && !_forcedEnabled)
+            {
+                spellsAvailable.Clear();
+                spellsAvailable.AddRange(_spellList);
+                spellsAvailable.ForEach(spell => spell.isActive = true);
+                _forcedEnabled = true;
+            }
+            
             float timeIncrement = Time.deltaTime;
             
-            for (int i = SpellsAvailable.Count - 1; i >= 0; i--)
+            for (int i = spellsAvailable.Count - 1; i >= 0; i--)
             {
-                Spell spell = SpellsAvailable[i];
+                Spell spell = spellsAvailable[i];
 
                 if (spell.cooldown < spell.recastDelay) spell.cooldown += timeIncrement;
                 spell.canBeCast = (!spell.isInCast || spell.canRecastWhileInCast) && spell.cooldown >= spell.recastDelay;
 
-                if (!spell.isActive) SpellsAvailable.RemoveAt(i);
+                if (!spell.isActive) spellsAvailable.RemoveAt(i);
             }
         }
     }
