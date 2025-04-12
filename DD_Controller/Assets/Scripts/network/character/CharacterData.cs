@@ -6,6 +6,7 @@ namespace script.network.character
     {
         public int WalkState;
     }
+
     public struct CharacterData
     {
         public Vector3 position;

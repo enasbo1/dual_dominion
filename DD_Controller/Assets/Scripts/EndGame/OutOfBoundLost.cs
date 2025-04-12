@@ -15,27 +15,20 @@ namespace end_game
             gameOverCanvas?.SetActive(false);
         }
 
+        // Update is called once per frame
+        private void Update()
+        {
+            foreach (Transform got in objectLimited)
+                if (got.transform.position.y < deathBottom)
+                    GameOver();
+        }
+
         private void GameOver()
         {
             gameOverCanvas?.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
-            foreach (var go in objectToDelete)
-            {
-                Destroy(go);
-            }
+            foreach (GameObject go in objectToDelete) Destroy(go);
             Cursor.visible = true;
-        }
-        
-        // Update is called once per frame
-        private void Update()
-        {
-            foreach (var got in objectLimited)
-            {
-                if (got.transform.position.y < deathBottom)
-                {
-                    GameOver();
-                }
-            }
         }
     }
 }

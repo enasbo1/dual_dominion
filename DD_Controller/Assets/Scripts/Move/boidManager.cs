@@ -7,18 +7,94 @@ namespace Move
 {
     public class BoidsManager : Manager<WalkerDdDealer, WalkerEnum, MonsterVariants>
     {
-        private readonly TableList<Transform> _transform = new (0);
-        private TableArray<bool> _hasRb = new (0);
-        private readonly TableList<Rigidbody> _boidsRb = new (0);
+        private readonly TableList<Rigidbody> _boidsRb = new(0);
+        private readonly TableList<Transform> _transform = new(0);
+        private TableArray<float> _angleList = new(0, false);
 
-        private TableArray<int> _groups = new (0);
-        private TableArray<int?> _lastTarget = new (0);
-        
-        private TableArray<Vector2> _boidsPos = new (0, false);
-        private TableArray<float> _angleList = new (0, false);
-        
+        private TableArray<Vector2> _boidsPos = new(0, false);
+
+        private TableArray<int> _groups = new(0);
+        private TableArray<bool> _hasRb = new(0);
+
         private int _index;
+        private TableArray<int?> _lastTarget = new(0);
         private int _rbSize;
+
+        // Update is called once per frame
+        private void FixedUpdate()
+        {
+            Vector2[] posList = _boidsPos.Values;
+            float[] angleList = _angleList.Values;
+            int rbIndex = 0;
+            for (int i = 0; i < Size; ++i)
+                if (Active[i])
+                {
+                    Vector3 tamp = _transform[i].position;
+                    posList[i].x = tamp.x;
+                    posList[i].y = tamp.z;
+                    if (_hasRb[i])
+                    {
+                        angleList[i] = _boidsRb[rbIndex].rotation.eulerAngles.y;
+                        ++rbIndex;
+                    }
+                    else
+                    {
+                        angleList[i] = _transform[i].rotation.eulerAngles.y;
+                    }
+                }
+                else if (_hasRb[i])
+                {
+                    ++rbIndex;
+                }
+
+            if (Size != 0)
+                _index %= 1 + Size / 50;
+
+
+            rbIndex = 0;
+            for (int j = 0; j < Size; ++j)
+                if (Active[j])
+                {
+                    Vector2 birdV = posList[j];
+                    int? n;
+                    float near;
+
+                    if (_lastTarget[j] == null || j % (1 + Size / 50) == _index)
+                    {
+                        (n, near) = LookForNearest(j, _groups.Values, posList, Active.Values, Size);
+                        if (n == null) return;
+                        _lastTarget[j] = n;
+                    }
+                    else
+                    {
+                        n = _lastTarget[j];
+                        near = (posList[n ?? 0] - birdV).SqrMagnitude();
+                    }
+
+                    float newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n],
+                        Time.deltaTime * 6);
+
+                    if (_hasRb[j])
+                    {
+                        Vector3 rot = _boidsRb[rbIndex].rotation.eulerAngles;
+                        rot.y = newAngle;
+                        _boidsRb[rbIndex].rotation = Quaternion.Euler(rot);
+                        ++rbIndex;
+                    }
+                    else
+                    {
+                        Vector3 rot = _transform[j].rotation.eulerAngles;
+                        rot.y = newAngle;
+                        _transform[j].rotation = Quaternion.Euler(rot);
+                    }
+                }
+                else if (_hasRb[j])
+                {
+                    ++rbIndex;
+                }
+
+            ++_index;
+        }
 
         protected override void AddChunk(int size)
         {
@@ -29,21 +105,20 @@ namespace Move
             _hasRb.AddChunk(size);
             _boidsPos.AddChunk(size);
             _angleList.AddChunk(size);
-            
         }
 
         protected override void InitElement(WalkerDdDealer element)
         {
             Rigidbody rb = element.body;
             if (!rb) return;
-            
+
             if (_boidsRb.Count == _rbSize)
                 _boidsRb.Add(rb);
-            else 
+            else
                 _boidsRb[_rbSize] = rb;
             ++_rbSize;
         }
-        
+
         protected override void RestoreElement(int i, WalkerDdDealer element)
         {
             _groups[i] = element.group;
@@ -72,15 +147,17 @@ namespace Move
         {
             int i = Elements.FindIndex(d => d == element);
             if (i == -1) return;
-            
-            _groups[i] = group??element.group;
+
+            _groups[i] = group ?? element.group;
         }
-        
-        private static float normal_scalar(Vector2 a, Vector2 b){
-            return  a.y * b.x-a.x * b.y;
+
+        private static float normal_scalar(Vector2 a, Vector2 b)
+        {
+            return a.y * b.x - a.x * b.y;
         }
-        
-        private static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle, float fact = 1)
+
+        private static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle,
+            float fact = 1)
         {
             angle += Random.Range(-2, 3) * fact;
             float side;
@@ -88,25 +165,28 @@ namespace Move
             {
                 case < 1:
                 {
-                    side =  normal_scalar(new Vector2(Mathf.Cos(angle*Mathf.Deg2Rad), Mathf.Sin(angle*Mathf.Deg2Rad)), target - pos);
+                    side = normal_scalar(
+                        new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
                     if (side > 0)
-                        return angle + 45* fact;
-                    return angle - 45* fact;
+                        return angle + 45 * fact;
+                    return angle - 45 * fact;
                 }
                 case > 4:
-                    side = normal_scalar(new Vector2(Mathf.Cos(angle*Mathf.Deg2Rad), Mathf.Sin(angle*Mathf.Deg2Rad)), target - pos);
+                    side = normal_scalar(
+                        new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
                     if (side > 0)
                         return angle - 15 * fact;
-                    return angle + 15* fact;
+                    return angle + 15 * fact;
                 default:
-                    if (targetAngle>angle)
+                    if (targetAngle > angle)
                         return angle + 12 * fact;
-                    return angle - 12* fact;
+                    return angle - 12 * fact;
             }
         }
 
-        
-        private static (int?, float) LookForNearest(int current, int[] groups, Vector2[] targetList, bool[] actives, int size)
+
+        private static (int?, float) LookForNearest(int current, int[] groups, Vector2[] targetList, bool[] actives,
+            int size)
         {
             Vector2 birdV = targetList[current];
             int g = groups[current];
@@ -115,81 +195,18 @@ namespace Move
             float near = 0;
             int? i = null;
 
-            for (int k = 0; k < size; ++k) if (k != current && actives[k] && (g == 0 || groups[k] == g)) 
-            {
-                Vector2 bV= targetList[k];
-                float dist = (bV - birdV).SqrMagnitude();
-                if (!((nearestV == null) | (near > (bV - birdV).SqrMagnitude()))) continue;
-                nearestV = bV;
-                i = k;
-                near = dist;
-            }
-            
+            for (int k = 0; k < size; ++k)
+                if (k != current && actives[k] && (g == 0 || groups[k] == g))
+                {
+                    Vector2 bV = targetList[k];
+                    float dist = (bV - birdV).SqrMagnitude();
+                    if (!((nearestV == null) | (near > (bV - birdV).SqrMagnitude()))) continue;
+                    nearestV = bV;
+                    i = k;
+                    near = dist;
+                }
+
             return (i, near);
-        }
-        
-        // Update is called once per frame
-        private void FixedUpdate()
-        {
-            Vector2[] posList = _boidsPos.Values;
-            float[] angleList = _angleList.Values;
-            int rbIndex = 0;
-            for (int i = 0; i < Size; ++i)  if (Active[i])
-            {
-                {
-                    Vector3 tamp = _transform[i].position;
-                    posList[i].x = tamp.x;
-                    posList[i].y = tamp.z;
-                    if (_hasRb[i])
-                    {
-                        angleList[i] = _boidsRb[rbIndex].rotation.eulerAngles.y;
-                        ++rbIndex;
-                    }
-                    else
-                        angleList[i] = _transform[i].rotation.eulerAngles.y;   
-                }
-            } else if (_hasRb[i]) ++rbIndex;
-            
-            if (Size != 0)
-                _index %= (1+Size/50);
-
-            
-            rbIndex = 0;
-            for (int j = 0; j < Size; ++j) if (Active[j])
-            {
-                Vector2 birdV = posList[j];
-                int? n;
-                float near;
-
-                if (_lastTarget[j] == null || j % (1+Size/50) == _index)
-                {
-                    (n, near) = LookForNearest(j, _groups.Values, posList, Active.Values , Size);
-                    if (n == null) return;
-                    _lastTarget[j] = n;
-                }
-                else
-                {
-                    n = _lastTarget[j];
-                    near = (posList[n??0] - birdV).SqrMagnitude();
-                }
-                
-                float newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n], Time.deltaTime*6);
-                
-                if (_hasRb[j])
-                {
-                    Vector3 rot = _boidsRb[rbIndex].rotation.eulerAngles;
-                    rot.y = newAngle;
-                    _boidsRb[rbIndex].rotation = Quaternion.Euler(rot);
-                    ++rbIndex;
-                }
-                else
-                {
-                    Vector3 rot = _transform[j].rotation.eulerAngles;
-                    rot.y = newAngle;
-                    _transform[j].rotation = Quaternion.Euler(rot);
-                }
-            } else if (_hasRb[j]) ++rbIndex;
-            ++_index;
         }
     }
 }

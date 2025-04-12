@@ -5,7 +5,7 @@ namespace Actions
     public struct ShieldAction : IDdAction
     {
         private readonly Animator _animator;
-        public int id { get;  set;}
+        public int id { get; set; }
         private static readonly int Shield = Animator.StringToHash("shield");
         public bool Active;
 
@@ -15,7 +15,7 @@ namespace Actions
             _animator = animator;
             Active = true;
         }
-        
+
         public void launch()
         {
             _animator.SetBool(Shield, true);

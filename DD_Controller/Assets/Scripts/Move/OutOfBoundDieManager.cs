@@ -6,17 +6,26 @@ using UnityEngine;
 
 namespace Move
 {
-
     public class WalkerOutOfBoundDieManager : OutOfBoundDieManager<WalkerDdDealer, WalkerEnum, MonsterVariants>
     {
     }
-    
-    public class OutOfBoundDieManager<TDealer, TEnum, TVariant> : Manager<TDealer, TEnum, TVariant> where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
+
+    public class OutOfBoundDieManager<TDealer, TEnum, TVariant> : Manager<TDealer, TEnum, TVariant>
+        where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
         [SerializeField] [NotNull] public StandByManager<TDealer, TEnum, TVariant> standBy;
         public int deathBottom = -100;
 
         private readonly TableList<Transform> _transform = new(0);
+
+
+        // Update is called once per frame
+        private void FixedUpdate()
+        {
+            for (int i = 0; i < Size; i++)
+                if (Active[i] & (_transform[i].position.y < deathBottom))
+                    standBy.Kill(Elements[i]);
+        }
 
         protected override void AddChunk(int size)
         {
@@ -32,16 +41,5 @@ namespace Move
         {
             _transform.Add(element.transform);
         }
-    
-    
-        // Update is called once per frame
-        private void FixedUpdate()
-        {
-            for (int i = 0 ; i < Size ; i++) if (Active[i] & (_transform[i].position.y < deathBottom))
-            {
-                standBy.Kill(Elements[i]);
-            }
-        }
     }
-    
 }

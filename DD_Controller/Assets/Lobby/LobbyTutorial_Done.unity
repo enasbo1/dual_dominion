@@ -4517,8 +4517,6 @@ MonoBehaviour:
   leaveLobbyButton: {fileID: 935551613}
   changeGameModeButton: {fileID: 1279448330}
   launchGameButton: {fileID: 1249694175}
-  multiPlayerScene: {fileID: 102900000, guid: d93cc9f80a72fdb42a8f0f2061f26cca, type: 3}
-  monoPlayerScene: {fileID: 102900000, guid: a8164fb07666df749ad8fc140ee4119b, type: 3}
 --- !u!1 &1238551660
 GameObject:
   m_ObjectHideFlags: 0

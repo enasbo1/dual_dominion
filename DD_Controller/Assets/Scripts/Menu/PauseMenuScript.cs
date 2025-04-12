@@ -8,30 +8,29 @@ namespace Menu
     public class PauseMenuScript : MonoBehaviour
     {
         public PlayerInput playerInputs;
-    
-        [Range(0.01f, 3f)]
-        public float neutralTimeFlow = 1f;
-        [Range(0.01f, 3f)]
-        public float pauseTimeFlow = 0.1f;
-        public List<GameObject> objectsToDisable = new List<GameObject>();
-    
+
+        [Range(0.01f, 3f)] public float neutralTimeFlow = 1f;
+
+        [Range(0.01f, 3f)] public float pauseTimeFlow = 0.1f;
+
+        public List<GameObject> objectsToDisable = new();
+
         [SerializeField] private GameObject canvas;
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button leavePartyButton;
         [SerializeField] private Button leaveGameButton;
-    
-        private InputAction _pauseTrigger;
         private bool _isPauseActive;
-    
-        private void Awake() {
+
+        private InputAction _pauseTrigger;
+
+        private void Awake()
+        {
             resumeButton.onClick.AddListener(CloseMenu);
 
-            leavePartyButton.onClick.AddListener(() => {
-                SceneManagerScript.ChangeToScene(SceneName.Lobby);
-            });
-        
+            leavePartyButton.onClick.AddListener(() => { SceneManagerScript.ChangeToScene(SceneName.Lobby); });
+
             leaveGameButton.onClick.AddListener(Application.Quit);
-        
+
             _pauseTrigger = playerInputs.actions["Escape"];
             _pauseTrigger.started += _ =>
             {
@@ -48,7 +47,7 @@ namespace Menu
             Cursor.lockState = CursorLockMode.None;
             _isPauseActive = true;
         }
-    
+
         private void CloseMenu()
         {
             Time.timeScale = neutralTimeFlow;

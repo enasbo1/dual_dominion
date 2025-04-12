@@ -7,8 +7,7 @@ namespace script.network
         public abstract T OutNetworkData();
     }
 
-    
-    
+
     public abstract class NetworkDataInput<T> : MonoBehaviour
     {
         public abstract void InNetworkData(T networkData);

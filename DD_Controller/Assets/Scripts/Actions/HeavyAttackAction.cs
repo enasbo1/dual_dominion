@@ -4,9 +4,9 @@ namespace Actions
 {
     public struct HeavyAttackAction : IDdAction
     {
-        private Animator _animator;
-        public int id { get;  set;}
-        
+        private readonly Animator _animator;
+        public int id { get; set; }
+
         private static readonly int Melee = Animator.StringToHash("melee");
 
         public HeavyAttackAction(Animator animator)

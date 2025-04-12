@@ -4,14 +4,14 @@ using UnityEngine.SceneManagement;
 
 public enum SceneName
 {
-    Lobby,
+    Lobby
 }
 
 public static class SceneList
 {
-    public static readonly Dictionary<SceneName, string> SceneNames = new Dictionary<SceneName, string>
+    public static readonly Dictionary<SceneName, string> SceneNames = new()
     {
-        { SceneName.Lobby, "LobbyTutorial_Done" },
+        { SceneName.Lobby, "LobbyTutorial_Done" }
     };
 }
 

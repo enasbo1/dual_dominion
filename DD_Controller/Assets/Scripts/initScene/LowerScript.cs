@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace initScene
 {
-    public class LowerScript : MonoBehaviour{
+    public class LowerScript : MonoBehaviour
+    {
         public NetworkObject networkObject;
         public GameObject[] GameObjectsToDestroy;
         public MonoBehaviour[] ComponentsToDestroy;
@@ -11,22 +12,19 @@ namespace initScene
 
         public void Start()
         {
-            if (!networkObject.IsOwner)
-            {
-                Apply();
-            }
+            if (!networkObject.IsOwner) Apply();
             Destroy(this);
         }
 
         private void Apply()
         {
-            foreach (var ctd in ComponentsToDestroy)
+            foreach (MonoBehaviour ctd in ComponentsToDestroy)
                 Destroy(ctd);
-            
-            foreach (var go in GameObjectsToDestroy)
+
+            foreach (GameObject go in GameObjectsToDestroy)
                 Destroy(go);
 
-            foreach (var rb in RigidbodiesToDestroy)
+            foreach (Rigidbody rb in RigidbodiesToDestroy)
                 Destroy(rb);
         }
     }

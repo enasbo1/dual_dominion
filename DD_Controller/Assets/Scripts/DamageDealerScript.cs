@@ -13,17 +13,14 @@ public class DamageDealerScript : MonoBehaviour
     {
         _monstersNearby = enemySensorScript.monstersNearby;
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         float damageToReduce = 0;
-        _monstersNearby.ForEach(monster =>
-        {
-            damageToReduce += damageReductionPerHit;
-        });
+        _monstersNearby.ForEach(_ => { damageToReduce += damageReductionPerHit; });
 
         damageMax -= damageToReduce;
-        
-        if (damageMax <= 0) this.gameObject.SetActive(false);
+
+        if (damageMax <= 0) gameObject.SetActive(false);
     }
 }

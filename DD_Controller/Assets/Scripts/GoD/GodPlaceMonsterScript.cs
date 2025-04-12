@@ -11,9 +11,10 @@ namespace GoD
         public Transform targetTransform;
 
         private Vector2 _directions;
-        
-        private InputAction _rotationTrigger;
         private bool _isRotating;
+
+        private InputAction _rotationTrigger;
+
         private void Start()
         {
             _rotationTrigger = godInputs.actions["Look"];
@@ -23,9 +24,8 @@ namespace GoD
 
         private void FixedUpdate()
         {
-            
             cameraHolder.rotation = Quaternion.Euler(-_directions.y, 0f, _directions.x);
-            
+
             Vector3 cameraPos = Input.mousePosition;
             Vector3 targetPosition = targetTransform.position;
 
@@ -34,9 +34,9 @@ namespace GoD
                 Debug.LogWarning("Camera is null");
                 return;
             }
-            
+
             Vector3 pos = Camera.ScreenToWorldPoint(cameraPos);
-            
+
             Vector3 satellitePosition = Camera.transform.position;
 
             cameraPos.z = satellitePosition.y - targetPosition.y;

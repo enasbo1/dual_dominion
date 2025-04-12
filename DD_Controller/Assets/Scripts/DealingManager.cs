@@ -2,16 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
+using Monster;
 using Shared;
 using UnityEngine;
 
-
-public class WalkerDealingManager : DealingManager<WalkerDdDealer, WalkerEnum, Monster.MonsterVariants>
+public class WalkerDealingManager : DealingManager<WalkerDdDealer, WalkerEnum, MonsterVariants>
 {
 }
-public abstract class WalkerManager : Manager<WalkerDdDealer, WalkerEnum, Monster.MonsterVariants> {}
 
-public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
+public abstract class WalkerManager : Manager<WalkerDdDealer, WalkerEnum, MonsterVariants>
+{
+}
+
+public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant>
+    where TEnum : Enum
+    where TVariant : Enum
 {
     [SerializeField] private int initialCapacity;
     [SerializeField] private Manager<TDealer, TEnum, TVariant>[] managers;
@@ -21,6 +26,31 @@ public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDea
     private void Start()
     {
         ContextStart(AddElement, RemoveElement);
+    }
+
+    // Update is called once per frame
+    private void FixedUpdate()
+    {
+        if (objectsDealers.SequenceEqual(_objectsDealed)) return;
+
+        objectsDealers.ForEach(cdd =>
+        {
+            if (_objectsDealed.Contains(cdd)) return;
+            _objectsDealed.AddSilently(cdd);
+            foreach (Manager<TDealer, TEnum, TVariant> manager in managers) manager.AddElement(cdd);
+        });
+
+        _objectsDealed.ForEach(cdd =>
+        {
+            if (objectsDealers.Contains(cdd)) return;
+            _objectsDealed.RemoveSilently(cdd);
+            foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
+                manager.DisableElement(cdd);
+        });
+
+        if (objectsDealers.SequenceEqual(_objectsDealed)) return;
+        _objectsDealed.Clear();
+        _objectsDealed.AddRange(objectsDealers);
     }
 
     protected void ContextStart(Action<TDealer> addAction, Action<TDealer> removeAction)
@@ -54,48 +84,13 @@ public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDea
     {
         if (!objectsDealers.Contains(element))
             objectsDealers.Add(element);
-        foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
-        {
-            manager.AddElement(element);
-        }
+        foreach (Manager<TDealer, TEnum, TVariant> manager in managers) manager.AddElement(element);
     }
 
     protected void RemoveElement(TDealer element)
     {
         objectsDealers.Remove(element);
-        foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
-        {
-            manager.DisableElement(element);
-        }
-    }
-
-    // Update is called once per frame
-    private void FixedUpdate()
-    {
-        if (objectsDealers.SequenceEqual(_objectsDealed)) return;
-
-        objectsDealers.ForEach(cdd =>
-        {
-            if (_objectsDealed.Contains(cdd)) return;
-            _objectsDealed.AddSilently(cdd);
-            foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
-            {
-                manager.AddElement(cdd);
-            }
-        });
-
-        _objectsDealed.ForEach(cdd =>
-        {
-            if (objectsDealers.Contains(cdd)) return;
-            _objectsDealed.RemoveSilently(cdd);
-            foreach (Manager<TDealer, TEnum, TVariant> manager in managers)
-                manager.DisableElement(cdd);
-
-        });
-
-        if (objectsDealers.SequenceEqual(_objectsDealed)) return;
-        _objectsDealed.Clear();
-        _objectsDealed.AddRange(objectsDealers);
+        foreach (Manager<TDealer, TEnum, TVariant> manager in managers) manager.DisableElement(element);
     }
 }
 
@@ -108,11 +103,13 @@ public class ListWithListener<T> : List<T>
     {
         _addAction = addAction;
     }
+
     public ListWithListener(Action<T> addAction, Action<T> removeAction)
     {
         _addAction = addAction;
         _removeAction = removeAction;
     }
+
     public new void Add(T item)
     {
         base.Add(item);

@@ -10,33 +10,37 @@ namespace Shared
     {
     }
 
-    public abstract class StandByManager<TDealer, TEnum, TVariant> : MonoBehaviour where  TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
+    public abstract class StandByManager<TDealer, TEnum, TVariant> : MonoBehaviour
+        where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
         [SerializeField] [CanBeNull] private DealingManager<TDealer, TEnum, TVariant> dealingManager;
         [SerializeField] [CanBeNull] private PrefabReferencer<TDealer, TEnum, TVariant> prefabReferencer;
         [SerializeField] private bool spawnNetworkObject;
-        
-        private readonly List<TDealer> _dealers = new ();
-        private readonly List<bool> _isDead = new ();
 
-        public TDealer Spawn(TEnum typeKey, Vector3 position, Quaternion rotation, TVariant variant = default, bool deal = true)
+        private readonly List<TDealer> _dealers = new();
+        private readonly List<bool> _isDead = new();
+
+        public TDealer Spawn(TEnum typeKey, Vector3 position, Quaternion rotation, TVariant variant = default,
+            bool deal = true)
         {
             if (!prefabReferencer)
                 throw new Exception("No DealingManager Set, Can't Spawn");
             return Spawn(prefabReferencer[typeKey].Item1, position, rotation, variant, deal);
         }
-        
-        public TDealer Spawn(GameObject objectToSpawn, Vector3 position, Quaternion rotation, TVariant variant = default, bool deal = true)
+
+        public TDealer Spawn(GameObject objectToSpawn, Vector3 position, Quaternion rotation,
+            TVariant variant = default, bool deal = true)
         {
             int i = -1;
             TEnum type = objectToSpawn.GetComponent<TDealer>().type;
-            for (int j = 0; j < _dealers.Count; j++) if (_isDead[j])
-            {
-                if (type == null) break;
-                if (!type.Equals(_dealers[j].type)) continue;
-                i = j;
-                break;
-            }
+            for (int j = 0; j < _dealers.Count; j++)
+                if (_isDead[j])
+                {
+                    if (type == null) break;
+                    if (!type.Equals(_dealers[j].type)) continue;
+                    i = j;
+                    break;
+                }
 
             TDealer newDealer;
             if (i == -1)
@@ -54,8 +58,8 @@ namespace Shared
                     rb.ResetInertiaTensor();
                     rb.linearVelocity = Vector3.zero;
                 }
-            } 
-            
+            }
+
             newDealer.gameObject.SetActive(true);
             newDealer.ApplyVariant(variant);
 
@@ -66,18 +70,16 @@ namespace Shared
                 if (i == -1)
                     newDealer.networkObject.Spawn();
             }
-            
+
             if (!newDealer.mainTransform) return newDealer;
 
             newDealer.mainTransform.position = position;
             newDealer.mainTransform.rotation = rotation;
 
 
-            
-            
             if (deal && dealingManager)
                 dealingManager.Add(newDealer);
-            
+
             return newDealer;
         }
 
@@ -96,10 +98,10 @@ namespace Shared
             {
                 _isDead[i] = true;
             }
-            
+
             if (deal && dealingManager)
                 dealingManager.Remove(dealer);
-            
+
             return dealer;
         }
     }

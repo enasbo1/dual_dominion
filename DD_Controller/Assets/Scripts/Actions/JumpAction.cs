@@ -6,12 +6,13 @@ namespace Actions
     {
         private readonly Rigidbody _rb;
         private readonly float _jumpForce;
-        public int id { get;  set;}
-        
+        public int id { get; set; }
+
         private float _jumpTimer;
         private Vector3 _lastPosition;
         private Vector3 _velocity;
-        public JumpAction(Rigidbody rb , float jumpForce)
+
+        public JumpAction(Rigidbody rb, float jumpForce)
         {
             id = 0;
             _rb = rb;
@@ -30,12 +31,12 @@ namespace Actions
 
         public bool update()
         {
-            var v = _rb.transform.position - _lastPosition;
+            Vector3 v = _rb.transform.position - _lastPosition;
             _lastPosition = _rb.transform.position;
             if (_velocity.sqrMagnitude < v.sqrMagnitude)
                 _velocity = v;
             if (Time.time < _jumpTimer + 0.2f) return false;
-            _rb.linearVelocity = _velocity/Time.deltaTime;
+            _rb.linearVelocity = _velocity / Time.deltaTime;
             _rb.AddForce(Vector3.up * _jumpForce, ForceMode.Impulse);
             return true;
         }

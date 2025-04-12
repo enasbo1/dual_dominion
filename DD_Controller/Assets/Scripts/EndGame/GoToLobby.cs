@@ -6,12 +6,12 @@ namespace end_game
 {
     public class GoToLobby : MonoBehaviour
     {
-    
+        private static readonly string LOBBY_SCENE = "LobbyTutorial_Done";
+
         public Button backToLobbyButton;
-        private static string LOBBY_SCENE =  "LobbyTutorial_Done";
-    
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
+        private void Start()
         {
             backToLobbyButton.onClick.AddListener(_GoToLobby);
         }

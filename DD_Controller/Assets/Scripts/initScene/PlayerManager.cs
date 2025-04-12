@@ -1,5 +1,4 @@
 using Unity.Netcode;
-using Unity.Netcode.Components;
 using UnityEngine;
 
 namespace initScene
@@ -31,12 +30,12 @@ namespace initScene
                 no.Spawn(true);
 
             CameraContainer cameraContainer = go.GetComponent<CameraContainer>();
-            
+
 
             playerCamera.SetParent(cameraContainer.cameraContainer);
             playerCamera.localPosition = cameraContainer.Offset;
             playerCamera.rotation = Quaternion.Euler(cameraContainer.directionOffset);
-            
+
             cameraContainer.DealCamera(playerCamera.GetComponent<Camera>());
         }
     }

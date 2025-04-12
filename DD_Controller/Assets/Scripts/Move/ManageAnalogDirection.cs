@@ -7,16 +7,16 @@ namespace Move
         public MageController directionSetter;
         public Transform target;
 
-        void Update()
+        private void Update()
         {
-            var currentDirection = directionSetter.GetCurrentWalkDirection();
+            float? currentDirection = directionSetter.GetCurrentWalkDirection();
             if (currentDirection is null) return;
-            
-            var targetDirection = directionSetter.GetTargetWalkDirection();
-            
-            var rot  = target.localRotation.eulerAngles;
-            rot.y = targetDirection - ((float)currentDirection);
-            
+
+            float targetDirection = directionSetter.GetTargetWalkDirection();
+
+            Vector3 rot = target.localRotation.eulerAngles;
+            rot.y = targetDirection - (float)currentDirection;
+
             target.localRotation = Quaternion.Euler(rot);
         }
     }

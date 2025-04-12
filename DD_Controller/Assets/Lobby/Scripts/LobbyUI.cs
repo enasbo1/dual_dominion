@@ -28,16 +28,21 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Button leaveLobbyButton;
     [SerializeField] private Button changeGameModeButton;
     [SerializeField] private Button launchGameButton;
+     
+    /*
     [Header("Scenes to Loads")]
     public SceneAsset multiPlayerScene;
     public SceneAsset monoPlayerScene;
+    */
+    
+    private const string MULTI_PLAYER_SCENE = "MultiPlayerScene";
+    private const string MONO_PLAYER_SCENE = "MonoPlayerScene";
 
-
-    public void LoadNextScene()
+    private void LoadNextScene()
     {
         if (playerCountText.text.StartsWith("1"))
         {
-            SceneManager.LoadScene(monoPlayerScene.name);
+            SceneManager.LoadScene(MONO_PLAYER_SCENE);
         }
         else if (playerCountText.text.StartsWith("2"))
         {
@@ -59,7 +64,7 @@ public class LobbyUI : MonoBehaviour
                 }
             }
 
-            NetworkManager.Singleton.SceneManager.LoadScene(multiPlayerScene.name, LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene(MULTI_PLAYER_SCENE, LoadSceneMode.Single);
         }
     }
 
@@ -172,7 +177,7 @@ public class LobbyUI : MonoBehaviour
         {
             if (playerSingleTemplate == null)
             {
-                Debug.LogWarning("playerSingleTemplate est null ou a été détruit !");
+                Debug.LogWarning("playerSingleTemplate est null ou a ï¿½tï¿½ dï¿½truit !");
                 return;
             }
 

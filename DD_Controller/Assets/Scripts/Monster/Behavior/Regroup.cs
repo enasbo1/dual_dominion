@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace Monster.Behavior
+﻿namespace Monster.Behavior
 {
     public class Regroup : IMonsterBehavior
     {

@@ -3,6 +3,6 @@
     public enum MonsterVariants
     {
         Small,
-        Big,
+        Big
     }
 }

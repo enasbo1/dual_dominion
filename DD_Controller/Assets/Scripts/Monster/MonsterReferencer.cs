@@ -2,7 +2,7 @@
 
 namespace Monster
 {
-    public class MonsterReferencer : PrefabReferencer<MonsterDealer, WalkerEnum, MonsterVariants> 
+    public class MonsterReferencer : PrefabReferencer<MonsterDealer, WalkerEnum, MonsterVariants>
     {
     }
 }

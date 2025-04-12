@@ -7,11 +7,11 @@ namespace Actions
         private readonly Animator _animator;
         private readonly LayerMask _layerMask;
         private readonly Transform _attackTransform;
-        public int id { get;  set;}
+        public int id { get; set; }
         private static readonly int Melee = Animator.StringToHash("Melee");
         private float _attackTimer;
 
-        public MeleeAttackAction(Animator animator, Transform attackTransform,  LayerMask mask)
+        public MeleeAttackAction(Animator animator, Transform attackTransform, LayerMask mask)
         {
             id = 0;
             _animator = animator;
@@ -19,7 +19,7 @@ namespace Actions
             _attackTransform = attackTransform;
             _attackTimer = 0f;
         }
-        
+
         public void launch()
         {
             _animator.SetTrigger(Melee);
@@ -39,7 +39,7 @@ namespace Actions
                     _layerMask))
                 hitInfo.rigidbody?.AddForce(_attackTransform.rotation * Vector3.forward * 100, ForceMode.Impulse);
             */
-            
+
             return true;
         }
 

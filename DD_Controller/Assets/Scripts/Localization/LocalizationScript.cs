@@ -9,20 +9,14 @@ namespace Localization
 {
     public class Localization : MonoBehaviour
     {
-        public TMP_Dropdown dropdownLang;
-        
-        private enum LocalizationName
-        {
-            En,
-            Fr,
-        }
-        
-        private static readonly Dictionary<LocalizationName, string> LocalizationNames = new Dictionary<LocalizationName, string>
+        private static readonly Dictionary<LocalizationName, string> LocalizationNames = new()
         {
             { LocalizationName.En, "English" },
-            { LocalizationName.Fr, "Français" },
+            { LocalizationName.Fr, "Français" }
         };
-        
+
+        public TMP_Dropdown dropdownLang;
+
         // prevent multiple call to coroutine if buttons pressed too often
         private bool _active;
 
@@ -31,19 +25,17 @@ namespace Localization
             int id = PlayerPrefs.GetInt("LocaleKey", 0);
             LocalizationName localizationName = (LocalizationName)id;
             ChangeLocale(localizationName);
-            
+
             InitLanguageDropdown();
         }
-        
+
         private void InitLanguageDropdown()
         {
             dropdownLang.ClearOptions();
 
-            List<string> options = new List<string>();
+            List<string> options = new();
             foreach (LocalizationName locale in Enum.GetValues(typeof(LocalizationName)))
-            {
                 options.Add(LocalizationNames[locale]);
-            }
 
             dropdownLang.AddOptions(options);
             dropdownLang.onValueChanged.AddListener(ChangeLocaleFromInt);
@@ -54,7 +46,7 @@ namespace Localization
             if (_active) return;
             StartCoroutine(SetLocale(localizationToLoad));
         }
-        
+
         private void ChangeLocaleFromInt(int id)
         {
             if (_active) return;
@@ -65,9 +57,16 @@ namespace Localization
         {
             _active = true;
             yield return LocalizationSettings.InitializationOperation;
-            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[(int)localizationToLoad];
+            LocalizationSettings.SelectedLocale =
+                LocalizationSettings.AvailableLocales.Locales[(int)localizationToLoad];
             PlayerPrefs.SetInt("LocaleKey", (int)localizationToLoad);
             _active = false;
+        }
+
+        private enum LocalizationName
+        {
+            En,
+            Fr
         }
     }
 }

@@ -7,40 +7,26 @@ namespace Move
 {
     public class KeepStandManager : MonoBehaviour
     {
-        private struct StandingObject
-        {
-            public Transform Transform;
-            public bool HasRigidBody;
-            public Rigidbody RigidBody;
-        }
-        
         public float angleTolerance = 10.0f;
 
-        public List<GameObject> standingGameObjects = new List<GameObject>();
-        
-        private readonly List<StandingObject> _standingObjects = new List<StandingObject>();
+        public List<GameObject> standingGameObjects = new();
+
+        private readonly List<StandingObject> _standingObjects = new();
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
-            foreach (StandingObject standing in from standingObject in standingGameObjects 
-                     let rBody = standingObject.GetComponent<Rigidbody>() 
+            foreach (StandingObject standing in from standingObject in standingGameObjects
+                     let rBody = standingObject.GetComponent<Rigidbody>()
                      select new StandingObject
                      {
                          Transform = standingObject.transform,
                          HasRigidBody = rBody,
                          RigidBody = rBody
                      })
-            {
                 _standingObjects.Add(standing);
-            }
         }
 
-
-        private static float angleDistanceTo_0(float angle)
-        {
-            return Math.Abs((angle + 180) % 360 - 180);
-        }
-        
         // Update is called once per frame
         private void FixedUpdate()
         {
@@ -62,14 +48,27 @@ namespace Move
                 }
 
                 if (!change) return;
-                
+
                 objectTransform.localRotation = Quaternion.Euler(rotation);
-                
+
                 if (!standingObject.HasRigidBody) return;
-                
+
                 standingObject.RigidBody.rotation = Quaternion.Euler(Vector3.zero);
                 standingObject.RigidBody.angularVelocity = Vector3.zero;
             }
+        }
+
+
+        private static float angleDistanceTo_0(float angle)
+        {
+            return Math.Abs((angle + 180) % 360 - 180);
+        }
+
+        private struct StandingObject
+        {
+            public Transform Transform;
+            public bool HasRigidBody;
+            public Rigidbody RigidBody;
         }
     }
 }

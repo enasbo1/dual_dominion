@@ -11,19 +11,19 @@ namespace script.network.character
 
         public override CharacterData OutNetworkData()
         {
-            var inclination = Vector2.zero;
-            var characterInclination = character.rotation.eulerAngles;
+            Vector2 inclination = Vector2.zero;
+            Vector3 characterInclination = character.rotation.eulerAngles;
             inclination.x = characterInclination.x;
             inclination.y = characterInclination.z;
-            return new CharacterData()
+            return new CharacterData
             {
                 characterInclination = inclination,
                 headRotation = directionMain.rotation.eulerAngles,
                 position = character.position,
                 characterTargetDirection = directionIntent.rotation.eulerAngles.y,
-                animation = new CharacterAnimation()
+                animation = new CharacterAnimation
                 {
-                    WalkState = characterAnimator.GetInteger("WalkState"),
+                    WalkState = characterAnimator.GetInteger("WalkState")
                 }
             };
         }

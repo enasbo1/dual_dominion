@@ -16,7 +16,7 @@ namespace Shared
         [SerializeField] [CanBeNull] public Animator animator;
         [SerializeField] [CanBeNull] public Renderer[] witnessBlessing;
         [DoNotSerialize] public int group;
-        
+
         public override void ResetDealed(bool respawn)
         {
             if (respawn)
@@ -25,7 +25,7 @@ namespace Shared
                 if (rb)
                     rb.ResetInertiaTensor();
             }
-            
+
             if (moveScript) moveScript.couldMove = false;
         }
     }
@@ -33,12 +33,16 @@ namespace Shared
     public class Dealer<TEnum, TVariant> : MonoBehaviour where TEnum : Enum where TVariant : Enum
     {
         [SerializeField] public TEnum type;
-        
+
         [SerializeField] [CanBeNull] public Transform mainTransform;
         [SerializeField] [CanBeNull] public NetworkObject networkObject;
 
-        public virtual void ResetDealed(bool respawn) {}
-        
-        public virtual void ApplyVariant(TVariant variant) {}
+        public virtual void ResetDealed(bool respawn)
+        {
+        }
+
+        public virtual void ApplyVariant(TVariant variant)
+        {
+        }
     }
 }

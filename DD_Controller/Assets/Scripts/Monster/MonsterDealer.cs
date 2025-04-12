@@ -8,7 +8,7 @@ namespace Monster
     {
         [SerializeField] public MonsterBehaviorEnum[] behaviors;
         [SerializeField] public MonsterVariants[] variants;
-        
+
         public override void ApplyVariant(MonsterVariants variant)
         {
             if (!mainTransform) return;

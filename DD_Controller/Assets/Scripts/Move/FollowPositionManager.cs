@@ -6,22 +6,15 @@ namespace Move
     {
         public Transform[] leaders;
         public Transform[] followers;
-        
-        void Start()
+
+        private void Start()
         {
-            if (leaders.Length != followers.Length)
-            {
-                Debug.LogError("leaders and followers must have the same length");
-                return;
-            }
+            if (leaders.Length != followers.Length) Debug.LogError("leaders and followers must have the same length");
         }
-        
-        void FixedUpdate()
+
+        private void FixedUpdate()
         {
-            for (int i = 0; i < leaders.Length; i++)
-            {
-                followers[i].position = leaders[i].position;
-            }
+            for (int i = 0; i < leaders.Length; i++) followers[i].position = leaders[i].position;
         }
     }
 }

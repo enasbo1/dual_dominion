@@ -5,15 +5,14 @@ using UnityEngine;
 
 namespace Shared
 {
-    public abstract class Manager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
+    public abstract class Manager<TDealer, TEnum, TVariant> : MonoBehaviour where TDealer : Dealer<TEnum, TVariant>
+        where TEnum : Enum
+        where TVariant : Enum
     {
-        protected int Size  => _size;
-
-        private int _size;
-
-
         protected readonly TableList<TDealer> Elements = new(0);
+
         protected TableArray<bool> Active = new(0);
+        protected int Size { get; private set; }
 
         public void InitializeChunk(int size = 50)
         {
@@ -21,10 +20,9 @@ namespace Shared
             Active.AddChunk(size);
             AddChunk(size);
         }
-        
+
         protected abstract void AddChunk(int size);
-        
-        
+
 
         public void AddElement(TDealer element)
         {
@@ -47,9 +45,9 @@ namespace Shared
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    throw new Exception($"Element add in Chunk Failed: {element},\nThe issue is probably from the AddChunk method one of the managers");
+                    throw new Exception(
+                        $"Element add in Chunk Failed: {element},\nThe issue is probably from the AddChunk method one of the managers");
                 }
-
             }
             else
             {
@@ -57,19 +55,27 @@ namespace Shared
                 Active.Add(true);
                 AddElementInNew(element);
             }
-            
+
             InitElement(element);
-            ++_size;
+            ++Size;
         }
 
-        protected virtual void RestoreElement(int i, TDealer element) { }        
-        protected virtual void InitElement(TDealer element) { }
+        protected virtual void RestoreElement(int i, TDealer element)
+        {
+        }
+
+        protected virtual void InitElement(TDealer element)
+        {
+        }
+
         protected abstract void AddElementInChunk(TDealer element);
         protected abstract void AddElementInNew(TDealer element);
 
 
-        
-        protected virtual void DisableElement(int index){}
+        protected virtual void DisableElement(int index)
+        {
+        }
+
         public void DisableElement(TDealer element)
         {
             int i = Elements.FindIndex(d => d == element);
@@ -77,22 +83,23 @@ namespace Shared
                 Active[i] = false;
         }
     }
-    
+
     public struct TableList<TValues> : ITable<List<TValues>, TValues>
     {
         public List<TValues> Values { get; set; }
         public int Count => Values.Count;
-        
+
         public TableList(int size = 0)
         {
             Values = new List<TValues>(size);
         }
+
         public readonly void Add(TValues value = default)
         {
             Values.Add(value);
         }
 
-        
+
         public readonly void AddChunk(int size)
         {
             Values.AddRange(new TValues[size]);
@@ -109,20 +116,20 @@ namespace Shared
             set => Values[index] = value;
         }
     }
-    
+
     public struct TableArray<TValues> : ITable<TValues[], TValues>
     {
         private readonly bool _keepValues;
         public int Count => Values.Length;
 
         public TValues[] Values { get; set; }
-        
+
         public TableArray(int size = 0, bool keepValues = true)
         {
             _keepValues = keepValues;
             Values = size == 0 ? Array.Empty<TValues>() : new TValues[size];
         }
-        
+
         public void Add(TValues value = default)
         {
             Values = Values.Append(value).ToArray();
@@ -134,15 +141,13 @@ namespace Shared
         }
 
 
-
-
         public TValues this[int index]
         {
             get => Values[index];
             set => Values[index] = value;
         }
     }
-    
+
     public interface ITable<T, TV> : ITable where T : IList<TV>
     {
         public TV this[int index] { get; set; }
