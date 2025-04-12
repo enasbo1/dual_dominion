@@ -1,12 +1,12 @@
+using initScene;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace GoD
 {
-    public class GodPlaceMonsterScript : MonoBehaviour
+    public class GodPlaceMonsterScript : CameraUser
     {
         public PlayerInput godInputs;
-        public Camera satelliteCamera;
         public Transform cameraHolder;
         public Transform targetTransform;
 
@@ -14,7 +14,6 @@ namespace GoD
         
         private InputAction _rotationTrigger;
         private bool _isRotating;
-
         private void Start()
         {
             _rotationTrigger = godInputs.actions["Look"];
@@ -24,15 +23,23 @@ namespace GoD
 
         private void FixedUpdate()
         {
-            Vector3 satellitePosition = satelliteCamera.transform.position;
             
             cameraHolder.rotation = Quaternion.Euler(-_directions.y, 0f, _directions.x);
             
             Vector3 cameraPos = Input.mousePosition;
             Vector3 targetPosition = targetTransform.position;
+
+            if (!Camera)
+            {
+                Debug.LogWarning("Camera is null");
+                return;
+            }
             
+            Vector3 pos = Camera.ScreenToWorldPoint(cameraPos);
+            
+            Vector3 satellitePosition = Camera.transform.position;
+
             cameraPos.z = satellitePosition.y - targetPosition.y;
-            Vector3 pos = satelliteCamera.ScreenToWorldPoint(cameraPos);
             pos.y = targetPosition.y;
             targetPosition = pos;
             targetTransform.position = targetPosition;

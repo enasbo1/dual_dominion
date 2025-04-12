@@ -16,12 +16,12 @@ namespace initScene
         {
             GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godScenePrefab;
 
-            var go = Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
-            var no = go.GetComponent<NetworkObject>();
+            GameObject go = Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
+            NetworkObject no = go.GetComponent<NetworkObject>();
 
             if (!no)
             {
-                var ncc = go.GetComponent<NetworkChildContainer>();
+                NetworkChildContainer ncc = go.GetComponent<NetworkChildContainer>();
                 if (ncc)
                     no = ncc.networkObject;
                 ncc.GetComponent<Transform>().SetParent(null);
@@ -30,11 +30,14 @@ namespace initScene
             if (no)
                 no.Spawn(true);
 
-            var cameraContainer = go.GetComponent<CameraContainer>();
+            CameraContainer cameraContainer = go.GetComponent<CameraContainer>();
+            
 
             playerCamera.SetParent(cameraContainer.cameraContainer);
             playerCamera.localPosition = cameraContainer.Offset;
-            playerCamera.rotation = Quaternion.identity;
+            playerCamera.rotation = Quaternion.Euler(cameraContainer.directionOffset);
+            
+            cameraContainer.DealCamera(playerCamera.GetComponent<Camera>());
         }
     }
 }

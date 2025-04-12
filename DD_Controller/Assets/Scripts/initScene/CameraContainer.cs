@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Unity.Netcode;
+﻿using System;
+using UnityEngine;
 
 namespace initScene
 {
@@ -7,10 +7,19 @@ namespace initScene
     {
         public Transform cameraContainer;
         public Vector3 Offset;
-
-        private void Start()
+        public Vector3 directionOffset;
+        public CameraUser[] cameraUsers;
+        
+        public void DealCamera(Camera camera)
         {
-            
+            foreach (CameraUser cameraUser in cameraUsers)
+                cameraUser.Camera = camera;
         }
+        
+    }
+
+    public abstract class CameraUser : MonoBehaviour
+    {
+        [NonSerialized] public Camera Camera;
     }
 }
