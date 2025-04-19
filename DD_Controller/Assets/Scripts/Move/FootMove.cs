@@ -11,10 +11,15 @@ namespace Move
         public bool onUpdate;
         public List<Transform> footList = new();
         private Transform _footTransform;
-
+        private Vector3 _moveValue = Vector3.zero;
 
         private Vector3 _lastFootPosition = Vector3.zero;
 
+        public override Vector3 GetMove()
+        {
+            return _moveValue;
+        }
+        
         private void Update()
         {
             if (onUpdate) Move();
@@ -25,6 +30,7 @@ namespace Move
             Move();
         }
 
+        // TODO : optimisation
         private void Move()
         {
             if (footList.Count == 0) return;
@@ -38,7 +44,12 @@ namespace Move
             {
                 Vector3 move = _footTransform.position - characterTransform.position - _lastFootPosition;
                 move.y = 0;
-                characterTransform.position -= move * movementSpeed;
+                _moveValue = - move * movementSpeed;
+                characterTransform.position += _moveValue;
+            }
+            else
+            {
+                _moveValue = Vector3.zero;
             }
 
             Transform floorFoot = footList[0];
@@ -65,5 +76,7 @@ namespace Move
         [FormerlySerializedAs("MoveSpeed")] public float movementSpeed = 1.0f;
         public bool canMove = true;
         [DoNotSerialize] public bool couldMove;
+
+        public abstract Vector3 GetMove();
     }
 }

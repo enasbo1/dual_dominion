@@ -4,6 +4,7 @@
     {
         DominionArmy,
         DominionDefense,
+        DominionWyvern,
         Survivor
     }
 }

@@ -1,5 +1,7 @@
 using Monster;
 using Shared;
+using Unity.Burst;
+using Unity.Collections;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,13 +9,14 @@ namespace Move
 {
     public class BoidsManager : Manager<WalkerDdDealer, WalkerEnum, MonsterVariants>
     {
+        [SerializeField] public int bnTargetUpdate = 50;
         private readonly TableList<Rigidbody> _boidsRb = new(0);
         private readonly TableList<Transform> _transform = new(0);
         private TableArray<float> _angleList = new(0, false);
 
-        private TableArray<Vector2> _boidsPos = new(0, false);
+        private TableNArray<Vector2> _boidsPos = new(Allocator.Persistent,0, false);
 
-        private TableArray<int> _groups = new(0);
+        private TableNArray<int> _groups = new(Allocator.Persistent);
         private TableArray<bool> _hasRb = new(0);
 
         private int _index;
@@ -23,15 +26,14 @@ namespace Move
         // Update is called once per frame
         private void FixedUpdate()
         {
-            Vector2[] posList = _boidsPos.Values;
+            NativeArray<Vector2> posList = _boidsPos.Values;
             float[] angleList = _angleList.Values;
             int rbIndex = 0;
             for (int i = 0; i < Size; ++i)
                 if (Active[i])
                 {
                     Vector3 tamp = _transform[i].position;
-                    posList[i].x = tamp.x;
-                    posList[i].y = tamp.z;
+                    posList[i] =  new Vector2(tamp.x, tamp.z);
                     if (_hasRb[i])
                     {
                         angleList[i] = _boidsRb[rbIndex].rotation.eulerAngles.y;
@@ -48,8 +50,7 @@ namespace Move
                 }
 
             if (Size != 0)
-                _index %= 1 + Size / 50;
-
+                _index %= 1 + Size / bnTargetUpdate;
 
             rbIndex = 0;
             for (int j = 0; j < Size; ++j)
@@ -59,7 +60,7 @@ namespace Move
                     int? n;
                     float near;
 
-                    if (_lastTarget[j] == null || j % (1 + Size / 50) == _index)
+                    if (_lastTarget[j] == null || j % (1 + Size / bnTargetUpdate) == _index)
                     {
                         (n, near) = LookForNearest(j, _groups.Values, posList, Active.Values, Size);
                         if (n == null) return;
@@ -72,7 +73,7 @@ namespace Move
                     }
 
                     float newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n],
-                        Time.deltaTime * 6);
+                        Time.deltaTime * 6, Random.Range(-2, 3));
 
                     if (_hasRb[j])
                     {
@@ -131,13 +132,15 @@ namespace Move
             _transform[Size] = element.transform;
             _lastTarget[Size] = null;
             _groups[Size] = element.group;
+            _boidsPos.Next();
+
         }
 
         protected override void AddElementInNew(WalkerDdDealer element)
         {
             _hasRb.Add(element.body);
             _transform.Add(element.transform);
-            _boidsPos.Add();
+            _boidsPos.Next();
             _angleList.Add();
             _lastTarget.Add();
             _groups.Add(element.group);
@@ -150,16 +153,18 @@ namespace Move
 
             _groups[i] = group ?? element.group;
         }
-
+        
+        [BurstCompile]
         private static float normal_scalar(Vector2 a, Vector2 b)
         {
             return a.y * b.x - a.x * b.y;
         }
-
+        
+        [BurstCompile]
         private static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle,
-            float fact = 1)
+            float fact = 1, float rotate = 0)
         {
-            angle += Random.Range(-2, 3) * fact;
+            angle += rotate * fact;
             float side;
             switch (dist)
             {
@@ -167,7 +172,7 @@ namespace Move
                 {
                     side = normal_scalar(
                         new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
-                    if (side > 0)
+                    if (side < 0)
                         return angle + 45 * fact;
                     return angle - 45 * fact;
                 }
@@ -184,8 +189,8 @@ namespace Move
             }
         }
 
-
-        private static (int?, float) LookForNearest(int current, int[] groups, Vector2[] targetList, bool[] actives,
+        [BurstCompile]
+        private static (int?, float) LookForNearest(int current, NativeArray<int> groups, NativeArray<Vector2> targetList, NativeArray<bool> actives,
             int size)
         {
             Vector2 birdV = targetList[current];

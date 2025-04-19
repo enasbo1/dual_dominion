@@ -31,10 +31,11 @@ namespace Move
         private int _animationState;
         private Vector2 _inputDirection = Vector2.zero;
         private Vector2 _walkDirection = Vector2.zero;
-
+        private JumpAction _jumpAction;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
+            _jumpAction = new JumpAction(characterBody, 15, moveScript);
             _shieldAction = new ShieldAction(characterAnimator);
             characterAnimator.SetInteger(WalkState, 0);
             playerInputs.actions["move"].performed += ctx => _inputDirection = ctx.ReadValue<Vector2>();
@@ -114,7 +115,7 @@ namespace Move
         private void Jump()
         {
             if (!characterAnimator.GetBool(MidAir))
-                actionManager.AddAction(new JumpAction(characterBody, 15));
+                actionManager.AddAction(_jumpAction);
         }
 
 

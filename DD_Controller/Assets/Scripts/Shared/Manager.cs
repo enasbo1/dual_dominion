@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Burst;
+using Unity.Collections;
 using UnityEngine;
 
 namespace Shared
@@ -11,7 +13,7 @@ namespace Shared
     {
         protected readonly TableList<TDealer> Elements = new(0);
 
-        protected TableArray<bool> Active = new(0);
+        protected TableNArray<bool> Active = new(Allocator.Persistent, 0);
         protected int Size { get; private set; }
 
         public void InitializeChunk(int size = 50)
@@ -116,7 +118,72 @@ namespace Shared
             set => Values[index] = value;
         }
     }
+    public struct TableNArray<TValues> : ITable<NativeArray<TValues>, TValues> where TValues : struct
+    {
+        private readonly bool _keepValues;
+        private readonly Allocator _allocator;
+        private readonly int _chunkSize;
+        private int _index;
+        public int Count => _count;
+        private int _count;
 
+        public NativeArray<TValues> Values { get=>_values; set=>_values = value; }
+        
+        private NativeArray<TValues> _values;
+
+        public TableNArray(Allocator allocator, int size = 0, bool keepValues = true, int chunkSize = 50)
+        {
+            _keepValues = keepValues;
+            _chunkSize = chunkSize;
+            _index = 0;
+            _allocator = allocator;
+            _values = new NativeArray<TValues>(Math.Max(size, chunkSize), allocator);
+            _count = 0;
+        }
+
+        public void Next(TValues value = default)
+        {
+            Add(value);
+        }
+        
+        public void Add(TValues value = default)
+        {
+            if (_values.Length <= _index) _AddChunk(_chunkSize, silently: true);
+            _values[_index] = value;
+            ++_index;
+            ++_count;
+        }
+
+        private void _AddChunk(int size, bool silently)
+        {
+            NativeArray<TValues> temp = new(Count + size, _allocator);
+            if (_keepValues)
+            {
+                for (int i = 0; i < Count; i++)
+                {
+                    temp[i] = _values[i];
+                }
+            }
+            _values.Dispose();
+            _values = temp;
+            
+            if (silently) return;
+
+            _count += size;
+        }
+
+        public void AddChunk(int size)
+        {
+            _AddChunk(size, silently: false);
+        }
+
+
+        public TValues this[int index]
+        {
+            get => _values[index];
+            set => _values[index] = value;
+        }
+    }
     public struct TableArray<TValues> : ITable<TValues[], TValues>
     {
         private readonly bool _keepValues;
@@ -148,7 +215,7 @@ namespace Shared
         }
     }
 
-    public interface ITable<T, TV> : ITable where T : IList<TV>
+    public interface ITable<T, TV> : ITable where T : IEnumerable<TV>
     {
         public TV this[int index] { get; set; }
         public T Values { get; set; }

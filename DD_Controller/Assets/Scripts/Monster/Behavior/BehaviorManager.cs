@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using NUnit.Framework;
 using Shared;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -105,6 +107,7 @@ namespace Monster.Behavior
 
         protected override void InitElement(MonsterDealer element)
         {
+
             if (element.witnessBlessing == null) return;
             for (int i = 0; i < DefaultMaterials[Size].Length; i++)
                 DefaultMaterials[Size][i] = element.witnessBlessing[i].material;

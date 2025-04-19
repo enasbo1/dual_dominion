@@ -15,6 +15,7 @@ namespace Shared
         [SerializeField] [CanBeNull] public MoveScript moveScript;
         [SerializeField] [CanBeNull] public Animator animator;
         [SerializeField] [CanBeNull] public Renderer[] witnessBlessing;
+        [SerializeField] public float size = 1;
         [DoNotSerialize] public int group;
 
         public override void ResetDealed(bool respawn)

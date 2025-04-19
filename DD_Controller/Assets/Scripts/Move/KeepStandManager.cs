@@ -33,7 +33,7 @@ namespace Move
             foreach (StandingObject standingObject in _standingObjects)
             {
                 Transform objectTransform = standingObject.Transform;
-                Vector3 rotation = objectTransform.localRotation.eulerAngles;
+                Vector3 rotation = objectTransform.rotation.eulerAngles;
                 bool change = false;
                 if (angleDistanceTo_0(rotation.x) > angleTolerance)
                 {
@@ -49,11 +49,11 @@ namespace Move
 
                 if (!change) return;
 
-                objectTransform.localRotation = Quaternion.Euler(rotation);
+                objectTransform.rotation = Quaternion.Euler(rotation);
 
                 if (!standingObject.HasRigidBody) return;
 
-                standingObject.RigidBody.rotation = Quaternion.Euler(Vector3.zero);
+                standingObject.RigidBody.rotation = Quaternion.Euler(rotation);
                 standingObject.RigidBody.angularVelocity = Vector3.zero;
             }
         }
