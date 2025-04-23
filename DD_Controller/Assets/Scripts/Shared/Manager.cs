@@ -141,6 +141,13 @@ namespace Shared
             _count = 0;
         }
 
+        public TableNArray<TValues> Clear()
+        {
+            _index = 0;
+            _count = 0;
+            return this;
+        }
+
         public void Next(TValues value = default)
         {
             Add(value);

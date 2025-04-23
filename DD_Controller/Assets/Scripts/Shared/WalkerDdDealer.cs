@@ -17,6 +17,7 @@ namespace Shared
         [SerializeField] [CanBeNull] public Renderer[] witnessBlessing;
         [SerializeField] public float size = 1;
         [DoNotSerialize] public int group;
+        [SerializeField] public (float current, float max) Health = (1f, 1f);
 
         public override void ResetDealed(bool respawn)
         {
