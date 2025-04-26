@@ -15,7 +15,7 @@ namespace Monster.Behavior
 
             if (dealer.witnessBlessing == null) return 3;
 
-            foreach (Renderer renderer in dealer.witnessBlessing) renderer.material = behaviorManager.idleMaterial;
+            foreach (Renderer renderer in dealer.witnessBlessing) renderer.material = behaviorManager.regroupMaterial;
 
             return 5;
         }

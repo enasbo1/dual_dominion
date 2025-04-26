@@ -304,16 +304,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3244955186233224538}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
-      propertyPath: variants.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: behaviors.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: 'behaviors.Array.data[1]'
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: witnessBlessing.Array.size

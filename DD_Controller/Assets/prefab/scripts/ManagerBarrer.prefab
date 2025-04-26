@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9045732850005552565}
+  - component: {fileID: 3785598760495928039}
   - component: {fileID: 4058464716831022371}
   m_Layer: 0
   m_Name: PlayerManager
@@ -32,6 +33,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1004342748369837748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3785598760495928039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143585801714515918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4179b274b3b544ee8de502f64bb8f303, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainPlayer: {fileID: 0}
+  childPlayerBearers: []
 --- !u!114 &4058464716831022371
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,7 +159,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce7bbbb2430222848a653c6b5695f9de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  idleMaterial: {fileID: 2100000, guid: 499f476821f97334982d9f0b7bc5605e, type: 2}
+  regroupMaterial: {fileID: 2100000, guid: 92b72afdd2105ea4daae4584d7855b67, type: 2}
+  targetMaterial: {fileID: 4840744358963866956, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+  playerBearer: {fileID: 3785598760495928039}
 --- !u!114 &6091143702304119244
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -255,7 +272,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speedTarget: 1.1
-  speedTargetParam: walkSpeed
 --- !u!114 &2395829284567232972
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,3 +284,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2065a13761fdd0498dda994c608a1b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bnTargetUpdate: 50

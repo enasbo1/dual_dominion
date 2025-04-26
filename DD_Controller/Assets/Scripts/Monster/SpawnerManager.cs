@@ -10,6 +10,7 @@ namespace Monster
         [SerializeField] private MonsterStandByManager standBy;
         [SerializeField] private MonsterDealingManager monsterDealingManager;
         [SerializeField] private MonsterReferencer monsterReferencer;
+        [SerializeField] public int SpawnLimit = 200;
         private readonly TableList<float> _nextSpawnTime = new(0);
         private readonly TableList<WalkerEnum[]> _spawned = new(0);
 
@@ -21,7 +22,7 @@ namespace Monster
                 if (Active[i])
                 {
                     if (!(_nextSpawnTime[i] < Time.time)) continue;
-                    if (monsterDealingManager.GetNbDealers() > 200) return;
+                    if (monsterDealingManager.GetNbDealers() >= SpawnLimit) return;
 
                     WalkerEnum spawn = _spawned[i][Random.Range(0, _spawned[i].Length)];
                     (GameObject prefab, MonsterDealer dealer) = monsterReferencer[spawn];
