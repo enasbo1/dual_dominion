@@ -45,10 +45,15 @@ namespace Shared
                 {
                     AddElementInChunk(element);
                 }
-                catch (ArgumentOutOfRangeException)
+                catch (IndexOutOfRangeException)
                 {
                     throw new Exception(
                         $"Element add in Chunk Failed: {element},\nThe issue is probably from the AddChunk method one of the managers");
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    throw new Exception(
+                        $"Element (2) add in Chunk Failed: {element},\nThe issue is probably from the AddChunk method one of the managers");
                 }
             }
             else
@@ -155,7 +160,7 @@ namespace Shared
         
         public void Add(TValues value = default)
         {
-            if (_values.Length <= _index) _AddChunk(_chunkSize, silently: true);
+            while (_values.Length <= _index) _AddChunk(_chunkSize, silently: true);
             _values[_index] = value;
             ++_index;
             ++_count;
@@ -163,18 +168,22 @@ namespace Shared
 
         private void _AddChunk(int size, bool silently)
         {
-            NativeArray<TValues> temp = new(Count + size, _allocator);
+            NativeArray<TValues> temp = new(_count + size, _allocator);
             if (_keepValues)
             {
-                for (int i = 0; i < Count; i++)
+                for (int i = 0; i < _count; i++)
                 {
                     temp[i] = _values[i];
                 }
             }
             _values.Dispose();
             _values = temp;
-            
-            if (silently) return;
+
+            if (silently)
+            {
+                Debug.Log("Silently adding chunk to Table");
+                return;
+            }
 
             _count += size;
         }

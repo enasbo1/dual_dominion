@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,8 +35,9 @@ namespace GoD
     public class GodManagerScript : MonoBehaviour
     {
         public double karmaPoint;
-        [SerializeField] private List<GameObject> spawnerList = new();
-        [SerializeField] private List<Button> spawnerButtonList = new();
+        [SerializeField] private TextMeshProUGUI _karmaCounter;
+        [SerializeField] private List<GameObject> spawnerList = new List<GameObject>();
+        [SerializeField] private List<Button> spawnerButtonList = new List<Button>();
         private readonly List<MonsterSpawner> _monsterSpawnerList;
         public readonly List<MonsterSpawner> monsterSpawnerAvailable;
 
@@ -60,6 +64,7 @@ namespace GoD
         private void Update()
         {
             karmaPoint += Time.deltaTime;
+            _karmaCounter.text = (Math.Round(karmaPoint * 100) / 100).ToString(CultureInfo.CurrentCulture);
         }
 
         private void FixedUpdate()

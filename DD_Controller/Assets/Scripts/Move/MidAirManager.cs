@@ -1,3 +1,4 @@
+using System;
 using Shared;
 using Shared.AnimParameter;
 using UnityEngine;
@@ -16,25 +17,37 @@ namespace Move
 
         private void FixedUpdate()
         {
-            for (int i = 0; i < Size; ++i)
-                if (Active[i])
-                {
-                    float size = _transforms[i].localScale.x * _size[i];
-                    bool floored = Physics.SphereCast(_transforms[i].position + Vector3.up * (0.55f*size),
-                        0.45f*size,
-                        Vector3.down,
-                        out RaycastHit _,
-                        1.0f*size);
-                    bool hist = _moveScript[i].canMove;
+            var deb = 0;
+            try
+            {
+                for (int i = 0; i < Size; ++i)
+                    if (Active[i])
+                    {
+                        deb = 1;
+                        
+                        float size = _transforms[i].localScale.x * _size[i];
+                        bool floored = Physics.SphereCast(_transforms[i].position + Vector3.up * (0.55f * size),
+                            0.45f * size,
+                            Vector3.down,
+                            out RaycastHit _,
+                            1.0f * size);
+                        bool hist = _moveScript[i].canMove;
 
-                    _animators[i].SetBool(WalkerAnimP.MidAir, !floored);
-                    _moveScript[i].canMove = floored;
+                        _animators[i].SetBool(WalkerAnimP.MidAir, !floored);
+                        _moveScript[i].canMove = floored;
 
-                    if (hist && !floored)
-                        _body[i].linearVelocity = (_transforms[i].position - _lastPosition[i]) / Time.deltaTime;
+                        if (hist && !floored)
+                            _body[i].linearVelocity = (_transforms[i].position - _lastPosition[i]) / Time.deltaTime;
 
-                    _lastPosition[i] = _transforms[i].position;
-                }
+                        _lastPosition[i] = _transforms[i].position;
+                        deb = 0;
+                    }
+            }
+            catch (IndexOutOfRangeException e)
+            {
+                throw new Exception("there " + Size + " "  + Active.Values.Length);
+            }
+
         }
 
         protected override void AddChunk(int size)
