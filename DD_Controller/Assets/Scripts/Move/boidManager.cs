@@ -1,3 +1,4 @@
+using System;
 using Monster;
 using Shared;
 using Unity.Burst;
@@ -13,6 +14,7 @@ namespace Move
         private readonly TableList<Rigidbody> _boidsRb = new(0);
         private readonly TableList<Transform> _transform = new(0);
         private TableArray<float> _angleList = new(0, false);
+        private TableNArray<float> _sizeList = new(Allocator.Persistent);
 
         private TableNArray<Vector2> _boidsPos = new(Allocator.Persistent,0, false);
 
@@ -32,8 +34,7 @@ namespace Move
             for (int i = 0; i < Size; ++i)
                 if (Active[i])
                 {
-                    Vector3 tamp = _transform[i].position;
-                    posList[i] =  new Vector2(tamp.x, tamp.z);
+                    posList[i] =  Vector2Extension.FromV3(_transform[i].position);
                     if (_hasRb[i])
                     {
                         angleList[i] = _boidsRb[rbIndex].rotation.eulerAngles.y;
@@ -62,7 +63,7 @@ namespace Move
 
                     if (_lastTarget[j] == null || j % (1 + Size / bnTargetUpdate) == _index)
                     {
-                        (n, near) = LookForNearest(j, _groups.Values, posList, Active.Values, Size);
+                        (n, near) = LookForNearest(j, _groups.Values, posList, Active.Values, _sizeList.Values, Size);
                         if (n == null) return;
                         _lastTarget[j] = n;
                     }
@@ -73,19 +74,20 @@ namespace Move
                     }
 
                     float newAngle = BoidRuleApply(birdV, angleList[j], near, posList[(int)n], angleList[(int)n],
-                        Time.deltaTime * 6, Random.Range(-2, 3));
+                        Time.deltaTime * 6, size:2*_sizeList[j]);
+                    
 
                     if (_hasRb[j])
                     {
                         Vector3 rot = _boidsRb[rbIndex].rotation.eulerAngles;
-                        rot.y = newAngle;
+                        rot.y += newAngle;
                         _boidsRb[rbIndex].rotation = Quaternion.Euler(rot);
                         ++rbIndex;
                     }
                     else
                     {
                         Vector3 rot = _transform[j].rotation.eulerAngles;
-                        rot.y = newAngle;
+                        rot.y += newAngle;
                         _transform[j].rotation = Quaternion.Euler(rot);
                     }
                 }
@@ -106,6 +108,7 @@ namespace Move
             _hasRb.AddChunk(size);
             _boidsPos.AddChunk(size);
             _angleList.AddChunk(size);
+            _sizeList.AddChunk(size);
         }
 
         protected override void InitElement(WalkerDdDealer element)
@@ -124,6 +127,7 @@ namespace Move
         {
             _groups[i] = element.group;
             _lastTarget[i] = null;
+            _sizeList[i] = element.size;
         }
 
         protected override void AddElementInChunk(WalkerDdDealer element)
@@ -132,8 +136,8 @@ namespace Move
             _transform[Size] = element.transform;
             _lastTarget[Size] = null;
             _groups[Size] = element.group;
+            _sizeList[Size] = element.size;
             _boidsPos.Next();
-
         }
 
         protected override void AddElementInNew(WalkerDdDealer element)
@@ -144,6 +148,7 @@ namespace Move
             _angleList.Add();
             _lastTarget.Add();
             _groups.Add(element.group);
+            _sizeList.Add(element.size);
         }
 
         public void ChangeGroup(WalkerDdDealer element, int? group = null)
@@ -157,40 +162,49 @@ namespace Move
         [BurstCompile]
         private static float normal_scalar(Vector2 a, Vector2 b)
         {
-            return a.y * b.x - a.x * b.y;
+            return a.y * b.y - a.x * b.x;
         }
         
         [BurstCompile]
-        private static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float targetAngle,
-            float fact = 1, float rotate = 0)
+        public static float BoidRuleApply(Vector2 pos, float angle, float dist, Vector2 target, float? targetAngle = null,
+            float fact = 1, float rotate = 0, bool charge = false, float size = 1)
         {
-            angle += rotate * fact;
+            if (targetAngle == null & !charge) throw new ArgumentNullException(nameof(targetAngle));
+            float add = rotate * fact;
             float side;
-            switch (dist)
-            {
-                case < 1:
+            if (!charge)
+                switch (dist/(size*size))
                 {
-                    side = normal_scalar(
-                        new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
-                    if (side < 0)
-                        return angle + 45 * fact;
-                    return angle - 45 * fact;
+                    case < 4:
+                    {
+                        side = normal_scalar(
+                            new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
+                        if (side > 0)
+                            return add + 45 * fact;
+                        return add - 45 * fact;
+                    }
+                    case > 16:
+                        side = normal_scalar(
+                            new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
+                        if (side < 0)
+                            return add + 15 * fact;
+                        return add - 15 * fact;
+                    default:
+                        if (targetAngle > angle)
+                            return add + 12 * fact;
+                        return add - 12 * fact;
                 }
-                case > 4:
-                    side = normal_scalar(
-                        new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
-                    if (side > 0)
-                        return angle - 15 * fact;
-                    return angle + 15 * fact;
-                default:
-                    if (targetAngle > angle)
-                        return angle + 12 * fact;
-                    return angle - 12 * fact;
-            }
+            
+            side = normal_scalar(
+                new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad)), target - pos);
+            if (side < 0)
+                return add + 15 * fact;
+            return add - 15 * fact;
+            
         }
 
         [BurstCompile]
-        private static (int?, float) LookForNearest(int current, NativeArray<int> groups, NativeArray<Vector2> targetList, NativeArray<bool> actives,
+        private static (int?, float) LookForNearest(int current, NativeArray<int> groups, NativeArray<Vector2> targetList, NativeArray<bool> actives, NativeArray<float> boidSize,
             int size)
         {
             Vector2 birdV = targetList[current];
@@ -204,7 +218,7 @@ namespace Move
                 if (k != current && actives[k] && (g == 0 || groups[k] == g))
                 {
                     Vector2 bV = targetList[k];
-                    float dist = (bV - birdV).SqrMagnitude();
+                    float dist = (bV - birdV).SqrMagnitude() / (boidSize[k]*boidSize[k]);
                     if (!((nearestV == null) | (near > (bV - birdV).SqrMagnitude()))) continue;
                     nearestV = bV;
                     i = k;

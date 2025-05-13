@@ -32,19 +32,22 @@ namespace Shared
         }
     }
 
-    public class Dealer<TEnum, TVariant> : MonoBehaviour where TEnum : Enum where TVariant : Enum
+    public class Dealer<TEnum, TVariant> : Dealer where TEnum : Enum where TVariant : Enum
     {
         [SerializeField] public TEnum type;
+        
+        public virtual void ApplyVariant(TVariant variant)
+        {
+        }
+    }
 
+    public class Dealer : MonoBehaviour
+    {
         [SerializeField] [CanBeNull] public Transform mainTransform;
         [SerializeField] [CanBeNull] public NetworkObject networkObject;
 
         public virtual void ResetDealed(bool respawn)
         {
-        }
-
-        public virtual void ApplyVariant(TVariant variant)
-        {
-        }
+        } 
     }
 }

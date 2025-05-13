@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using NUnit.Framework;
+using initScene;
 using Shared;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Monster.Behavior
@@ -14,21 +15,31 @@ namespace Monster.Behavior
         {
             { MonsterBehaviorEnum.Start, new Starts() },
             { MonsterBehaviorEnum.Idle, new Idle() },
-            { MonsterBehaviorEnum.Regroup, new Regroup() }
+            { MonsterBehaviorEnum.Regroup, new Regroup() },
+            { MonsterBehaviorEnum.Target, new Target() }
         };
     }
 
-    public class BehaviorManager : Manager<MonsterDealer, WalkerEnum, MonsterVariants>
+    public class BehaviorManager : Manager<MonsterDealer, WalkerEnum, MonsterVariants>, IPlayerUser<WalkerDdDealer>
     {
-        [SerializeField] public Material idleMaterial;
-
+        [SerializeField] public Material regroupMaterial;
+        [SerializeField] public Material targetMaterial;
+        [SerializeField] public PlayerBearer<WalkerDdDealer> playerBearer;
+        [SerializeField] public WalkerDdDealer MainPlayer { get; set; }
 
         protected TableArray<MonsterBehaviorEnum> ActivesBehaviors = new(0);
         protected bool[] Available = new bool[5];
         protected TableArray<float> BehaviorEnd = new(0);
 
         [DoNotSerialize] public TableArray<Material[]> DefaultMaterials = new(0);
+        [DoNotSerialize] public TableList<Transform> Transforms = new(0);
+        [DoNotSerialize] public TableList<Rigidbody> Bodies = new(0);
         protected TableArray<MonsterBehaviorEnum[]> KnownBehaviors = new(0);
+
+        private void Start()
+        {
+            playerBearer.Subscribe(this);
+        }
 
         private void FixedUpdate()
         {
@@ -87,6 +98,8 @@ namespace Monster.Behavior
             KnownBehaviors.AddChunk(size);
             BehaviorEnd.AddChunk(size);
             DefaultMaterials.AddChunk(size);
+            Transforms.AddChunk(size);
+            Bodies.AddChunk(size);
         }
 
         protected override void AddElementInChunk(MonsterDealer element)
@@ -95,6 +108,8 @@ namespace Monster.Behavior
             KnownBehaviors[Size] = element.behaviors;
             BehaviorEnd[Size] = 0f;
             DefaultMaterials[Size] = new Material[element.witnessBlessing?.Length ?? 0];
+            Transforms[Size] = element.mainTransform;
+            Bodies[Size] = element.body;
         }
 
         protected override void AddElementInNew(MonsterDealer element)
@@ -103,6 +118,8 @@ namespace Monster.Behavior
             KnownBehaviors.Add(element.behaviors);
             BehaviorEnd.Add();
             DefaultMaterials.Add(new Material[element.witnessBlessing?.Length ?? 0]);
+            Transforms.Add(element.mainTransform);
+            Bodies.Add(element.body);
         }
 
         protected override void InitElement(MonsterDealer element)
@@ -126,6 +143,11 @@ namespace Monster.Behavior
         {
             return Elements[index];
         }
+
+        public void SetMainPlayer(WalkerDdDealer dealer)
+        {
+            MainPlayer = dealer;
+        }
     }
 
     public interface IMonsterBehavior
@@ -140,6 +162,7 @@ namespace Monster.Behavior
     {
         Start,
         Idle,
+        Target,
         Regroup,
         MovesWhileReady,
         MeleeAttack,
