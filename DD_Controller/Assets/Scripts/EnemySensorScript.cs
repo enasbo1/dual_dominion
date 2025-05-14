@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySensorScript : MonoBehaviour
 {
     [DoNotSerialize] public List<Collider> monstersNearby = new();
+    [DoNotSerialize] public bool withTriggerExit = true;
 
     private void OnTriggerEnter(Collider monster)
     {
@@ -13,6 +14,9 @@ public class EnemySensorScript : MonoBehaviour
 
     private void OnTriggerExit(Collider monster)
     {
-        monstersNearby.Remove(monster);
+        if (withTriggerExit)
+        {
+            monstersNearby.Remove(monster);
+        }
     }
 }

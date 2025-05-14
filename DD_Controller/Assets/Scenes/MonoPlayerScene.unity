@@ -1152,6 +1152,14 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3518985906570290379, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 179
+      objectReference: {fileID: 0}
+    - target: {fileID: 3518985906570290379, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3582340319846360632, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Layer
       value: 7
@@ -1239,6 +1247,14 @@ PrefabInstance:
     - target: {fileID: 5251187315934252364, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5313604575902248990, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 5313604575902248990, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.59
       objectReference: {fileID: 0}
     - target: {fileID: 5353792939548378499, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Layer
