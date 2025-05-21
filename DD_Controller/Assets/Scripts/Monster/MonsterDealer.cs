@@ -1,5 +1,4 @@
-﻿using Monster.AnimParameter;
-using Monster.Behavior;
+﻿using Monster.Behavior;
 using Shared;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ namespace Monster
 {
     public class MonsterDealer : WalkerDdDealer
     {
+        [SerializeField] public SensorScript sensor;
         [SerializeField] public MonsterBehaviorEnum[] behaviors;
         [SerializeField] public MonsterVariants[] variants;
 

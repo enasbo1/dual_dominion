@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class DamageDealerScript : MonoBehaviour
 {
-    public EnemySensorScript enemySensorScript;
+    [FormerlySerializedAs("enemySensorScript")] public SensorScript sensorScript;
     public float damageMax;
     public float damageReductionPerHit;
 
@@ -11,7 +12,7 @@ public class DamageDealerScript : MonoBehaviour
 
     private void Start()
     {
-        _monstersNearby = enemySensorScript.monstersNearby;
+        _monstersNearby = sensorScript.nearby;
     }
 
     private void OnTriggerEnter(Collider other)

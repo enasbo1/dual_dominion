@@ -10,11 +10,17 @@ namespace Actions
 
         private void FixedUpdate()
         {
-            _actions.RemoveAll(action => action.update());
+            _actions.RemoveAll(action =>
+            {
+                if (!action.update()) return false;
+                action.end();
+                return true;
+            });
         }
 
         public int AddAction(IDdAction action)
         {
+            if (_actions.FindIndex(action.Equals) != -1) return -1;
             _actions.Add(action);
             action.launch();
             action.id = _serial;

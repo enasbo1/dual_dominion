@@ -38,3 +38,51 @@ minimum de 2.
 
 ## aide
 - https://www.redblobgames.com => réfence et explique des algo de JV
+
+# Soutenance
+
+## Point d'attention :
+- Performance
+- Architecture
+- Complexité
+
+## plan type
+- Présentation (qui nous sommes)
+- Sujet 
+  - Résumé du sujet, 
+  - Contraintes & choix
+- Présentation du jeu
+  - But du jeu : ?
+  - Challenge de réflexion
+    - Types d'Enemis
+    - Boss
+    - Choix de Power-up
+  - Challenge d'exécution
+    - Déplacement...
+    - Fréquence de décision
+- Défit du projet (pourquoi c'est difficile pour les devs) ?
+  - Pas Tuto Unity
+  - Choix d'Architecture
+  - Avant/Après
+- Tools ?
+
+- Démo
+  - Perdre <o>
+  - Gameplay classique <o>
+  - Prestige (fin de partie) <o>
+  - (Prise de risque) -> faire jouer le Jury (si le jeu est stable)
+
+/!\ : démo : commentateur & joueur (deux personnes différentes)
+
+- Conclusion
+  - Que changeriez-vous dans le produit ?
+    - Archi
+    - (Gameplay)
+    - Perf
+    - ...
+  - Que changeriez-vous dans l'orga du groupe ?
+    - UltraSpécialisation
+    - Différence de compétence
+    - ...
+- Ouverture
+  - Si on continue le projet ?

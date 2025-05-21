@@ -8,7 +8,11 @@ using UnityEngine;
 
 namespace Shared
 {
-    public class WalkerDdDealer : Dealer<WalkerEnum, MonsterVariants>
+    public class WalkerDdDealer : WalkerDealer<WalkerEnum, MonsterVariants>
+    {
+    }
+    
+    public class WalkerDealer<TEnum, TVariant> : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
         [SerializeField] [CanBeNull] public Rigidbody body;
         [SerializeField] [CanBeNull] public Transform headTransform;
@@ -17,7 +21,7 @@ namespace Shared
         [SerializeField] [CanBeNull] public Renderer[] witnessBlessing;
         [SerializeField] public float size = 1;
         [DoNotSerialize] public int group;
-        [SerializeField] public (float current, float max) Health = (1f, 1f);
+        [SerializeField] public float maxHealth = 1f;
 
         public override void ResetDealed(bool respawn)
         {

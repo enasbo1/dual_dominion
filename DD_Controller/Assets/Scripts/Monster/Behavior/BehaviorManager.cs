@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using initScene;
+using Mage;
 using Shared;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 namespace Monster.Behavior
@@ -16,16 +15,18 @@ namespace Monster.Behavior
             { MonsterBehaviorEnum.Start, new Starts() },
             { MonsterBehaviorEnum.Idle, new Idle() },
             { MonsterBehaviorEnum.Regroup, new Regroup() },
-            { MonsterBehaviorEnum.Target, new Target() }
+            { MonsterBehaviorEnum.Target, new Target() },
+            { MonsterBehaviorEnum.MeleeAttack, new MeleeAttack()}
         };
     }
 
-    public class BehaviorManager : Manager<MonsterDealer, WalkerEnum, MonsterVariants>, IPlayerUser<WalkerDdDealer>
+    public class BehaviorManager : Manager<MonsterDealer, WalkerEnum, MonsterVariants>, IPlayerUser<PlayerDealer>
     {
         [SerializeField] public Material regroupMaterial;
         [SerializeField] public Material targetMaterial;
-        [SerializeField] public PlayerBearer<WalkerDdDealer> playerBearer;
-        [SerializeField] public WalkerDdDealer MainPlayer { get; set; }
+        [SerializeField] public Material attackMaterial;
+        [SerializeField] public PlayerBearer<PlayerDealer> playerBearer;
+        public PlayerDealer MainPlayer { get; set; }
 
         protected TableArray<MonsterBehaviorEnum> ActivesBehaviors = new(0);
         protected bool[] Available = new bool[5];
@@ -50,7 +51,14 @@ namespace Monster.Behavior
                     IMonsterBehavior currentBehavior = MonsterBehaviors.BehaviorMap[ActivesBehaviors[i]];
                     if (BehaviorEnd[i] > time && !currentBehavior.Step(i, this)) continue;
 
-                    currentBehavior.Stop(i, this);
+                    float delay = currentBehavior.Stop(i, this);
+
+                    if (delay != 0f)
+                    {
+                        BehaviorEnd[i] = time + delay;
+                        ActivesBehaviors[i] = MonsterBehaviorEnum.Idle;
+                        continue;for
+                    }
 
                     int size = KnownBehaviors[i].Length;
 
@@ -144,7 +152,7 @@ namespace Monster.Behavior
             return Elements[index];
         }
 
-        public void SetMainPlayer(WalkerDdDealer dealer)
+        public void SetMainPlayer(PlayerDealer dealer)
         {
             MainPlayer = dealer;
         }
@@ -155,7 +163,7 @@ namespace Monster.Behavior
         public bool IsAvailable(int index, BehaviorManager behaviorManager);
         public float Start(int index, BehaviorManager behaviorManager);
         public bool Step(int index, BehaviorManager behaviorManager);
-        public void Stop(int index, BehaviorManager behaviorManager);
+        public float Stop(int index, BehaviorManager behaviorManager);
     }
 
     public enum MonsterBehaviorEnum
@@ -202,8 +210,9 @@ namespace Monster.Behavior
             return true;
         }
 
-        public void Stop(int index, BehaviorManager behaviorManager)
+        public float Stop(int index, BehaviorManager behaviorManager)
         {
+            return 0f;
         }
     }
 }

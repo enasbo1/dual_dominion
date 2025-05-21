@@ -5,11 +5,15 @@ using UnityEngine;
 
 namespace GameRule
 {
+    public class LifeManager : LifeManager<WalkerDdDealer, WalkerEnum, MonsterVariants>
+    {
+    }
+    
     // WIP : knockBack non implementés
     // WIP : effect non implémentés
-    public class LifeManager : WalkerManager
+    public class LifeManager<TDealer, TEnum, TVariant> : Manager<TDealer, TEnum, TVariant> where TDealer : WalkerDealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
-        [SerializeField] private StandByManager<WalkerDdDealer, WalkerEnum, MonsterVariants> standByManager;
+        [SerializeField] private StandByManager<TDealer, TEnum, TVariant> standByManager;
         private TableArray<(float current, float max)> _life = new(0);
 
         // Update is called once per frame
@@ -35,34 +39,73 @@ namespace GameRule
             if (damage < 0) throw new ArgumentOutOfRangeException(nameof(damage));
             for (int i = 0; i < targets.Length; ++i)
             {
-                GameObject go = targets[i];
-                for(int j = 0; j < Size; ++j) if (Active[j] & (Elements[i].gameObject == go))
-                {
-                    (float current, float max) health = _life[j];
-                    health.current -= damage;
-                    health.current = Mathf.Clamp(health.current, 0, health.max);
-                    float damageTaken = _life[i].current - health.current;
-                    _life[j] = health;
-                    
-                    if (perforation!=0)
-                        damage -= damageTaken / perforation;
-                }
+                float damageTaken = Hit(targets[i], damage, perforation);
+                if (perforation!=0)
+                    damage -= damageTaken / perforation;
             }
+        }
+        
+        public void Hit(Rigidbody[] targets, float damage, int perforation = 1)
+        {
+            if (damage < 0) throw new ArgumentOutOfRangeException(nameof(damage));
+            for (int i = 0; i < targets.Length; ++i)
+            {
+                float damageTaken = Hit(targets[i], damage, perforation);                
+                if (perforation!=0)
+                    damage -= damageTaken / perforation;
+            }
+        }
+        
+        public float Hit(GameObject targets, float damage, int perforation = 1)
+        {
+            for(int j = 0; j < Size; ++j) if (Active[j] & (Elements[j].gameObject == targets))
+            {
+                return hit(j, damage, perforation);
+            }
+
+            return 0f;
+        }
+        
+        public float Hit(Rigidbody targets, float damage, int perforation = 1)
+        {
+
+            for(int j = 0; j < Size; ++j) if (Active[j] & (Elements[j].body == targets))
+            {
+                return hit(j, damage, perforation);
+            }
+
+            return 0f;
+        }
+
+        private float hit(int index, float damage, int perforation = 1)
+        {
+            (float current, float max) health = _life[index];
+            health.current -= damage;
+            health.current = Mathf.Clamp(health.current, 0, health.max);
+                
+            float damageTaken = _life[index].current - health.current;
+            _life[index] = health;
+                
+            return damageTaken;
         }
         
         protected override void AddChunk(int size)
         {
             _life.AddChunk(size);
         }
-
-        protected override void AddElementInChunk(WalkerDdDealer element)
+        protected override void AddElementInChunk(TDealer element)
         {
-            _life[Size] = element.Health;
+            _life[Size] = (element.maxHealth, element.maxHealth);
         }
 
-        protected override void AddElementInNew(WalkerDdDealer element)
+        protected override void AddElementInNew(TDealer element)
         {
-            _life.Add(element.Health);
+            _life.Add((element.maxHealth, element.maxHealth));
+        }
+
+        protected override void RestoreElement(int i, TDealer element)
+        {
+            _life[i] = (element.maxHealth, element.maxHealth);
         }
     }
 

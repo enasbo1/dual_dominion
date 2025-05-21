@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using Mage;
 using Shared;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace initScene
 {
-    public class PlayerBearer : PlayerBearer<WalkerDdDealer>
+    public class PlayerBearer : PlayerBearer<PlayerDealer>
     {
     }
     public abstract class PlayerBearer<TDealer> : MonoBehaviour, IPlayerUser<TDealer> where TDealer : Dealer

@@ -25,13 +25,14 @@ namespace Monster.Behavior
             return false;
         }
 
-        public void Stop(int index, BehaviorManager behaviorManager)
+        public float Stop(int index, BehaviorManager behaviorManager)
         {
             MonsterDealer dealer = behaviorManager.GetDealer(index);
 
-            if (dealer.witnessBlessing == null) return;
+            if (dealer.witnessBlessing == null) return 0f;
             for (int i = 0; i < dealer.witnessBlessing.Length; i++)
                 dealer.witnessBlessing[i].material = behaviorManager.DefaultMaterials[index][i];
+            return 0f;
         }
     }
 }

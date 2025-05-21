@@ -19,8 +19,9 @@ namespace Monster.Behavior
             return false;
         }
 
-        public void Stop(int index, BehaviorManager behaviorManager)
+        public float Stop(int index, BehaviorManager behaviorManager)
         {
+            return 0f;
         }
     }
 }

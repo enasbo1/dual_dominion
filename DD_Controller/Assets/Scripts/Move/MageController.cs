@@ -1,5 +1,6 @@
 using System;
 using Actions;
+using Monster;
 using Shared;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -27,11 +28,15 @@ namespace Move
         [SerializeField] private Transform characterTransform;
         [SerializeField] private MoveScript moveScript;
         [SerializeField] public MoveMode moveMode = MoveMode.ThirdPerson;
+        public MonsterLifeManager lifeScript;
+        public SensorScript sensorScript;
 
         private int _animationState;
         private Vector2 _inputDirection = Vector2.zero;
         private Vector2 _walkDirection = Vector2.zero;
         private JumpAction _jumpAction;
+
+        private MeleeAttackAction _attackAction;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
@@ -44,6 +49,8 @@ namespace Move
             playerInputs.actions["jump"].started += _ => Jump();
             playerInputs.actions["shield"].started += _ => _shieldAction.launch();
             playerInputs.actions["shield"].canceled += _ => _shieldAction.end();
+
+            _attackAction = new MeleeAttackAction(characterAnimator, characterTransform, sensorScript, lifeScript);
         }
 
 
@@ -109,7 +116,7 @@ namespace Move
 
         private void Attack()
         {
-            actionManager.AddAction(new MeleeAttackAction(characterAnimator, characterTransform, opponentLayerMask));
+            actionManager.AddAction(_attackAction);
         }
 
         private void Jump()

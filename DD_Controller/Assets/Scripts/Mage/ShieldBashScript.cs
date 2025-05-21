@@ -1,32 +1,33 @@
 using System.Collections.Generic;
+using GameRule;
+using Monster;
+using Shared;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ShieldBashScript : MonoBehaviour
 {
-    public EnemySensorScript enemySensorScript;
-    public float yVelocity = 50f;
-    public float zVelocity = 50f;
+    public SensorScript sensorScript;
+    public Dealer dealer;
+    public float knockBack = 10f;
+    public float damage = 10f;
+    public MonsterLifeManager lifeScript;
     
     private List<Collider> _monstersNearby;
-    
-    void Start()
+
+    private void Start()
     {
-        enemySensorScript.withTriggerExit = false;
-        _monstersNearby = enemySensorScript.monstersNearby;
+        sensorScript.Listener += Damage;
     }
 
-    void Update()
+    private void Push(Collider collider)
     {
-        for (int i = _monstersNearby.Count - 1; i >= 0; i--)
-        {
-            Rigidbody monster = _monstersNearby[i].attachedRigidbody;
+    }
 
-            if (monster != null)
-            {
-                monster.linearVelocity = new Vector3(0f, yVelocity, zVelocity);
-            }
-
-            _monstersNearby.RemoveAt(i);
-        }
+    private void Damage(Collider collider)
+    {
+        lifeScript.Hit(collider.attachedRigidbody, damage);
+        if (dealer?.mainTransform != null)
+            collider.attachedRigidbody.AddForce((collider.attachedRigidbody.position-dealer.mainTransform.position).normalized * knockBack, ForceMode.Impulse);
     }
 }
