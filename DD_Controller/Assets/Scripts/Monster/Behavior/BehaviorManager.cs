@@ -57,7 +57,7 @@ namespace Monster.Behavior
                     {
                         BehaviorEnd[i] = time + delay;
                         ActivesBehaviors[i] = MonsterBehaviorEnum.Idle;
-                        continue;for
+                        continue;
                     }
 
                     int size = KnownBehaviors[i].Length;

@@ -415,9 +415,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3779386104611836642, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779386104611836642, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779386104611836642, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779386104611836642, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 3779386104611836642, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3798438813408115782, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 931643621
+      objectReference: {fileID: 0}
+    - target: {fileID: 4317772441825741990, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: m_Radius
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5044487178346377922, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: m_Center.z
