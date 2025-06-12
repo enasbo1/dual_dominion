@@ -41,7 +41,7 @@ namespace Move
         private void Start()
         {
             _jumpAction = new JumpAction(characterBody, 15, moveScript);
-            _shieldAction = new ShieldAction(characterAnimator);
+            _shieldAction = new ShieldAction(characterAnimator, characterTransform, sensorScript);
             characterAnimator.SetInteger(WalkState, 0);
             playerInputs.actions["move"].performed += ctx => _inputDirection = ctx.ReadValue<Vector2>();
             playerInputs.actions["move"].canceled += _ => StopWalking();

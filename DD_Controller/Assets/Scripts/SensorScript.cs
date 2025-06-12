@@ -30,6 +30,10 @@ public class SensorScript : MonoBehaviour
     {
         if (keepPresent)
             nearby.Remove(monster);
-        
+    }
+
+    private void OnDisable()
+    {
+        nearby.Clear();
     }
 }

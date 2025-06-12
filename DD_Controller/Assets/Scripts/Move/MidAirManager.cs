@@ -17,14 +17,11 @@ namespace Move
 
         private void FixedUpdate()
         {
-            var deb = 0;
             try
             {
                 for (int i = 0; i < Size; ++i)
                     if (Active[i])
                     {
-                        deb = 1;
-                        
                         float size = _transforms[i].localScale.x * _size[i];
                         bool floored = Physics.SphereCast(_transforms[i].position + Vector3.up * (0.55f * size),
                             0.45f * size,
@@ -40,10 +37,9 @@ namespace Move
                             _body[i].linearVelocity = (_transforms[i].position - _lastPosition[i]) / Time.deltaTime;
 
                         _lastPosition[i] = _transforms[i].position;
-                        deb = 0;
                     }
             }
-            catch (IndexOutOfRangeException e)
+            catch (IndexOutOfRangeException)
             {
                 throw new Exception("there " + Size + " "  + Active.Values.Length);
             }

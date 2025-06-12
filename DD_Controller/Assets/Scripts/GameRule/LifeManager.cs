@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Monster;
 using Shared;
 using UnityEngine;
@@ -34,7 +35,7 @@ namespace GameRule
          * damage : les dégats de bases
          * perforation : plus elle est élevée, moin les dégats sont réduits entre cheques cibles impactées
          */
-        public void Hit(GameObject[] targets, float damage, int perforation = 1)
+        public void Hit(GameObject[] targets, float damage, int perforation = 1, Action<TDealer> onHit = null)
         {
             if (damage < 0) throw new ArgumentOutOfRangeException(nameof(damage));
             for (int i = 0; i < targets.Length; ++i)
@@ -45,7 +46,7 @@ namespace GameRule
             }
         }
         
-        public void Hit(Rigidbody[] targets, float damage, int perforation = 1)
+        public void Hit(Rigidbody[] targets, float damage, int perforation = 1, Action<TDealer> onHit = null)
         {
             if (damage < 0) throw new ArgumentOutOfRangeException(nameof(damage));
             for (int i = 0; i < targets.Length; ++i)
@@ -55,8 +56,17 @@ namespace GameRule
                     damage -= damageTaken / perforation;
             }
         }
-        
-        public float Hit(GameObject targets, float damage, int perforation = 1)
+        public void Hit(List<Collider> targets, float damage, int perforation = 1, Action<TDealer> onHit = null)
+        {
+            if (damage < 0) throw new ArgumentOutOfRangeException(nameof(damage));
+            for (int i = 0; i < targets.Count; ++i)
+            {
+                float damageTaken = Hit(targets[i].attachedRigidbody, damage, perforation, onHit);                
+                if (perforation!=0)
+                    damage -= damageTaken / perforation;
+            }
+        }
+        public float Hit(GameObject targets, float damage, int perforation = 1, Action<TDealer> onHit = null)
         {
             for(int j = 0; j < Size; ++j) if (Active[j] & (Elements[j].gameObject == targets))
             {
@@ -66,18 +76,18 @@ namespace GameRule
             return 0f;
         }
         
-        public float Hit(Rigidbody targets, float damage, int perforation = 1)
+        public float Hit(Rigidbody targets, float damage, int perforation = 1, Action<TDealer> onHit = null)
         {
 
             for(int j = 0; j < Size; ++j) if (Active[j] & (Elements[j].body == targets))
             {
-                return hit(j, damage, perforation);
+                return hit(j, damage, perforation, onHit);
             }
 
             return 0f;
         }
 
-        private float hit(int index, float damage, int perforation = 1)
+        private float hit(int index, float damage, int perforation = 1, Action<TDealer> onHit = null)
         {
             (float current, float max) health = _life[index];
             health.current -= damage;
@@ -85,7 +95,9 @@ namespace GameRule
                 
             float damageTaken = _life[index].current - health.current;
             _life[index] = health;
-                
+            
+            onHit?.Invoke(Elements[index]);
+            
             return damageTaken;
         }
         

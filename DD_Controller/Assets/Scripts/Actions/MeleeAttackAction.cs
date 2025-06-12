@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Actions
 {
-    public struct MeleeAttackAction : IDdAction
+    public class MeleeAttackAction : IDdAction
     {
         private readonly Animator _animator;
         private readonly MonsterLifeManager _lifeManager;
@@ -25,48 +25,35 @@ namespace Actions
             _attackTimer = 0f;
             _damage = damage;
             _sensorScript = sensorScript;
-            sensorScript.Listener += Damage;
+            sensorScript.keepPresent = true;
         }
 
         public void launch()
         {
-            if (Time.time < _attackTimer + .75f) return;
+            if (Time.time < _attackTimer + .45f) return;
             if (_sensorScript.gameObject.activeSelf) return;
             _animator.SetTrigger(Melee);
-            _attackTimer = Time.time + .75f;
+            _attackTimer = Time.time + .3f;
             _sensorScript.gameObject.SetActive(true);
 
         }
 
-        private void Damage(Collider collider)
+        private void Hit(MonsterDealer dealer)
         {
-
-            if (_attackTimer > Time.time) return;
-            
-            _lifeManager.Hit(collider.attachedRigidbody, _damage);
-            collider.attachedRigidbody.AddForce((collider.attachedRigidbody.position-_attackTransform.position).normalized * 100, ForceMode.Impulse);
-
+            if (dealer.body)
+                dealer.body.AddForce(
+                    ((dealer.body.position - _attackTransform.position).normalized * 40) + Vector3.up * 10,
+                    ForceMode.VelocityChange);
         }
         
         public bool update()
         {
-            if (Time.time < _attackTimer) return false;
-            /*
-            var dir = _attackTransform.rotation * Vector3.forward;
-            if (Physics.SphereCast(_attackTransform.position - (2 * dir),
-                    3f,
-                    dir,
-                    out var hitInfo,
-                    5f,
-                    _layerMask))
-                hitInfo.rigidbody?.AddForce(_attackTransform.rotation * Vector3.forward * 100, ForceMode.Impulse);
-            */
-
-            return true;
+            return !(Time.time < _attackTimer);
         }
 
         public void end()
         {
+            _lifeManager.Hit(_sensorScript.nearby, _damage, onHit:Hit);
             _sensorScript.gameObject.SetActive(false);
         }
     }
