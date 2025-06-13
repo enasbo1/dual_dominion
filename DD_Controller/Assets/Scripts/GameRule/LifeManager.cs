@@ -14,8 +14,20 @@ namespace GameRule
     // WIP : effect non implémentés
     public class LifeManager<TDealer, TEnum, TVariant> : Manager<TDealer, TEnum, TVariant> where TDealer : WalkerDealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
+        public static LifeManager<TDealer, TEnum, TVariant> MainInstance = null;
+        [SerializeField] private bool IsMainInstance = false;
         [SerializeField] private StandByManager<TDealer, TEnum, TVariant> standByManager;
         private TableArray<(float current, float max)> _life = new(0);
+
+        private void Start()
+        {
+            if (IsMainInstance)
+            {
+                if (LifeManager<TDealer, TEnum, TVariant>.MainInstance != null)
+                    throw new Exception("there is More than one instance of LifeManager marked as the Main Instance");
+                LifeManager<TDealer, TEnum, TVariant>.MainInstance = this;
+            }
+        }
 
         // Update is called once per frame
         void FixedUpdate()

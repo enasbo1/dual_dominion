@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Monster;
 using UnityEngine;
 
 namespace Mage.SpellListener
@@ -7,6 +8,7 @@ namespace Mage.SpellListener
     public class UnnamedSpell : MonoBehaviour
     {
         public SpellManager spellManager;
+        public MonsterLifeManager lifeScript;
         public Transform[] groups;
         public float timeBetweenBullet = 0.2f;
         public int spellId = 6;

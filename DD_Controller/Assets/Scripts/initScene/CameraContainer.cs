@@ -1,4 +1,5 @@
 ﻿using System;
+using Globals;
 using UnityEngine;
 
 namespace initScene
@@ -8,17 +9,19 @@ namespace initScene
         public Transform cameraContainer;
         public Vector3 Offset;
         public Vector3 directionOffset;
-        public CameraUser[] cameraUsers;
+        private bool _isInitialized = false;
 
-        public void DealCamera(Camera camera)
+        private void Start()
         {
-            foreach (CameraUser cameraUser in cameraUsers)
-                cameraUser.Camera = camera;
+            SceneObjectReferencer.WaitingInit += CamInit;
         }
-    }
 
-    public abstract class CameraUser : MonoBehaviour
-    {
-        [NonSerialized] public Camera Camera;
+        private void CamInit(SceneObjectReferencer sceneObjectReferencer)
+        {
+            Transform camTransform = sceneObjectReferencer.camera.transform;
+            camTransform.SetParent(cameraContainer);
+            camTransform.localPosition = Offset;
+            camTransform.rotation = Quaternion.Euler(directionOffset);
+        }
     }
 }

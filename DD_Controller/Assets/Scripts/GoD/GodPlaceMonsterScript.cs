@@ -1,10 +1,11 @@
+using Globals;
 using initScene;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace GoD
 {
-    public class GodPlaceMonsterScript : CameraUser
+    public class GodPlaceMonsterScript : MonoBehaviour
     {
         public PlayerInput godInputs;
         public Transform cameraHolder;
@@ -14,6 +15,7 @@ namespace GoD
         private bool _isRotating;
 
         private InputAction _rotationTrigger;
+        private float _warnTimer = 0f;
 
         private void Start()
         {
@@ -29,15 +31,17 @@ namespace GoD
             Vector3 cameraPos = Input.mousePosition;
             Vector3 targetPosition = targetTransform.position;
 
-            if (!Camera)
+            if (!SceneObjectReferencer.MainInstance.camera)
             {
+                if (Time.time < _warnTimer) return;
                 Debug.LogWarning("Camera is null");
+                _warnTimer = Time.time + 2f;
                 return;
             }
 
-            Vector3 pos = Camera.ScreenToWorldPoint(cameraPos);
+            Vector3 pos = SceneObjectReferencer.MainInstance.camera.ScreenToWorldPoint(cameraPos);
 
-            Vector3 satellitePosition = Camera.transform.position;
+            Vector3 satellitePosition = SceneObjectReferencer.MainInstance.camera.transform.position;
 
             cameraPos.z = satellitePosition.y - targetPosition.y;
             pos.y = targetPosition.y;

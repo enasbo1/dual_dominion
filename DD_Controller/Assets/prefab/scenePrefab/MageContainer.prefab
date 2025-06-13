@@ -286,7 +286,6 @@ MonoBehaviour:
   cameraContainer: {fileID: 1863915827460733219}
   Offset: {x: -2, y: 0, z: 0}
   directionOffset: {x: 0, y: 0, z: 0}
-  cameraUsers: []
 --- !u!114 &4305453172761329476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -294,7 +293,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7148764649362112785}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c257031302f09da4881eee2abc5cb442, type: 3}
   m_Name: 
@@ -579,7 +578,7 @@ MonoBehaviour:
     Layer: 2
     OriginatingState: 1736441620
     DestinationState: -806913119
-    TransitionDuration: 0.25
+    TransitionDuration: 0.1
     TriggerNameHash: 237393061
     TransitionIndex: 2
   - IsCrossFadeExit: 0

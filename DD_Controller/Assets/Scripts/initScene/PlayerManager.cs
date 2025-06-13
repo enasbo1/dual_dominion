@@ -35,8 +35,6 @@ namespace initScene
             playerCamera.SetParent(cameraContainer.cameraContainer);
             playerCamera.localPosition = cameraContainer.Offset;
             playerCamera.rotation = Quaternion.Euler(cameraContainer.directionOffset);
-
-            cameraContainer.DealCamera(playerCamera.GetComponent<Camera>());
         }
     }
 }

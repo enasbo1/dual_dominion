@@ -36,7 +36,7 @@ namespace Actions
                     ((collider.attachedRigidbody.position - _ownerTransform.position).normalized * 15) + Vector3.up * 10,
                     ForceMode.Impulse);
         }
-            
+
         public bool update()
         {
             if (!_sensor.gameObject.activeInHierarchy)
