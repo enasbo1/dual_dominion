@@ -151,6 +151,13 @@ namespace Move
             _sizeList.Add(element.size);
         }
 
+        protected override void onEnd()
+        {
+            _sizeList.End();
+            _groups.End();
+            _boidsPos.End();
+        }
+
         public void ChangeGroup(WalkerDdDealer element, int? group = null)
         {
             int i = Elements.FindIndex(d => d == element);

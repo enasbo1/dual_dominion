@@ -20,6 +20,7 @@ public class DamageDealerScript : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!sensorScript) return;
         float damageToReduce = 0;
         _monstersNearby.ForEach(_ => { damageToReduce += damageReductionPerHit; });
 

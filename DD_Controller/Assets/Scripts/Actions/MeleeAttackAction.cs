@@ -30,12 +30,12 @@ namespace Actions
 
         public void launch()
         {
+            if (!_sensorScript) return;
             if (Time.time < _attackTimer + .45f) return;
             if (_sensorScript.gameObject.activeSelf) return;
             _animator.SetTrigger(Melee);
             _attackTimer = Time.time + .3f;
             _sensorScript.gameObject.SetActive(true);
-
         }
 
         private void Hit(MonsterDealer dealer)
