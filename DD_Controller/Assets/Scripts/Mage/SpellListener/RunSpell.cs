@@ -44,7 +44,6 @@ namespace Mage.SpellListener
         private void OnSpell(Spell spell)
         {
             _timer = 5;
-            if (_active) return;
             _initialValue = footMoveScript.movementSpeed;
             footMoveScript.movementSpeed = _initialValue * 4;
             effectRenderer.material = effectMaterial;
@@ -55,7 +54,6 @@ namespace Mage.SpellListener
         private void OnSpellFailure(Spell spell)
         {
             _timer = 2;
-            if (_active) return;
             _initialValue = footMoveScript.movementSpeed;
             footMoveScript.movementSpeed = _initialValue * 2;
             effectRenderer.material = effectMaterial;

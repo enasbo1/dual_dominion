@@ -557,12 +557,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3520538111468219036}
     m_Modifications:
-    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
-      propertyPath: m_text
-      value: '20000
-
-'
-      objectReference: {fileID: 0}
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
       value: ButtonMonster (5)
@@ -647,6 +641,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
+      propertyPath: m_text
+      value: '20000
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -665,6 +665,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4700211296933262842}
     m_Modifications:
+    - target: {fileID: 1126943322615663827, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
+      propertyPath: pointerManager
+      value: 
+      objectReference: {fileID: 4614167747204949210}
     - target: {fileID: 3918355075851847143, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -799,6 +803,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6993059635973654256, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1755140186444155192}
+    - targetCorrespondingSourceObject: {fileID: 6993059635973654256, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4614167747204949210}
   m_SourcePrefab: {fileID: 100100000, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
 --- !u!224 &5496688216653071106 stripped
 RectTransform:
@@ -823,6 +830,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scroller: {fileID: 8636803552372686518}
+--- !u!114 &4614167747204949210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8024492066674602585}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f893426236042ba8b4fda939174d403, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPointerOverScrollRect: 0
 --- !u!224 &8636803552372686518 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8758648771207760415, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
@@ -836,12 +856,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3520538111468219036}
     m_Modifications:
-    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
-      propertyPath: m_text
-      value: '20000
-
-'
-      objectReference: {fileID: 0}
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
       value: ButtonMonster (4)
@@ -926,6 +940,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
+      propertyPath: m_text
+      value: '20000
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -944,12 +964,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3520538111468219036}
     m_Modifications:
-    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
-      propertyPath: m_text
-      value: '20000
-
-'
-      objectReference: {fileID: 0}
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
       value: ButtonMonster (3)
@@ -1034,6 +1048,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
+      propertyPath: m_text
+      value: '20000
+
+'
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1052,12 +1072,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3520538111468219036}
     m_Modifications:
-    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
-      propertyPath: m_text
-      value: '2000
-
-'
-      objectReference: {fileID: 0}
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
       value: ButtonMonster (1)
@@ -1141,6 +1155,12 @@ PrefabInstance:
     - target: {fileID: 4288736147735259027, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
+      propertyPath: m_text
+      value: '2000
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1262,12 +1282,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3520538111468219036}
     m_Modifications:
-    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
-      propertyPath: m_text
-      value: '20000
-
-'
-      objectReference: {fileID: 0}
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
       value: ButtonMonster (2)
@@ -1351,6 +1365,12 @@ PrefabInstance:
     - target: {fileID: 4288736147735259027, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2896877289301645250, guid: 055d5074c39aa584aae55de77b84d357, type: 3}
+      propertyPath: m_text
+      value: '20000
+
+'
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
