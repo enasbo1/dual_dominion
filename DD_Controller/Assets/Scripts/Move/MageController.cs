@@ -63,6 +63,7 @@ namespace Move
 
         private void StopWalking()
         {
+            if (!characterAnimator) return;
             characterAnimator.SetInteger(WalkState, 0);
             _walkDirection = Vector2.zero;
             _inputDirection = Vector2.zero;
@@ -121,6 +122,7 @@ namespace Move
 
         private void Jump()
         {
+            if (!characterAnimator) return;
             if (!characterAnimator.GetBool(MidAir))
                 actionManager.AddAction(_jumpAction);
         }

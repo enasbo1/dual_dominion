@@ -10,6 +10,7 @@ public class GameMultiplayer : NetworkBehaviour
 {
     public const int MAX_PLAYER_AMOUNT = 2;
     private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
+    private const string MULTI_PLAYER_SCENE = "MultiPlayerScene";
 
 
     public static GameMultiplayer Instance { get; private set; }
@@ -59,7 +60,9 @@ public class GameMultiplayer : NetworkBehaviour
         NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
-        NetworkManager.Singleton.StartServer();
+        NetworkManager.Singleton.StartHost();
+        
+        NetworkManager.Singleton.SceneManager.LoadScene(MULTI_PLAYER_SCENE, LoadSceneMode.Single);
     }
 
 
@@ -70,7 +73,6 @@ public class GameMultiplayer : NetworkBehaviour
             PlayerData playerData = playerDataNetworkList[i];
             if (playerData.clientId == clientId)
             {
-                // Disconnected!
                 playerDataNetworkList.RemoveAt(i);
             }
         }

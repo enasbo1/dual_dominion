@@ -35,7 +35,6 @@ public class LobbyUI : MonoBehaviour
     public SceneAsset monoPlayerScene;
     */
     
-    private const string MULTI_PLAYER_SCENE = "MultiPlayerScene";
     private const string MONO_PLAYER_SCENE = "MonoPlayerScene";
 
     private void LoadNextScene()
@@ -63,8 +62,6 @@ public class LobbyUI : MonoBehaviour
                     GameMultiplayer.Instance.StartClient();
                 }
             }
-
-            NetworkManager.Singleton.SceneManager.LoadScene(MULTI_PLAYER_SCENE, LoadSceneMode.Single);
         }
     }
 

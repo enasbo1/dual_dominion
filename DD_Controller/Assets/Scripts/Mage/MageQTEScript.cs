@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Mage
 {
-    public class MageQTEScript : MonoBehaviour
+    public class MageQTEScript : WithEndMonoBehavior
     {
         public enum ControllerInputType
         {
@@ -59,13 +59,19 @@ namespace Mage
             if (_inputsPerformedUI.Count < longestInputs) throw new Exception("Number of inputs insufficient");
 
             _incantationTrigger = playerInputs.actions["IncantationTrigger"];
-            _incantationTrigger.started += _ => IncantationRecover();
+            _incantationTrigger.started += ToBeCleanedAction(
+                _ => IncantationRecover(),
+                a => _incantationTrigger.started -= a
+            );
 
             _spellTrigger = playerInputs.actions["CastSpell"];
-            _spellTrigger.started += _ =>
-            {
-                if (spellManager.isIncanting) CastSpell();
-            };
+            _spellTrigger.started += ToBeCleanedAction(
+                _ =>
+                {
+                    if (spellManager.isIncanting) CastSpell();
+                },
+                a => _spellTrigger.started -= a
+            );
 
             _actionMove = playerInputs.actions["Move"];
             _incantationMove = playerInputs.actions["IncantationMove"];
@@ -73,17 +79,31 @@ namespace Mage
             switch (controllerInputType)
             {
                 case ControllerInputType.DualShock:
-                    _actionMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
-                    _actionMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _actionMove.canceled += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _actionMove.canceled -= a
+                    );
+                    _actionMove.performed += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _actionMove.performed -= a
+                    );
                     break;
                 case ControllerInputType.Buttons:
-                    _incantationMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
-                    _incantationMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _incantationMove.canceled += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _incantationMove.canceled -= a
+                    );
+                    _incantationMove.performed += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _incantationMove.performed -= a
+                    );
                     break;
                 case ControllerInputType.Both:
-                    _incantationMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
-                    _actionMove.canceled += ctx => _moveVector = ctx.ReadValue<Vector2>();
-                    _incantationMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
+                    _incantationMove.canceled += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _incantationMove.canceled -= a
+                    );
+                    _actionMove.canceled += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _incantationMove.canceled -= a
+                    );
+                    _incantationMove.performed += ToBeCleanedAction(ctx => _moveVector = ctx.ReadValue<Vector2>(),
+                        a => _incantationMove.performed -= a
+                    );
                     _actionMove.performed += ctx => _moveVector = ctx.ReadValue<Vector2>();
                     break;
                 default:

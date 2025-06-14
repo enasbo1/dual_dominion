@@ -89,6 +89,17 @@ namespace Shared
             if (i != -1)
                 Active[i] = false;
         }
+
+        private void OnDestroy()
+        {
+            Active.End();
+            onEnd();
+        }
+
+        protected virtual void onEnd()
+        {
+            
+        }
     }
 
     public struct TableList<TValues> : ITable<List<TValues>, TValues>
@@ -181,7 +192,6 @@ namespace Shared
 
             if (silently)
             {
-                Debug.Log("Silently adding chunk to Table");
                 return;
             }
 
@@ -198,6 +208,11 @@ namespace Shared
         {
             get => _values[index];
             set => _values[index] = value;
+        }
+
+        public void End()
+        {
+            _values.Dispose();
         }
     }
     public struct TableArray<TValues> : ITable<TValues[], TValues>

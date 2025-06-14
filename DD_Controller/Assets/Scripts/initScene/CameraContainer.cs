@@ -9,7 +9,6 @@ namespace initScene
         public Transform cameraContainer;
         public Vector3 Offset;
         public Vector3 directionOffset;
-        private bool _isInitialized = false;
 
         private void Start()
         {

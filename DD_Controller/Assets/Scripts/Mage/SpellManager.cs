@@ -67,6 +67,11 @@ namespace Mage
             foreach (Action<Spell> action in _spellFailureEvents)
                 action.Invoke(this);
         }
+
+        public void ClearListeners()
+        {
+            _spellEvents.Clear();
+        }
     }
 
     public class SpellManager : MonoBehaviour
@@ -219,6 +224,11 @@ namespace Mage
         {
             spellsAvailable.Clear();
             spellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
+        }
+
+        private void OnDestroy()
+        {
+            foreach (Spell spell in _spellList) spell.ClearListeners();
         }
     }
 }
