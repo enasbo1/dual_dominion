@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072d516b985dc474881dcb089aa8d36a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onScrollRectClickScript: {fileID: 4953420895846708389}
+  godPointerManager: {fileID: 379881671543465989}
   godInputs: {fileID: 537170381815457016}
   playerTransform: {fileID: 5003327070825058557}
   globalSpeed: 40
@@ -137,8 +137,6 @@ MonoBehaviour:
   cameraContainer: {fileID: 4227179228703451864}
   Offset: {x: 0, y: 10, z: 0}
   directionOffset: {x: 90, y: 0, z: 0}
-  cameraUsers:
-  - {fileID: 7840790138548455433}
 --- !u!1 &1458053987029589666
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,6 +202,7 @@ MonoBehaviour:
   standBy: {fileID: 2807882525672456308}
   monsterDealingManager: {fileID: 6352019414832522193}
   monsterReferencer: {fileID: 5915306624478684104}
+  SpawnLimit: 200
 --- !u!1 &1897129754226375362
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,15 +643,15 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
---- !u!114 &4953420895846708389 stripped
+--- !u!114 &379881671543465989 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 140556412211181690, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4614167747204949210, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
   m_PrefabInstance: {fileID: 4993732501700644063}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 778a15a5a5b06e6409857982097a3d13, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f893426236042ba8b4fda939174d403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &6030480454502661406 stripped

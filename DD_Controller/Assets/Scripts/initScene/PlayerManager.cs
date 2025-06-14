@@ -1,6 +1,5 @@
 using Mage;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace initScene
@@ -8,8 +7,8 @@ namespace initScene
     public class PlayerManager : NetworkBehaviour
     {
         public GameObject mageContainerPrefab;
-        public GameObject ManagerBearer;
-        public PlayerBearer PlayerBearer;
+        public GameObject managerBearer;
+        public PlayerBearer playerBearer;
         public WalkerDealingManager playerDealingManager;
         public GameObject godScenePrefab;
         public Transform spawnPoint;
@@ -19,14 +18,21 @@ namespace initScene
         private void Start()
         {
             if (!NetworkManager.Singleton.IsServer) 
-                ManagerBearer.SetActive(false);
+                managerBearer.SetActive(false);
             GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godScenePrefab;
-
-            GameObject go = Instantiate(selectedPrefab, spawnPoint.position, spawnPoint.rotation);
+            
+            GameObject go = Instantiate(selectedPrefab, 
+                spawnPoint.position + (NetworkManager.Singleton.IsServer? Vector3.zero : Vector3.up * 30), 
+                spawnPoint.rotation);
             if (NetworkManager.Singleton.IsServer)
             {
-                PlayerBearer.mainPlayer = go.GetComponent<PlayerDealer>();
-                playerDealingManager.Add(PlayerBearer.mainPlayer);
+                PlayerDealer player = go.GetComponent<PlayerDealer>();
+                if (!player)
+                    Debug.LogWarning("Player dealer est null");
+                
+                playerBearer.mainPlayer = player;
+                playerDealingManager.ForceStart();
+                playerDealingManager.Add(playerBearer.mainPlayer);
             }
             
             NetworkObject no = go.GetComponent<NetworkObject>();
@@ -35,8 +41,10 @@ namespace initScene
             {
                 NetworkChildContainer ncc = go.GetComponent<NetworkChildContainer>();
                 if (ncc)
+                {
                     no = ncc.networkObject;
-                ncc.GetComponent<Transform>().SetParent(null);
+                    ncc.GetComponent<Transform>().SetParent(null);
+                }
             }
 
             if (no)

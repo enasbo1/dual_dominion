@@ -22,10 +22,18 @@ public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDea
     [SerializeField] private Manager<TDealer, TEnum, TVariant>[] managers;
     [SerializeField] private List<TDealer> objectsDealers;
     private ListWithListener<TDealer> _objectsDealed;
+    private bool _hasStarted = false;
 
+    public void ForceStart()
+    {
+        Start();
+    }
+    
     private void Start()
     {
-        ContextStart(AddElement, RemoveElement);
+        if (!_hasStarted)
+            ContextStart(AddElement, RemoveElement);
+        _hasStarted = true;
     }
 
     // Update is called once per frame

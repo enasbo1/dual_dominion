@@ -70,7 +70,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 680d4332618d3d6468a6324776019eae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerPrefab: {fileID: 7148764649362112785, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
-  shadowPrefab: {fileID: 6422554838783205668, guid: 3ce493d32e2bf26499a7c99accaaad9d, type: 3}
+  ShowTopMostFoldoutHeaderGroup: 1
+  mageContainerPrefab: {fileID: 7148764649362112785, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+  ManagerBearer: {fileID: 0}
+  playerBearer: {fileID: 0}
+  playerDealingManager: {fileID: 0}
+  godScenePrefab: {fileID: 1238274112862726071, guid: ae3bc7c29c0c1094f836670edfb872cf, type: 3}
   spawnPoint: {fileID: 7109384860923867675}
   networkObject: {fileID: 8016791414827324424}
+  playerCamera: {fileID: 0}

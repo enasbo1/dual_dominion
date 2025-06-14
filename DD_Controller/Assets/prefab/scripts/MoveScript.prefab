@@ -46,10 +46,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28096f354571cbc4189de940d2a32e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementSpeed: 1
+  canMove: 1
+  couldMove: 0
   characterTransform: {fileID: 0}
   onUpdate: 0
-  canMove: 1
-  MoveSpeed: 1
   footList: []
 --- !u!114 &6057027555062638936
 MonoBehaviour:
@@ -81,4 +82,6 @@ MonoBehaviour:
   followers: []
   limit: []
   onlyY: 
-  speed: []
+  speed:
+  - 450
+  - 0

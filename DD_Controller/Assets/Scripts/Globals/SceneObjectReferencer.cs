@@ -10,9 +10,9 @@ namespace Globals
         public static event Action<SceneObjectReferencer> WaitingInit 
         {
             add => waitingAction(value);
-            remove => _onInitialized.Remove(value);
+            remove => OnInitialized.Remove(value);
         }
-        private static readonly List<Action<SceneObjectReferencer>> _onInitialized = new();
+        private static readonly List<Action<SceneObjectReferencer>> OnInitialized = new();
         public Camera camera;
 
         private void Start()
@@ -21,14 +21,14 @@ namespace Globals
                 throw new Exception("there is More than one instance of LifeManager marked as the Main Instance");
             
             MainInstance = this;
-            foreach (Action<SceneObjectReferencer> actions in _onInitialized)
+            foreach (Action<SceneObjectReferencer> actions in OnInitialized)
                 actions.Invoke(this);
             
         }
 
         private static void waitingAction(Action<SceneObjectReferencer> action)
         {
-            if (MainInstance == null) _onInitialized.Add(action);
+            if (MainInstance == null) OnInitialized.Add(action);
             else action.Invoke(MainInstance);
         }
         

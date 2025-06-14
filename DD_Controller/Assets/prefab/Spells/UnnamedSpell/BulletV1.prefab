@@ -121,7 +121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca3bb5362069e4a959bc83bf707714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monstersNearby: []
+  nearby: []
+  keepPresent: 0
 --- !u!1 &8354568884166229160
 GameObject:
   m_ObjectHideFlags: 0
@@ -262,6 +263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4977509bca1064dac5458b0404c143, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySensorScript: {fileID: 2766999227100681413}
-  damageMax: 200
-  damageReductionPerHit: 200
+  sensorScript: {fileID: 2766999227100681413}
+  damageMax: 20
+  damageReductionPerHit: 10

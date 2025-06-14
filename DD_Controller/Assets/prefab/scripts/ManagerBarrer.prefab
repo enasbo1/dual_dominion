@@ -128,8 +128,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefabDealer:
-  - {fileID: 454477076267338107, guid: 83cb4ae300a00314a861cc97e0cd2a54, type: 3}
-  - {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+  - {fileID: 5275831418637596891, guid: 14e8b22fd8f40544f9f73535ce9e1024, type: 3}
+  - {fileID: 1902440317105870723, guid: a8c8b0ac3d92016498c20b5d7d1e7d7e, type: 3}
 --- !u!114 &5923616582156529237
 MonoBehaviour:
   m_ObjectHideFlags: 0

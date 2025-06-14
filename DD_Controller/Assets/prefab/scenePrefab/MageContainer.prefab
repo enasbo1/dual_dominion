@@ -347,7 +347,7 @@ MonoBehaviour:
   - {fileID: 650860838498001736}
   - {fileID: 4125760538661141371}
   size: 1
-  maxHealth: 200
+  maxHealth: 100
   group: 0
   gameEnd: {fileID: 6277412911993343772}
   lifePoints: 0
@@ -358,7 +358,7 @@ MonoBehaviour:
   currentXP: 0
   xpBarSlider: {fileID: 2906513661562100444}
   textXp: {fileID: 5931273844642078294}
-  scoreEffect: {fileID: 0}
+  scoreEffect: {fileID: 3272210534737848676}
 --- !u!1001 &707137759972952131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -422,6 +422,7 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 3473531652284557279, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
     - {fileID: -3655922003717024677, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
+    - {fileID: 8345210339579546959, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5390244634552519927, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
@@ -766,6 +767,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3179200372982848921}
     m_Modifications:
+    - target: {fileID: 687651296441673562, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      propertyPath: 'leaders.Array.data[0]'
+      value: 
+      objectReference: {fileID: 16959593843051099}
+    - target: {fileID: 687651296441673562, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      propertyPath: 'leaders.Array.data[1]'
+      value: 
+      objectReference: {fileID: 4836229264326083764}
+    - target: {fileID: 687651296441673562, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      propertyPath: 'followers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 5313604575902248990}
+    - target: {fileID: 687651296441673562, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      propertyPath: 'followers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 7450958527087371678}
     - target: {fileID: 1843405136009378281, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -890,7 +907,8 @@ PrefabInstance:
       propertyPath: playerCamera
       value: 
       objectReference: {fileID: 4836229264326083764}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 687651296441673562, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -912,6 +930,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1873972789769361740, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1397009374702517156}
+    - targetCorrespondingSourceObject: {fileID: 1873972789769361740, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5261176108423847310}
   m_SourcePrefab: {fileID: 100100000, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
 --- !u!114 &1307477160623690423 stripped
 MonoBehaviour:
@@ -968,7 +989,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2748333948680096094}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a80e6c33a90ebe54cbf9af2bfb88b044, type: 3}
   m_Name: 
@@ -1030,6 +1051,31 @@ MonoBehaviour:
   playerCamera: {fileID: 1863915827460733219}
   targetPosition: {x: 0, y: 40, z: -4}
   targetEulerRotation: {x: 85, y: 0, z: 0}
+--- !u!114 &5261176108423847310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748333948680096094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb4aaa61f26acf1498800280a4b2d95e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leaders:
+  - {fileID: 16959593843051099}
+  - {fileID: 4836229264326083764}
+  followers:
+  - {fileID: 5313604575902248990}
+  - {fileID: 7450958527087371678}
+  limit:
+  - 0
+  - 30
+  onlyY: 0100
+  speed:
+  - 450
+  - 0
 --- !u!114 &9207938726428252190 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4894445244274935820, guid: e4ba62a0f45c03042872bcfb9203203d, type: 3}
@@ -1289,6 +1335,17 @@ MonoBehaviour:
   - {fileID: 5313604575902248990}
   followers:
   - {fileID: 1456919835783598484}
+--- !u!114 &3272210534737848676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1199611153249002534, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+  m_PrefabInstance: {fileID: 4453186847628578114}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4399138162147914700 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 54048701070917262, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}

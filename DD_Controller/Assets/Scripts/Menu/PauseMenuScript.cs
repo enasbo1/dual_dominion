@@ -27,7 +27,11 @@ namespace Menu
         {
             resumeButton.onClick.AddListener(CloseMenu);
 
-            leavePartyButton.onClick.AddListener(() => { SceneManagerScript.ChangeToScene(SceneName.Lobby); });
+            leavePartyButton.onClick.AddListener(() =>
+            {
+                Time.timeScale = neutralTimeFlow;
+                SceneManagerScript.ChangeToScene(SceneName.Lobby);
+            });
 
             leaveGameButton.onClick.AddListener(Application.Quit);
 
@@ -55,6 +59,11 @@ namespace Menu
             objectsToDisable.ForEach(x => x.SetActive(true));
             Cursor.lockState = CursorLockMode.Locked;
             _isPauseActive = false;
+        }
+
+        private void OnDestroy()
+        {
+            Time.timeScale = neutralTimeFlow;
         }
     }
 }

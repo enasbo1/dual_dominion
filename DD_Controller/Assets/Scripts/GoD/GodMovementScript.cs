@@ -1,3 +1,4 @@
+using GoD.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -5,7 +6,7 @@ namespace GoD
 {
     public class GodMovementScript : MonoBehaviour
     {
-        public OnScrollRectClickScript onScrollRectClickScript;
+        public GodPointerManagerScript godPointerManager;
         public PlayerInput godInputs;
         public Transform playerTransform;
         public float globalSpeed = 40f;
@@ -67,7 +68,7 @@ namespace GoD
 
         private void MouseControl()
         {
-            if (Input.GetMouseButton(0) && !onScrollRectClickScript.isPointerOverScrollRect)
+            if (Input.GetMouseButton(0) && !godPointerManager.isPointerOverScrollRect)
             {
                 _positionZ += -Input.GetAxis("Mouse Y") * masterVerticalSensibility;
                 _positionX += Input.GetAxis("Mouse X") * masterHorizontalSensibility;

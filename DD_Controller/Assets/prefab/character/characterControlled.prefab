@@ -154,10 +154,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4573552822797170719, guid: cf21202375fc5d746982667516d53148, type: 3}
-      propertyPath: 'speed.Array.data[0]'
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 4573552822797170719, guid: cf21202375fc5d746982667516d53148, type: 3}
       propertyPath: followers.Array.size
       value: 2
       objectReference: {fileID: 0}
