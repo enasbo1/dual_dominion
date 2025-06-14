@@ -162,6 +162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   regroupMaterial: {fileID: 2100000, guid: 92b72afdd2105ea4daae4584d7855b67, type: 2}
   targetMaterial: {fileID: 4840744358963866956, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+  attackMaterial: {fileID: 0}
   playerBearer: {fileID: 3785598760495928039}
 --- !u!114 &6091143702304119244
 MonoBehaviour:
@@ -189,7 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f6f7970e734ef4933ef5efc912dfbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  standByManager: {fileID: 0}
+  IsMainInstance: 1
+  standByManager: {fileID: 3235163029835107824}
+  playerBearer: {fileID: 3785598760495928039}
 --- !u!1 &5574618041224519943
 GameObject:
   m_ObjectHideFlags: 0

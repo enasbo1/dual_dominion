@@ -35,13 +35,11 @@ public class LobbyUI : MonoBehaviour
     public SceneAsset monoPlayerScene;
     */
     
-    private const string MONO_PLAYER_SCENE = "MonoPlayerScene";
-
     private void LoadNextScene()
     {
         if (playerCountText.text.StartsWith("1"))
         {
-            SceneManager.LoadScene(MONO_PLAYER_SCENE);
+            SceneManagerScript.ChangeToScene(SceneName.MonoPlayer);
         }
         else if (playerCountText.text.StartsWith("2"))
         {
@@ -67,8 +65,9 @@ public class LobbyUI : MonoBehaviour
 
     public void ReadyToPlay()
     {
-        if (playerCountText.text.StartsWith("2")) if (LobbyManager.Instance.IsLobbyHost() && NetworkManager.Singleton.ConnectedClients.Count > 1) launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Launch";
-        else launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Launch";
+        if (playerCountText.text.StartsWith("2")) 
+            if (LobbyManager.Instance.IsLobbyHost() && NetworkManager.Singleton.ConnectedClients.Count > 1) launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Launch";
+            else launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Launch";
     }
 
     private void Awake()

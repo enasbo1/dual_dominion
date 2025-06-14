@@ -40,6 +40,10 @@ namespace Move
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
+            if (!lifeScript)
+            {
+                lifeScript = MonsterLifeManager.MainInstance;
+            }
             _jumpAction = new JumpAction(characterBody, 15, moveScript);
             _shieldAction = new ShieldAction(characterAnimator, characterTransform, sensorScript);
             characterAnimator.SetInteger(WalkState, 0);

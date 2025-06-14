@@ -52,11 +52,13 @@ MonoBehaviour:
   actionManager: {fileID: 0}
   opponentLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   directionMain: {fileID: 0}
   characterTransform: {fileID: 0}
   moveScript: {fileID: 0}
   moveMode: 0
+  lifeScript: {fileID: 0}
+  sensorScript: {fileID: 0}
 --- !u!114 &3314839490608186021
 MonoBehaviour:
   m_ObjectHideFlags: 0

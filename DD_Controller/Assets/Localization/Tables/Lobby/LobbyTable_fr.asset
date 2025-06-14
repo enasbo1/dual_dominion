@@ -42,6 +42,10 @@ MonoBehaviour:
     m_Localized: SALON REJOIN
     m_Metadata:
       m_Items: []
+  - m_Id: 31520416001556480
+    m_Localized: Jouer en Solo
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

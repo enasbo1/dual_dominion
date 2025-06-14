@@ -10,8 +10,6 @@ public class GameMultiplayer : NetworkBehaviour
 {
     public const int MAX_PLAYER_AMOUNT = 2;
     private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
-    private const string MULTI_PLAYER_SCENE = "MultiPlayerScene";
-
 
     public static GameMultiplayer Instance { get; private set; }
 
@@ -62,7 +60,7 @@ public class GameMultiplayer : NetworkBehaviour
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
         NetworkManager.Singleton.StartHost();
         
-        NetworkManager.Singleton.SceneManager.LoadScene(MULTI_PLAYER_SCENE, LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene(SceneList.SceneNames[SceneName.Multiplayer], LoadSceneMode.Single);
     }
 
 
