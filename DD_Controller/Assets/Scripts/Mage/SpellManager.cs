@@ -49,6 +49,11 @@ namespace Mage
         {
             _spellEvents.Add(spellEvent);
         }
+        
+        public void AddSpellFailureListener(Action<Spell> spellEvent)
+        {
+            _spellFailureEvents.Add(spellEvent);
+        }
 
         public void Cast()
         {

@@ -16,16 +16,18 @@ namespace Mage.SpellListener
         private Material _originalMaterial;
 
         private float _timer;
+        
+        private Spell _runSpell;
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()
         {
+            _runSpell = spellManager.GetSpellById(1);
             _initialValue = footMoveScript.movementSpeed;
             _originalMaterial = effectRenderer.material;
-            spellManager.GetSpellById(1).AddSpellListener(OnSpell);
+            _runSpell.AddSpellListener(OnSpell);
+            _runSpell.AddSpellFailureListener(OnSpellFailure);
         }
-
-        // Update is called once per frame
+        
         private void FixedUpdate()
         {
             if (!_active) return;
@@ -35,7 +37,7 @@ namespace Mage.SpellListener
                 footMoveScript.movementSpeed = _initialValue;
                 effectRenderer.material = _originalMaterial;
                 _active = false;
-                spellManager.GetSpellById(1).isInCast = false;
+                _runSpell.isInCast = false;
             }
         }
 
@@ -44,10 +46,20 @@ namespace Mage.SpellListener
             _timer = 5;
             if (_active) return;
             _initialValue = footMoveScript.movementSpeed;
-            footMoveScript.movementSpeed = _initialValue * 2;
+            footMoveScript.movementSpeed = _initialValue * 4;
             effectRenderer.material = effectMaterial;
             _active = true;
             spell.isInCast = true;
+        }
+        
+        private void OnSpellFailure(Spell spell)
+        {
+            _timer = 2;
+            if (_active) return;
+            _initialValue = footMoveScript.movementSpeed;
+            footMoveScript.movementSpeed = _initialValue * 2;
+            effectRenderer.material = effectMaterial;
+            _active = true;
         }
     }
 }
