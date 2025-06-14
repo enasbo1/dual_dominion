@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2792480906970125073, guid: d346055967a77f148ac603f7e9440f3c, type: 3}
       propertyPath: m_Name
-      value: Defete
+      value: Defeat
       objectReference: {fileID: 0}
     - target: {fileID: 5008158219389412553, guid: d346055967a77f148ac603f7e9440f3c, type: 3}
       propertyPath: m_Pivot.x
@@ -109,12 +109,20 @@ PrefabInstance:
       value: 0.6132076
       objectReference: {fileID: 0}
     - target: {fileID: 9004450840856982483, guid: d346055967a77f148ac603f7e9440f3c, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 1100
+      propertyPath: m_AnchorMax.x
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9004450840856982483, guid: d346055967a77f148ac603f7e9440f3c, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 800
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004450840856982483, guid: d346055967a77f148ac603f7e9440f3c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9004450840856982483, guid: d346055967a77f148ac603f7e9440f3c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

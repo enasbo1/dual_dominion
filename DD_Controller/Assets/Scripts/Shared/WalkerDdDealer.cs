@@ -14,14 +14,17 @@ namespace Shared
     
     public class WalkerDealer<TEnum, TVariant> : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
+        [Header("Walker Body References")]
         [SerializeField] [CanBeNull] public Rigidbody body;
         [SerializeField] [CanBeNull] public Transform headTransform;
         [SerializeField] [CanBeNull] public MoveScript moveScript;
         [SerializeField] [CanBeNull] public Animator animator;
         [SerializeField] [CanBeNull] public Renderer[] witnessBlessing;
+        
+        [Header("Walker Characteristics")]
         [SerializeField] public float size = 1;
-        [DoNotSerialize] public int group;
         [SerializeField] public float maxHealth = 1f;
+        [DoNotSerialize] public int group;
 
         public override void ResetDealed(bool respawn)
         {
@@ -38,6 +41,8 @@ namespace Shared
 
     public class Dealer<TEnum, TVariant> : Dealer where TEnum : Enum where TVariant : Enum
     {
+        [Header("Type References")]
+
         [SerializeField] public TEnum type;
         
         public virtual void ApplyVariant(TVariant variant)
@@ -47,11 +52,17 @@ namespace Shared
 
     public class Dealer : MonoBehaviour
     {
+        [Header("Dealer References")]
         [SerializeField] [CanBeNull] public Transform mainTransform;
         [SerializeField] [CanBeNull] public NetworkObject networkObject;
 
         public virtual void ResetDealed(bool respawn)
         {
-        } 
+        }
+
+        public virtual void Kill()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

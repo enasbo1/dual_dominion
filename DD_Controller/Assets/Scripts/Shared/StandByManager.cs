@@ -38,6 +38,7 @@ namespace Shared
                 {
                     if (type == null) break;
                     if (!type.Equals(_dealers[j].type)) continue;
+                    if (_dealers[j].isActiveAndEnabled) continue;
                     i = j;
                     break;
                 }
@@ -85,7 +86,7 @@ namespace Shared
 
         public TDealer Kill(TDealer dealer, bool deal = true)
         {
-            dealer.gameObject.SetActive(false);
+            dealer.Kill();
             int i = _dealers.FindIndex(d => d == dealer);
 
 

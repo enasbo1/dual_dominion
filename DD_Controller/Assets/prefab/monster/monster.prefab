@@ -242,6 +242,7 @@ MonoBehaviour:
   size: 1
   group: 0
   maxHealth: 1
+  damages: 1
   sensor: {fileID: 0}
   behaviors: 01000000
   variants: 

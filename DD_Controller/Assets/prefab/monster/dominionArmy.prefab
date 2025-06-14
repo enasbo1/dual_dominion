@@ -300,12 +300,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3142858623515770872}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: damages
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 6454135355189990796}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: maxHealth
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: scoreValue
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: headTransform

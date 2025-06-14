@@ -71,7 +71,7 @@ namespace Monster.Behavior
 
             if (dealer.sensor.nearby.Any(collider => collider.attachedRigidbody == behaviorManager.MainPlayer.body))
             {
-                behaviorManager.MainPlayer.Aie(10f);
+                behaviorManager.MainPlayer.Aie(dealer.currentDamages);
             }
             
             if (dealer.witnessBlessing == null) return 1f;

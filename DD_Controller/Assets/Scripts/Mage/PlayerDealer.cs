@@ -9,20 +9,36 @@ namespace Mage
 {
     public class PlayerDealer : WalkerDdDealer
     {
-        public float lifePoints;
+        
         [SerializeField] private GameEnd gameEnd;
         
+        [Header("Health")]
+        [SerializeField] public float lifePoints;
         [SerializeField] private Slider healthBarSlider;
         [SerializeField] private TextMeshProUGUI textHp;
         [SerializeField] private Image damageEffect;
-
-        private string _stringMaxHp;
         
+        [Header("XP Bar")]
+        [SerializeField] public float levelXpPoints = 100;
+        [SerializeField] private float currentXP = 0;
+        [SerializeField] private Slider xpBarSlider;
+        [SerializeField] private TextMeshProUGUI textXp;        
+        [SerializeField] private Image scoreEffect;
+        
+        
+        private string _stringMaxHp;
+        private string _stringMaxXp;
+        private Color _originalXpColor;
+        private float _effectTimer;
         private void Start()
         {
             lifePoints = maxHealth;
             _stringMaxHp = lifePoints.ToString(CultureInfo.CurrentCulture);
+            _stringMaxXp = levelXpPoints.ToString(CultureInfo.CurrentCulture);
             textHp.text = $"{lifePoints.ToString(CultureInfo.CurrentCulture)} / {_stringMaxHp}";
+            UpdateXpUI();
+
+            _originalXpColor = scoreEffect.color;
             
             Color damageEffectColor = damageEffect.color;
             damageEffectColor.a = 0f;
@@ -40,13 +56,45 @@ namespace Mage
             }
         }
 
+        public void Score(float score)
+        {
+            currentXP += score;
+            UpdateXpUI();
+            if (levelXpPoints <= currentXP)
+            {
+                gameEnd.GameWon();
+            }
+        }
+
         private void Update()
         {
-            if (damageEffect.color.a <= 0f) return;
+            if (!damageEffect) return;
+            if (!scoreEffect) return;
+            if (damageEffect.color.a > 0f)
+            {
+                            
+                Color damageEffectColor = damageEffect.color;
+                damageEffectColor.a -= Time.deltaTime;
+                damageEffect.color = damageEffectColor;
+            }
+
+            if (!(_effectTimer > 0f)) return;
             
-            Color damageEffectColor = damageEffect.color;
-            damageEffectColor.a -= Time.deltaTime;
-            damageEffect.color = damageEffectColor;
+            _effectTimer -= Time.deltaTime / 2;
+
+            if (_effectTimer <= 0f)
+                scoreEffect.color = _originalXpColor;
+            else
+            {
+                Color temp = _originalXpColor;
+                
+                temp.r = temp.r * (1-_effectTimer) + _effectTimer;
+                temp.g = temp.g * (1-_effectTimer) + _effectTimer; 
+                temp.b = temp.b * (1-_effectTimer) + _effectTimer; 
+                    
+                scoreEffect.color = temp;
+            }
+
         }
         
         private void UpdateHealthUI()
@@ -57,6 +105,14 @@ namespace Mage
             Color damageEffectColor = damageEffect.color;
             damageEffectColor.a = 1f;
             damageEffect.color = damageEffectColor;
+        }
+        
+        private void UpdateXpUI()
+        {
+            xpBarSlider.value = currentXP / levelXpPoints;
+            textXp.text = $"{currentXP.ToString(CultureInfo.CurrentCulture)} / {_stringMaxXp}";
+
+            _effectTimer = 1f;
         }
     }
 }

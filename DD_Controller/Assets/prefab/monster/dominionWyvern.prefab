@@ -25,6 +25,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8704607739267584160}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: damages
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: animator
       value: 
       objectReference: {fileID: 6070992292064152326}
@@ -33,12 +37,16 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: scoreValue
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: headTransform
       value: 
       objectReference: {fileID: 5936798853890377674}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: variants.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: behaviors.Array.size
@@ -46,6 +54,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: 'variants.Array.data[0]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: 'variants.Array.data[1]'
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
@@ -182,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3798438813408115782, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 223278980
+      value: 1405004566
       objectReference: {fileID: 0}
     - target: {fileID: 4317772441825741990, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: m_Radius

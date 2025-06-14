@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Monster;
+using Monster.Behavior;
 using Shared;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ namespace GameRule
         [SerializeField] private StandByManager<TDealer, TEnum, TVariant> standByManager;
         private TableArray<(float current, float max)> _life = new(0);
 
-        private void Start()
+        protected virtual void Start()
         {
             if (IsMainInstance)
             {
@@ -36,9 +37,14 @@ namespace GameRule
             {
                 if (_life[i].current <= 0)
                 {
+                    onDeath(Elements[i]);
                     standByManager.Kill(Elements[i]);
                 }
             }
+        }
+
+        protected virtual void onDeath(TDealer dealer)
+        {
         }
 
 

@@ -8,6 +8,7 @@ namespace end_game
         [SerializeField][CanBeNull] private GameObject gameOverCanvas;
         [SerializeField][CanBeNull] private GameObject gameWonCanvas;
         public GameObject[] objectToDelete;
+        public MonoBehaviour[] scriptToDisable;
         private void Start()
         {
             gameOverCanvas?.SetActive(false);
@@ -17,6 +18,16 @@ namespace end_game
             gameOverCanvas?.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             foreach (GameObject go in objectToDelete) Destroy(go);
+            foreach (MonoBehaviour script in scriptToDisable) script.enabled = false;
+            Cursor.visible = true;
+        }
+        
+        public void GameWon()
+        {
+            gameWonCanvas?.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            foreach (GameObject go in objectToDelete) Destroy(go);
+            foreach (MonoBehaviour script in scriptToDisable) script.enabled = false;
             Cursor.visible = true;
         }
     }
