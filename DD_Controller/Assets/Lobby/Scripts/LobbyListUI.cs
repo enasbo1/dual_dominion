@@ -80,6 +80,7 @@ public class LobbyListUI : MonoBehaviour {
 
     public void Show() {
         gameObject.SetActive(true);
+        LobbyManager.Instance.RefreshLobbyList();
     }
 
 }

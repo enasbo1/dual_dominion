@@ -80,16 +80,16 @@ public class LobbyUI : MonoBehaviour
 
         changeMarineButton.onClick.AddListener(() =>
         {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Marine);
+            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Random);
         });
         changeNinjaButton.onClick.AddListener(() =>
         {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Ninja);
+            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Survivor);
             isSurvivor = true;
         });
         changeZombieButton.onClick.AddListener(() =>
         {
-            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Zombie);
+            LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.God);
             isSurvivor = false;
         });
 

@@ -516,6 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7386bf5a9181f08499f15cc227c818ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInputs: {fileID: 0}
   neutralTimeFlow: 1
   pauseTimeFlow: 0.1
   objectsToDisable: []
@@ -1075,7 +1076,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1547225959218208872
 RectTransform:
   m_ObjectHideFlags: 0

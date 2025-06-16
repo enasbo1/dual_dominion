@@ -1219,6 +1219,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Escape",
+                    "type": "Button",
+                    "id": "c434445d-4713-40ed-8189-d5dfbb75d29b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "MoveMouse",
                     "type": "Value",
                     "id": "dec678b2-9ead-4928-896b-fb400f315ca2",
@@ -1246,6 +1255,28 @@
                     "processors": "",
                     "groups": ";Gamepad;Keyboard&Mouse;Joystick;Touch;XR",
                     "action": "MoveGamepad",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "aa57e67c-86c0-4c33-a898-f17e007974fd",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ff61a5c-a824-4dd7-8378-141636bbe6f2",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Escape",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

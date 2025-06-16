@@ -1,3 +1,5 @@
+using Unity.Services.Authentication;
+using Unity.Services.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,14 +7,33 @@ public class AuthenticateUI : MonoBehaviour {
 
 
     [SerializeField] private Button authenticateButton;
+    [SerializeField] private LobbyListUI lobbyListUI;
 
 
-    private void Awake() {
-        authenticateButton.onClick.AddListener(() => {
-            LobbyManager.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
-            LobbyListUI.Instance.Show();
+    private void Start()
+    {
+        bool isSignedIn = false;
+        try
+        {
+            isSignedIn = AuthenticationService.Instance.IsSignedIn;
+        }
+        catch (ServicesInitializationException)
+        {
+        }
+
+        if (isSignedIn)
+        {
+            lobbyListUI.Show();
             Hide();
-        });
+        }
+        else
+        {
+            authenticateButton.onClick.AddListener(() => {
+                LobbyManager.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
+                lobbyListUI.Show();
+                Hide();
+            });
+        }
     }
 
     private void Hide() {

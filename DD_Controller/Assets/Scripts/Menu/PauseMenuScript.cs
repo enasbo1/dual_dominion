@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Menu
 {
-    public class PauseMenuScript : MonoBehaviour
+    public class PauseMenuScript : WithEndMonoBehavior
     {
         public PlayerInput playerInputs;
 
@@ -36,11 +36,13 @@ namespace Menu
             leaveGameButton.onClick.AddListener(Application.Quit);
 
             _pauseTrigger = playerInputs.actions["Escape"];
-            _pauseTrigger.started += _ =>
-            {
-                if (_isPauseActive) CloseMenu();
-                else OpenMenu();
-            };
+            _pauseTrigger.started += ToBeCleanedAction(_ =>
+                {
+                    if (_isPauseActive) CloseMenu();
+                    else OpenMenu();
+                },
+                a => _pauseTrigger.started -= a
+            );
         }
 
         private void OpenMenu()
