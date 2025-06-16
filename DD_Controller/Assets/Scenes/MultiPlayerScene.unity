@@ -1064,6 +1064,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1174092479}
     - target: {fileID: 8557946921620855135, guid: dc3e34b4f8e003b45bed534d65c013f1, type: 3}
+      propertyPath: managerBearer
+      value: 
+      objectReference: {fileID: 1174092479}
+    - target: {fileID: 8557946921620855135, guid: dc3e34b4f8e003b45bed534d65c013f1, type: 3}
       propertyPath: playerDealingManager
       value: 
       objectReference: {fileID: 1174092478}
