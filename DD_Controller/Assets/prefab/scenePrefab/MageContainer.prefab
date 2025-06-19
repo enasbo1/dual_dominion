@@ -326,7 +326,8 @@ MonoBehaviour:
   gameWonCanvas: {fileID: 4807183680084504987}
   objectToDelete:
   - {fileID: 2601907536832713260}
-  scriptToDisable: []
+  scriptToDisable:
+  - {fileID: 2800593394507225767}
 --- !u!114 &2800593394507225767
 MonoBehaviour:
   m_ObjectHideFlags: 0

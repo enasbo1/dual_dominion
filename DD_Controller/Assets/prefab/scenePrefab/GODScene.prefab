@@ -483,6 +483,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5003327070825058557}
     m_Modifications:
+    - target: {fileID: 289945448675895625, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7c53b47dfa6ac81419a655658837fb76, type: 3}
     - target: {fileID: 1407733225525302815, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -511,6 +515,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2608990506997589504, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 88c63f849cbaa7d418b155a983c46bb4, type: 3}
+    - target: {fileID: 2661912297067192805, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 0374ec9a523e71f468fc10d4ff289ece, type: 3}
     - target: {fileID: 3158707732455721276, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -591,6 +603,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3425036387472257086, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8f3aa90d9288bf74d8e27e01ff4e24a2, type: 3}
     - target: {fileID: 4048776311429067086, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -599,6 +615,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4056185509275125419, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ffe0a900dfd36ae4aab6a2940555cf6b, type: 3}
     - target: {fileID: 4167272790342363312, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
       propertyPath: m_Name
       value: GodUI
@@ -639,6 +659,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9121573824546787843, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 024454a99352f23499282c9f87708705, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

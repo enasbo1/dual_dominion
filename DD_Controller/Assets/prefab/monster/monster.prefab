@@ -147,6 +147,8 @@ GameObject:
   - component: {fileID: 5260561388766450755}
   - component: {fileID: 454477076267338107}
   - component: {fileID: 3798438813408115782}
+  - component: {fileID: 4348272403316973511}
+  - component: {fileID: 6054202753930080923}
   m_Layer: 3
   m_Name: monster
   m_TagString: Untagged
@@ -240,12 +242,14 @@ MonoBehaviour:
   animator: {fileID: 0}
   witnessBlessing: []
   size: 1
-  group: 0
   maxHealth: 1
+  group: 0
+  scoreValue: 5
   damages: 1
-  sensor: {fileID: 0}
   behaviors: 01000000
   variants: 
+  curentVariant: 0
+  sensor: {fileID: 0}
 --- !u!114 &3798438813408115782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,12 +257,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7011715027037496875}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1687977810
+  GlobalObjectIdHash: 931643621
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -271,3 +275,57 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &4348272403316973511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011715027037496875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AuthorityMode: 0
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 1
+  UseQuaternionCompression: 1
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0
+--- !u!114 &6054202753930080923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7011715027037496875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c257031302f09da4881eee2abc5cb442, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  networkObject: {fileID: 3798438813408115782}
+  GameObjectsToDestroy:
+  - {fileID: 3077523417082540770}
+  - {fileID: 4791472153955484652}
+  ComponentsToDestroy: []
+  RigidbodiesToDestroy: []

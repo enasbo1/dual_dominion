@@ -7,13 +7,14 @@ namespace Globals
     public class SceneObjectReferencer : MonoBehaviour
     {
         public static SceneObjectReferencer MainInstance;
+        public Camera camera;
+
         public static event Action<SceneObjectReferencer> WaitingInit 
         {
             add => waitingAction(value);
             remove => OnInitialized.Remove(value);
         }
         private static readonly List<Action<SceneObjectReferencer>> OnInitialized = new();
-        public Camera camera;
 
         private void Start()
         {

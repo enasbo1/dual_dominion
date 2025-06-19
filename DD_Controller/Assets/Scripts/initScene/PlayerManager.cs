@@ -30,9 +30,9 @@ namespace initScene
                 if (!player)
                     Debug.LogWarning("Player dealer est null");
                 
-                playerBearer.mainPlayer = player;
-                playerDealingManager.ForceStart();
-                playerDealingManager.Add(playerBearer.mainPlayer);
+                playerBearer.MainPlayer = player;
+                playerDealingManager.ForceStart();      
+                playerDealingManager.Add(playerBearer.MainPlayer);
             }
             
             NetworkObject no = go.GetComponent<NetworkObject>();

@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: type
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: group
@@ -194,7 +194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3798438813408115782, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: GlobalObjectIdHash
-      value: 1405004566
+      value: 223278980
       objectReference: {fileID: 0}
     - target: {fileID: 4317772441825741990, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: m_Radius
@@ -319,6 +319,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6070992292064152326}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3294752816885003069}
   m_SourcePrefab: {fileID: 100100000, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
 --- !u!23 &576716510070111498 stripped
 MeshRenderer:
@@ -377,6 +380,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3294752816885003069
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4555562421982508254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 6070992292064152326}
 --- !u!23 &4866280595597579828 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -1120989108687609925, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}

@@ -150,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
       propertyPath: m_Name
-      value: Dominion_armee_model (1)
+      value: Dominion_armee_model
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
       propertyPath: m_Layer
@@ -199,6 +199,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6454135355189990796}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2312352225803926711}
   m_SourcePrefab: {fileID: 100100000, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
 --- !u!23 &1228929031348348112 stripped
 MeshRenderer:
@@ -267,6 +270,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &2312352225803926711
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4635120408705211982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 6454135355189990796}
 --- !u!23 &4785516891056668477 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -8143710011712545758, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
@@ -295,6 +313,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
+      propertyPath: type
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 454477076267338107, guid: ee91f1971a79acb49b382896786ad9bf, type: 3}
       propertyPath: sensor
       value: 

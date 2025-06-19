@@ -16,7 +16,8 @@ namespace Shared
         [SerializeField] [CanBeNull] private DealingManager<TDealer, TEnum, TVariant> dealingManager;
         [SerializeField] [CanBeNull] private PrefabReferencer<TDealer, TEnum, TVariant> prefabReferencer;
         [SerializeField] private bool spawnNetworkObject;
-
+        
+        public bool SpawnNetworkObject => spawnNetworkObject;
         private readonly List<TDealer> _dealers = new();
         private readonly List<bool> _isDead = new();
 
@@ -24,7 +25,7 @@ namespace Shared
             bool deal = true)
         {
             if (!prefabReferencer)
-                throw new Exception("No DealingManager Set, Can't Spawn");
+                throw new Exception("No PrefabReferencer Set, Can't Spawn");
             return Spawn(prefabReferencer[typeKey].Item1, position, rotation, variant, deal);
         }
 
@@ -48,6 +49,11 @@ namespace Shared
             {
                 newDealer = Instantiate(objectToSpawn, Vector3.zero, Quaternion.identity).GetComponent<TDealer>();
                 newDealer.ResetDealed(false);
+                if (newDealer.networkObject)
+                    if (spawnNetworkObject)
+                        newDealer.networkObject.Spawn();
+                    else
+                        newDealer.networkObject.enabled = false;
             }
             else
             {
@@ -63,15 +69,7 @@ namespace Shared
 
             newDealer.gameObject.SetActive(true);
             newDealer.ApplyVariant(variant);
-
-
-            if (newDealer.networkObject && spawnNetworkObject)
-            {
-                newDealer.networkObject.enabled = true;
-                if (i == -1)
-                    newDealer.networkObject.Spawn();
-            }
-
+            
             if (!newDealer.mainTransform) return newDealer;
 
             newDealer.mainTransform.position = position;

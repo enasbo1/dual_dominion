@@ -13,7 +13,7 @@ namespace initScene
     public abstract class PlayerBearer<TDealer> : MonoBehaviour, IPlayerUser<TDealer> where TDealer : Dealer
     {
         private readonly List<IPlayerUser<TDealer>> _playerUser = new();
-        [SerializeField][CanBeNull] public TDealer mainPlayer;
+        [SerializeField][CanBeNull] private TDealer mainPlayer;
         public List<PlayerBearer<TDealer>> childPlayerBearers = new();
 
         public TDealer MainPlayer { get=>mainPlayer; set=>SetMainPlayer(value); }

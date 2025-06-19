@@ -2,9 +2,7 @@ using TMPro;
 using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LobbyUI : MonoBehaviour
