@@ -11,7 +11,7 @@ namespace Globals
 
         public static event Action<SceneObjectReferencer> WaitingInit 
         {
-            add => waitingAction(value);
+            add => WaitingAction(value);
             remove => OnInitialized.Remove(value);
         }
         private static readonly List<Action<SceneObjectReferencer>> OnInitialized = new();
@@ -27,7 +27,7 @@ namespace Globals
             
         }
 
-        private static void waitingAction(Action<SceneObjectReferencer> action)
+        private static void WaitingAction(Action<SceneObjectReferencer> action)
         {
             if (MainInstance == null) OnInitialized.Add(action);
             else action.Invoke(MainInstance);
