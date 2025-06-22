@@ -1,7 +1,6 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,7 +9,8 @@ public class GameMultiplayer : NetworkBehaviour
 {
     public const int MAX_PLAYER_AMOUNT = 2;
     private const string PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER = "PlayerNameMultiplayer";
-
+    [SerializeField] private NetworkTransport networkTransport;
+    
     public static GameMultiplayer Instance { get; private set; }
 
 
@@ -104,7 +104,13 @@ public class GameMultiplayer : NetworkBehaviour
 
         NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback; 
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
+
+
+        ((UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport).SetConnectionData(default);
+        
+        Debug.Log("0");
         NetworkManager.Singleton.StartClient();
+        Debug.Log("1");
     }
 
     private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)

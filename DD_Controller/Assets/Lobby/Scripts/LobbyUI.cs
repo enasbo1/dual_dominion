@@ -42,7 +42,14 @@ public class LobbyUI : MonoBehaviour
         else if (playerCountText.text.StartsWith("2"))
         {
             Lobby lobby = LobbyManager.Instance.GetJoinedLobby();
-
+            /*
+            foreach (var player in lobby.Players)
+            {
+                Debug.Log($"Id {player.Id}, Data {player.Data}, ConnectionInfo {player.ConnectionInfo}" +
+                          $"AllocationId {player.AllocationId}");
+            }
+            */
+            
             foreach (Player player in lobby.Players)
             {
                 if (player.Id == AuthenticationService.Instance.PlayerId && isSurvivor)
