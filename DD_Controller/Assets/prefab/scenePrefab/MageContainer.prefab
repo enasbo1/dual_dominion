@@ -567,6 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isEnableOnStart: 1
 --- !u!4 &4836229264326083764 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5390244634552519927, guid: 3c2a76fcc80855c499bf55b250e36177, type: 3}
@@ -1247,6 +1248,10 @@ PrefabInstance:
     - target: {fileID: 3443804139737688913, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4306058902246258818, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5108773919738165402, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: player

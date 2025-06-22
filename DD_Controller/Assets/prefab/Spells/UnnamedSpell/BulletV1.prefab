@@ -137,8 +137,8 @@ GameObject:
   - component: {fileID: 7180692416580026822}
   - component: {fileID: 3003901903143897489}
   - component: {fileID: 1919705325746380300}
-  - component: {fileID: 6931113678025899959}
-  - component: {fileID: 4130350354543855325}
+  - component: {fileID: 333050079121129186}
+  - component: {fileID: 8984142580535904573}
   m_Layer: 6
   m_Name: BulletV1
   m_TagString: Untagged
@@ -268,7 +268,7 @@ MonoBehaviour:
   sensorScript: {fileID: 2766999227100681413}
   damageMax: 20
   damageReductionPerHit: 10
---- !u!114 &6931113678025899959
+--- !u!114 &333050079121129186
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -282,8 +282,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
-  AuthorityMode: 1
-  TickSyncChildren: 1
+  AuthorityMode: 0
+  TickSyncChildren: 0
   UseUnreliableDeltas: 0
   SyncPositionX: 1
   SyncPositionY: 1
@@ -297,14 +297,14 @@ MonoBehaviour:
   PositionThreshold: 0.001
   RotAngleThreshold: 0.01
   ScaleThreshold: 0.01
-  UseQuaternionSynchronization: 1
-  UseQuaternionCompression: 1
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
   UseHalfFloatPrecision: 0
   InLocalSpace: 0
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
---- !u!114 &4130350354543855325
+--- !u!114 &8984142580535904573
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,3 +317,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isEnableOnStart: 0

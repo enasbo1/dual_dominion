@@ -10,7 +10,7 @@ namespace Monster
     public class MonsterLifeManager : LifeManager<MonsterDealer, WalkerEnum, MonsterVariants>
     {
         [SerializeField] public PlayerBearer<PlayerDealer> playerBearer;
-        public new static MonsterLifeManager MainInstance = null;
+        public new static MonsterLifeManager MainInstance;
 
         private new void Start()
         {

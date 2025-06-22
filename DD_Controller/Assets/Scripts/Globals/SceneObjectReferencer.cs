@@ -7,8 +7,9 @@ namespace Globals
     public class SceneObjectReferencer : MonoBehaviour
     {
         public static SceneObjectReferencer MainInstance;
+        
         public Camera camera;
-
+        public bool isNetworkScene;
         public static event Action<SceneObjectReferencer> WaitingInit 
         {
             add => WaitingAction(value);
@@ -16,10 +17,10 @@ namespace Globals
         }
         private static readonly List<Action<SceneObjectReferencer>> OnInitialized = new();
 
-        private void Start()
+        private void Awake()
         {
             if (MainInstance != null)
-                throw new Exception("there is More than one instance of LifeManager marked as the Main Instance");
+                throw new Exception("there is More than one instance of SceneReferencer");
             
             MainInstance = this;
             foreach (Action<SceneObjectReferencer> actions in OnInitialized)
@@ -31,6 +32,13 @@ namespace Globals
         {
             if (MainInstance == null) OnInitialized.Add(action);
             else action.Invoke(MainInstance);
+        }
+
+        private void OnDestroy()
+        {
+            if (MainInstance == this)
+                MainInstance = null;
+
         }
         
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -62,7 +63,8 @@ namespace Menu
             Cursor.lockState = CursorLockMode.Locked;
             _isPauseActive = false;
         }
-
+        
+        
         private void OnDestroy()
         {
             Time.timeScale = neutralTimeFlow;

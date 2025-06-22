@@ -202,9 +202,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2312352225803926711}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1873735525804396733}
   m_SourcePrefab: {fileID: 100100000, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
 --- !u!23 &1228929031348348112 stripped
 MeshRenderer:
@@ -288,19 +285,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 6454135355189990796}
---- !u!114 &1873735525804396733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4635120408705211982}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eece1bc74ec643aca5ebfb0e4bf9ac56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!23 &4785516891056668477 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -8143710011712545758, guid: 66b8e5197b9b6f745b2e3ae4c9a84ed8, type: 3}
