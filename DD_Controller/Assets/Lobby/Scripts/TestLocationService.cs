@@ -13,24 +13,23 @@ public class TestLocationService : MonoBehaviour
 
     private void Start()
     {
-        GetLocalIPAddress();
-        CheckIP();
+        localIp = GetLocalIPAddress();
+        globalIp = GetGlobalIPAddress();
     }
-    public string GetLocalIPAddress()
+    public static string GetLocalIPAddress()
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
         foreach (var ip in host.AddressList)
         {
             if (ip.AddressFamily == AddressFamily.InterNetwork)
             {
-                localIp = ip.ToString();
                 return ip.ToString();
             }
         }
         throw new System.Exception("No network adapters with an IPv4 address in the system!");
     }
     
-    public void CheckIP(){
+    public static string GetGlobalIPAddress(){
         HttpWebRequest myExtIPWWW = WebRequest.CreateHttp("http://checkip.dyndns.org");
 
         Stream steam = myExtIPWWW.GetResponse().GetResponseStream();
@@ -44,7 +43,7 @@ public class TestLocationService : MonoBehaviour
         myExtIP=myExtIP.Substring(myExtIP.IndexOf(":", StringComparison.Ordinal)+2);
         myExtIP=myExtIP.Substring(0,myExtIP.IndexOf("<", StringComparison.Ordinal));
         
-        globalIp = myExtIP;
+        return myExtIP;
     }
 
 }
