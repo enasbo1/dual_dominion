@@ -1,6 +1,5 @@
 using System;
 using Unity.Netcode;
-using Unity.Netcode.Transports.UTP;
 using Unity.Services.Authentication;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -106,7 +105,7 @@ public class GameMultiplayer : NetworkBehaviour
         NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
 
 
-        ((UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport).SetConnectionData(default);
+        //((UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport).SetConnectionData(default);
         
         Debug.Log("0");
         NetworkManager.Singleton.StartClient();

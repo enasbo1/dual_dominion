@@ -46,6 +46,10 @@ MonoBehaviour:
     m_Localized: Jouer en Solo
     m_Metadata:
       m_Items: []
+  - m_Id: 35446602931691520
+    m_Localized: En attente du Mage
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

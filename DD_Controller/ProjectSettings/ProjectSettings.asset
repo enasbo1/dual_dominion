@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: enasbo
   productName: dual_dominion
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -939,10 +939,10 @@ PlayerSettings:
   captureStartupLogs: {}
   activeInputHandler: 2
   windowsGamepadBackendHint: 0
-  cloudProjectId: a05db0af-ff47-425f-9e4d-7ef1f53d799d
+  cloudProjectId: 840415e6-4713-4ae2-8514-fbe222b1ada7
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: controllers_test
+  projectName: dual_dominion
   organizationId: enasbo
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
