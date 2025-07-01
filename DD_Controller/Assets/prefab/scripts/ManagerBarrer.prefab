@@ -130,6 +130,7 @@ MonoBehaviour:
   prefabDealer:
   - {fileID: 5275831418637596891, guid: 14e8b22fd8f40544f9f73535ce9e1024, type: 3}
   - {fileID: 1902440317105870723, guid: a8c8b0ac3d92016498c20b5d7d1e7d7e, type: 3}
+  - {fileID: 3184859363332087724, guid: c1c5406d1872e4443b93a9d504fd74bf, type: 3}
 --- !u!114 &5923616582156529237
 MonoBehaviour:
   m_ObjectHideFlags: 0

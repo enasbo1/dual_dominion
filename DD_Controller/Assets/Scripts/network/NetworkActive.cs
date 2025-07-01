@@ -26,12 +26,14 @@ namespace network
 
         private void OnDisable()
         {
+            if (!SceneObjectReferencer.MainInstance) return;
             if (SceneObjectReferencer.MainInstance.isNetworkScene && IsServer)
                 SetActiveRpc(false);
         }
 
         private void OnEnable()
-        {
+        {            
+            if (!SceneObjectReferencer.MainInstance) return;
             if (SceneObjectReferencer.MainInstance.isNetworkScene && IsServer)
                 SetActiveRpc(true);
         }

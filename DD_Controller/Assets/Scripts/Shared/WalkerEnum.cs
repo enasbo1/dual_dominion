@@ -4,7 +4,7 @@
     {
         Walker,
         DominionArmy,
-        DominionDefense,
+        DominionWarrior,
         DominionWyvern,
         Survivor
     }

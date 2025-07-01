@@ -23,7 +23,7 @@ namespace Monster
                 {
                     if (!(_nextSpawnTime[i] < Time.time)) continue;
                     if (monsterDealingManager.GetNbDealers() >= SpawnLimit) return;
-
+                    
                     WalkerEnum spawn = _spawned[i][Random.Range(0, _spawned[i].Length)];
                     (GameObject prefab, MonsterDealer dealer) = monsterReferencer[spawn];
                     if (dealer.variants.Length > 0)

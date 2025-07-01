@@ -1,6 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Globals
 {
@@ -24,7 +23,7 @@ namespace Globals
             }
             for (int i = 0; i < _instance.materialNetworked.Length; i++)
             {
-                if (mat.color.Equals(_instance.materialNetworked[i].color)) return i;
+                if (mat.color.Equals(_instance.materialNetworked[i].color) && mat.name.Equals(_instance.materialNetworked[i].name)) return i;
             }
             Debug.LogWarning($"Material {mat} not referenced");
             return 0;

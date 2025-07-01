@@ -1,3 +1,4 @@
+using Globals;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -12,8 +13,12 @@ namespace initScene
 
         public void Start()
         {
-            if (!networkObject.IsOwner) Apply();
-            Destroy(this);
+            SceneObjectReferencer.WaitingInit += sor =>
+            {
+                if (sor.isNetworkScene && !networkObject.IsOwner) Apply();
+                Destroy(this);
+            };
+
         }
 
         private void Apply()

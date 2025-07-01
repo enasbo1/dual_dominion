@@ -3,6 +3,10 @@
     public enum MonsterVariants
     {
         Small,
-        Big
+        Big,
+        DWarrior,
+        DDefendor,
+        DProtector
+        
     }
 }

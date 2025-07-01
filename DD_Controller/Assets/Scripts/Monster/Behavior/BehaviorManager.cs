@@ -16,7 +16,8 @@ namespace Monster.Behavior
             { MonsterBehaviorEnum.Idle, new Idle() },
             { MonsterBehaviorEnum.Regroup, new Regroup() },
             { MonsterBehaviorEnum.Target, new Target() },
-            { MonsterBehaviorEnum.MeleeAttack, new MeleeAttack()}
+            { MonsterBehaviorEnum.MeleeAttack, new MeleeAttack()},
+            { MonsterBehaviorEnum.Slash, new Slash()}
         };
     }
 
@@ -30,7 +31,7 @@ namespace Monster.Behavior
 
         protected TableArray<MonsterBehaviorEnum> ActivesBehaviors = new(0);
         protected bool[] Available = new bool[5];
-        protected TableArray<float> BehaviorEnd = new(0);
+        public TableArray<float> BehaviorEnd = new(0);
 
         [DoNotSerialize] public TableArray<Material[]> DefaultMaterials = new(0);
         [DoNotSerialize] public TableList<Transform> Transforms = new(0);
@@ -151,11 +152,20 @@ namespace Monster.Behavior
         {
             return Elements[index];
         }
+        
+        public int GetDealerId(MonsterDealer dealer)
+        {
+            for (int i = 0; i < Size; ++i)
+                if (Elements[i] == dealer)
+                    return i;
+            return -1;
+        }
 
         public void SetMainPlayer(PlayerDealer dealer)
         {
             MainPlayer = dealer;
         }
+        
     }
 
     public interface IMonsterBehavior
@@ -174,6 +184,7 @@ namespace Monster.Behavior
         Regroup,
         MovesWhileReady,
         MeleeAttack,
+        Slash,
         Thrust,
         Guard,
         Parry,
