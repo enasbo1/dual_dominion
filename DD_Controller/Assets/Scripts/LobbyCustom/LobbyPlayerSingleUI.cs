@@ -31,13 +31,13 @@ namespace LobbyCustom
             kickPlayerButton.gameObject.SetActive(visible);
         }
 
-        public void UpdatePlayer(Player player) {
+        public void UpdatePlayerUI(Player player) {
             this._player = player;
         
-            playerNameText.text = player.Data[LobbyManager.PLAYER_KEYS.KEY_PLAYER_NAME].Value;
-            playerStatusText.text = player.Data[LobbyManager.PLAYER_KEYS.KEY_READY].Value;
-            LobbyManager.PlayerCharacter playerCharacter = 
-                System.Enum.Parse<LobbyManager.PlayerCharacter>(player.Data[LobbyManager.PLAYER_KEYS.KEY_PLAYER_CHARACTER].Value);
+            playerNameText.text = player.Data[PLAYER_KEYS.KEY_PLAYER_NAME].Value;
+            playerStatusText.text = player.Data[PLAYER_KEYS.KEY_READY].Value;
+            PlayerCharacter playerCharacter = 
+                System.Enum.Parse<PlayerCharacter>(player.Data[PLAYER_KEYS.KEY_PLAYER_CHARACTER].Value);
             characterImage.sprite = LobbyAssets.Instance.GetSprite(playerCharacter);
         }
 

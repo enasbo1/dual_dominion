@@ -29,8 +29,9 @@ namespace LobbyCustom
             else
             {
                 authenticateButton.onClick.AddListener(() => {
-                    LobbyManager.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
+                    PlayerManager.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
                     lobbyListUI.Show();
+                    LobbyManager.Instance.RefreshLobbyList();
                     Hide();
                 });
             }

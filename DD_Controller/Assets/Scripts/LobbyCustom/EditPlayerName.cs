@@ -39,7 +39,7 @@ namespace LobbyCustom
         }
 
         private void EditPlayerName_OnNameChanged(object sender, EventArgs e) {
-            LobbyManager.Instance.UpdatePlayerName(GetPlayerName());
+            PlayerManager.Instance.UpdatePlayerName(GetPlayerName());
         }
 
         public string GetPlayerName() {

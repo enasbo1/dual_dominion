@@ -20,7 +20,7 @@ namespace LobbyCustom
         private string _lobbyName;
         private bool _isPrivate;
         private int _maxPlayers;
-        private LobbyManager.GameMode _gameMode;
+        private GameMode _gameMode;
 
         private void Awake() {
             Instance = this;
@@ -65,8 +65,8 @@ namespace LobbyCustom
             gameModeButton.onClick.AddListener(() => {
                 switch (_gameMode) {
                     default:
-                    case LobbyManager.GameMode.PvP:
-                        _gameMode = LobbyManager.GameMode.PvP;
+                    case GameMode.PvP:
+                        _gameMode = GameMode.PvP;
                         break;
                 }
                 UpdateText();
@@ -92,7 +92,7 @@ namespace LobbyCustom
             _lobbyName = "MyLobby";
             _isPrivate = false;
             _maxPlayers = 2;
-            _gameMode = LobbyManager.GameMode.PvP;
+            _gameMode = GameMode.PvP;
 
             UpdateText();
         }

@@ -13,12 +13,12 @@ namespace LobbyCustom
             Instance = this;
         }
 
-        public Sprite GetSprite(LobbyManager.PlayerCharacter playerCharacter) {
+        public Sprite GetSprite(PlayerCharacter playerCharacter) {
             switch (playerCharacter) {
                 default:
-                case LobbyManager.PlayerCharacter.Random:   return marineSprite;
-                case LobbyManager.PlayerCharacter.Survivor:    return ninjaSprite;
-                case LobbyManager.PlayerCharacter.God:   return zombieSprite;
+                case PlayerCharacter.Random:   return marineSprite;
+                case PlayerCharacter.Survivor:    return ninjaSprite;
+                case PlayerCharacter.God:   return zombieSprite;
             }
         }
 

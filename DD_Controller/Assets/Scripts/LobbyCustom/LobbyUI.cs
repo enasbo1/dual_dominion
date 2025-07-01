@@ -24,14 +24,8 @@ namespace LobbyCustom
         [SerializeField] private Button leaveLobbyButton;
         [SerializeField] private Button changeGameModeButton;
         [SerializeField] private Button launchGameButton;
-    
-        private bool _isSurvivor;
-        private bool _isReady;
-        /*
-    [Header("Scenes to Loads")]
-    public SceneAsset multiPlayerScene;
-    public SceneAsset monoPlayerScene;
-    */
+
+        private TextMeshProUGUI _launchText;
     
         private void LoadNextScene()
         {
@@ -46,7 +40,7 @@ namespace LobbyCustom
             {
                 if (player.Id != AuthenticationService.Instance.PlayerId) continue;
             
-                if (_isSurvivor)
+                if (LobbyManager.Instance.IsLobbyHost())
                 {
                     GameMultiplayer.Instance.StartHost();
                 }
@@ -55,57 +49,28 @@ namespace LobbyCustom
                     GameMultiplayer.Instance.StartClient();
                 }
             }
-        }
-    
-        private void CheckPlayerReady()
-        {
-            Lobby lobby = LobbyManager.Instance.GetJoinedLobby();
-        
-            foreach (Player player in lobby.Players)
-            {
-                Debug.Log($"Id {player.Id}, Data {player.Data}, ConnectionInfo {player.ConnectionInfo}, AllocationId {player.AllocationId}");
-            
-                if (player.Id != AuthenticationService.Instance.PlayerId) continue;
-            
-                if (_isSurvivor)
-                {
-                    GameMultiplayer.Instance.StartHost();
-                }
-                else
-                {
-                    GameMultiplayer.Instance.StartClient();
-                }
-            }
-        }
-
-        public void ReadyToPlay()
-        {
-            if (playerCountText.text.StartsWith("2")) 
-                if (LobbyManager.Instance.IsLobbyHost() && NetworkManager.Singleton.ConnectedClients.Count > 1) launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Launch";
-                else launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text = "Launch";
         }
 
         private void Awake()
         {
             Instance = this;
-
             DontDestroyOnLoad(this.gameObject);
+            
+            _launchText = launchGameButton.GetComponentInChildren<TextMeshProUGUI>();
 
             playerSingleTemplate.gameObject.SetActive(false);
 
             randomButton.onClick.AddListener(() =>
             {
-                LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Random);
+                PlayerManager.Instance.UpdatePlayerCharacter(PlayerCharacter.Random);
             });
             mageButton.onClick.AddListener(() =>
             {
-                LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.Survivor);
-                _isSurvivor = true;
+                PlayerManager.Instance.UpdatePlayerCharacter(PlayerCharacter.Survivor);
             });
             godButton.onClick.AddListener(() =>
             {
-                LobbyManager.Instance.UpdatePlayerCharacter(LobbyManager.PlayerCharacter.God);
-                _isSurvivor = false;
+                PlayerManager.Instance.UpdatePlayerCharacter(PlayerCharacter.God);
             });
 
             leaveLobbyButton.onClick.AddListener(() =>
@@ -115,28 +80,21 @@ namespace LobbyCustom
 
             launchGameButton.onClick.AddListener(() =>
             {
-                //if (LobbyManager.Instance.IsLobbyHost() && launchGameButton.GetComponentInChildren<TextMeshProUGUI>().text == "Launch") LoadNextScene();
-                //ToggleReadyState();
-                //ReadyToPlay();
 
-                LoadNextScene();
+                if (LobbyManager.Instance.IsLobbyHost())
+                {
+                    if (LobbyManager.Instance.ArePlayersReady()) LoadNextScene();
+                    return;
+                }
+                
+                PlayerManager.Instance.UpdateReadyStatus();
+                _launchText.text = PlayerManager.Instance.GetPlayerStatus();
             });
 
             changeGameModeButton.onClick.AddListener(() =>
             {
                 LobbyManager.Instance.ChangeGameMode();
             });
-        }
-
-        private void ToggleReadyState()
-        {
-            _isReady = !_isReady;
-            UpdateReadyButtonText();
-        }
-
-        private void UpdateReadyButtonText()
-        {
-        
         }
 
         private void Start()
@@ -147,7 +105,6 @@ namespace LobbyCustom
             LobbyManager.Instance.OnLeftLobby += LobbyManager_OnLeftLobby;
             LobbyManager.Instance.OnKickedFromLobby += LobbyManager_OnLeftLobby;
 
-            UpdateReadyButtonText();
             Hide();
         }
 
@@ -182,6 +139,8 @@ namespace LobbyCustom
 
         private void UpdateLobby(Lobby lobby)
         {
+            if (lobby == null) return;
+            
             ClearLobby();
 
             foreach (Player player in lobby.Players)
@@ -201,25 +160,29 @@ namespace LobbyCustom
                     player.Id != AuthenticationService.Instance.PlayerId // Don't allow kick self
                 );
 
-                lobbyPlayerSingleUI.UpdatePlayer(player);
+                lobbyPlayerSingleUI.UpdatePlayerUI(player);
+
+                if (LobbyManager.Instance.IsLobbyHost())
+                {
+                    _launchText.text = LobbyManager.Instance.ArePlayersReady() ? "Launch": "Waiting Players";
+                    _launchText.color = LobbyManager.Instance.ArePlayersReady() ? Color.black: Color.gray;
+                }
             }   
 
             changeGameModeButton.gameObject.SetActive(LobbyManager.Instance.IsLobbyHost());
 
             lobbyNameText.text = lobby.Name;
             playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
-            gameModeText.text = lobby.Data[LobbyManager.PLAYER_KEYS.KEY_GAME_MODE].Value;
+            gameModeText.text = lobby.Data[PLAYER_KEYS.KEY_GAME_MODE].Value;
 
             Show();
         }
 
         private void ClearLobby()
         {
-            if (container == null) return;
-
             foreach (Transform child in container)
             {
-                if (child == null || child == playerSingleTemplate) continue;
+                if (child == playerSingleTemplate) continue;
                 Destroy(child.gameObject);
             }
         }
