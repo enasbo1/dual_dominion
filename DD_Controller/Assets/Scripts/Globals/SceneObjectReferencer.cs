@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Monster;
 using UnityEngine;
 
 namespace Globals
@@ -7,9 +8,10 @@ namespace Globals
     public class SceneObjectReferencer : MonoBehaviour
     {
         public static SceneObjectReferencer MainInstance;
-        
+         
         public Camera camera;
         public bool isNetworkScene;
+        public MonsterStandByManager monsterStandByManager;
         public static event Action<SceneObjectReferencer> WaitingInit 
         {
             add => WaitingAction(value);

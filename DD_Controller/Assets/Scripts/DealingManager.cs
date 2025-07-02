@@ -77,7 +77,7 @@ public class DealingManager<TDealer, TEnum, TVariant> : MonoBehaviour where TDea
     {
         return _objectsDealed.Count;
     }
-
+    
     public void Add(TDealer element)
     {
         _objectsDealed.Add(element);

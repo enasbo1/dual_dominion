@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Monster;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Shared
@@ -13,10 +14,10 @@ namespace Shared
     public abstract class StandByManager<TDealer, TEnum, TVariant> : MonoBehaviour
         where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
-        [SerializeField] [CanBeNull] private DealingManager<TDealer, TEnum, TVariant> dealingManager;
+        [SerializeField] [CanBeNull] public DealingManager<TDealer, TEnum, TVariant> dealingManager;
         [SerializeField] [CanBeNull] private PrefabReferencer<TDealer, TEnum, TVariant> prefabReferencer;
         [SerializeField] private bool spawnNetworkObject;
-        
+        [SerializeField] [CanBeNull] private TDealer[] reserve;
         public bool SpawnNetworkObject => spawnNetworkObject;
         private readonly List<TDealer> _dealers = new();
         private readonly List<bool> _isDead = new();
@@ -33,6 +34,7 @@ namespace Shared
             TVariant variant = default, bool deal = true)
         {
             int i = -1;
+            bool useReserve = false;
             TEnum type = objectToSpawn.GetComponent<TDealer>().type;
             for (int j = 0; j < _dealers.Count; j++)
                 if (_isDead[j])
@@ -43,6 +45,19 @@ namespace Shared
                     i = j;
                     break;
                 }
+
+            if (i == -1)
+                if (reserve != null)
+                    for (int j = 0; j < reserve.Length; j++)
+                        if (reserve[j])
+                        {
+                            if (type == null) break;
+                            if (!type.Equals(reserve[j].type)) continue;
+                            if (reserve[j].isActiveAndEnabled) continue;
+                            i = j;
+                            useReserve = true;
+                            break;
+                        }
 
             TDealer newDealer;
             if (i == -1)
@@ -55,10 +70,21 @@ namespace Shared
                     else
                         newDealer.networkObject.enabled = false;
             }
+            else if (useReserve)
+            {
+                newDealer = reserve[i];
+                newDealer.ResetDealed(false);
+                if (newDealer.networkObject)
+                    if (spawnNetworkObject)
+                        newDealer.networkObject.Spawn();
+                    else
+                        newDealer.networkObject.enabled = false;
+            }
             else
             {
                 newDealer = _dealers[i];
                 _isDead[i] = false;
+                
                 Rigidbody rb = newDealer.mainTransform?.GetComponent<Rigidbody>();
                 if (rb)
                 {

@@ -73,6 +73,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5313308774028100187}
   - component: {fileID: 3235163029835107824}
+  - component: {fileID: 2381131758266882593}
   - component: {fileID: 6342587721082908236}
   - component: {fileID: 5923616582156529237}
   - component: {fileID: 8525445743320877743}
@@ -115,6 +116,20 @@ MonoBehaviour:
   dealingManager: {fileID: 5923616582156529237}
   prefabReferencer: {fileID: 6342587721082908236}
   spawnNetworkObject: 1
+--- !u!114 &2381131758266882593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187424710987997082}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 267cdfe5f12144e39ece34b986985105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  reserve: []
+  standBy: {fileID: 3235163029835107824}
 --- !u!114 &6342587721082908236
 MonoBehaviour:
   m_ObjectHideFlags: 0
