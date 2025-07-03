@@ -34,10 +34,10 @@ namespace LobbyCustom
         public void UpdatePlayerUI(Player player) {
             this._player = player;
         
-            playerNameText.text = player.Data[PLAYER_KEYS.KEY_PLAYER_NAME].Value;
-            playerStatusText.text = player.Data[PLAYER_KEYS.KEY_READY].Value;
+            playerNameText.text = player.Data[PlayerKey.PLAYER_NAME].Value;
+            playerStatusText.text = player.Data[PlayerKey.READY].Value;
             PlayerCharacter playerCharacter = 
-                System.Enum.Parse<PlayerCharacter>(player.Data[PLAYER_KEYS.KEY_PLAYER_CHARACTER].Value);
+                System.Enum.Parse<PlayerCharacter>(player.Data[PlayerKey.PLAYER_CHARACTER].Value);
             characterImage.sprite = LobbyAssets.Instance.GetSprite(playerCharacter);
         }
 

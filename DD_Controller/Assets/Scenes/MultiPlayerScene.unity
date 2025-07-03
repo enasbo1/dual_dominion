@@ -492,6 +492,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 408239705}
   isNetworkScene: 1
+  monsterStandByManager: {fileID: 0}
 --- !u!1 &789945260
 GameObject:
   m_ObjectHideFlags: 0

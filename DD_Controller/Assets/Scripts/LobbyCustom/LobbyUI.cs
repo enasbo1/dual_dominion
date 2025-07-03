@@ -1,5 +1,5 @@
+using network;
 using TMPro;
-using Unity.Netcode;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
 using UnityEngine;
@@ -83,7 +83,11 @@ namespace LobbyCustom
 
                 if (LobbyManager.Instance.IsLobbyHost())
                 {
-                    if (LobbyManager.Instance.ArePlayersReady()) LoadNextScene();
+                    if (LobbyManager.Instance.ArePlayersReady())
+                    {
+                        Debug.Log("setRelayHostData");
+                        NetworkConnection.SetRelayHostConnection();
+                    };
                     return;
                 }
                 
@@ -102,6 +106,7 @@ namespace LobbyCustom
             LobbyManager.Instance.OnJoinedLobby += UpdateLobby_Event;
             LobbyManager.Instance.OnJoinedLobbyUpdate += UpdateLobby_Event;
             LobbyManager.Instance.OnLobbyGameModeChanged += UpdateLobby_Event;
+            LobbyManager.Instance.OnRelayCodeGiven += JoinIfClient_Event;
             LobbyManager.Instance.OnLeftLobby += LobbyManager_OnLeftLobby;
             LobbyManager.Instance.OnKickedFromLobby += LobbyManager_OnLeftLobby;
 
@@ -115,6 +120,7 @@ namespace LobbyCustom
                 LobbyManager.Instance.OnJoinedLobby -= UpdateLobby_Event;
                 LobbyManager.Instance.OnJoinedLobbyUpdate -= UpdateLobby_Event;
                 LobbyManager.Instance.OnLobbyGameModeChanged -= UpdateLobby_Event;
+                LobbyManager.Instance.OnRelayCodeGiven -= JoinIfClient_Event;
                 LobbyManager.Instance.OnLeftLobby -= LobbyManager_OnLeftLobby;
                 LobbyManager.Instance.OnKickedFromLobby -= LobbyManager_OnLeftLobby;
             }
@@ -132,6 +138,18 @@ namespace LobbyCustom
             UpdateLobby();
         }
 
+        private void JoinIfClient_Event(object sender, LobbyManager.LobbyEventArgs e)
+        {
+            JoinIfClient();
+        }
+        private void JoinIfClient()
+        {
+            Debug.Log("New Relay Code : " + LobbyManager.Instance.GetRelayCode.Value);
+            if (!LobbyManager.Instance.IsLobbyHost() && LobbyManager.Instance.GetRelayCode.Value != "")
+            {
+                NetworkConnection.SetRelayClientConnection();
+            }
+        }
         private void UpdateLobby()
         {
             UpdateLobby(LobbyManager.Instance.GetJoinedLobby());
@@ -140,6 +158,12 @@ namespace LobbyCustom
         private void UpdateLobby(Lobby lobby)
         {
             if (lobby == null) return;
+
+            if (!LobbyManager.Instance.IsLobbyHost() && LobbyManager.Instance.GetRelayCode.Value != "")
+            {
+                JoinIfClient();
+                return;
+            }
             
             ClearLobby();
 
@@ -173,7 +197,7 @@ namespace LobbyCustom
 
             lobbyNameText.text = lobby.Name;
             playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
-            gameModeText.text = lobby.Data[PLAYER_KEYS.KEY_GAME_MODE].Value;
+            gameModeText.text = lobby.Data[LobbyKey.GAME_MODE].Value;
 
             Show();
         }

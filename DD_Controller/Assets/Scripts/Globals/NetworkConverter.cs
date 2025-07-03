@@ -23,7 +23,7 @@ namespace Globals
             }
             for (int i = 0; i < _instance.materialNetworked.Length; i++)
             {
-                if (mat.color.Equals(_instance.materialNetworked[i].color) && mat.name.Equals(_instance.materialNetworked[i].name)) return i;
+                if (mat.color.Equals(_instance.materialNetworked[i].color) && mat.name.Substring(0, 4).Equals(_instance.materialNetworked[i].name.Substring(0, 4))) return i;
             }
             Debug.LogWarning($"Material {mat} not referenced");
             return 0;

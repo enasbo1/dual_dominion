@@ -356,10 +356,54 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8143710011712545758, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -6093592463355912122, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -3195828791156449804, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -1806680513116206669, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -1461304994638716399, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -1120989108687609925, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -804731622281664130, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: -678588488315902003, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: 327064008815436722, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
     - target: {fileID: 919132149155446097, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
       propertyPath: m_Name
       value: Dominion_wyvern
       objectReference: {fileID: 0}
+    - target: {fileID: 4321514657177891973, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
+    - target: {fileID: 6745302439343835087, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -459,6 +503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isEnableOnStart: 1
 --- !u!23 &4866280595597579828 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -1120989108687609925, guid: b72d7de023711a7488699a1cd6cfe68c, type: 3}

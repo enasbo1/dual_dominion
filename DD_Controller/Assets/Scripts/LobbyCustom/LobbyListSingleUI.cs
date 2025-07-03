@@ -25,7 +25,7 @@ namespace LobbyCustom
 
             lobbyNameText.text = lobby.Name;
             playersText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
-            gameModeText.text = lobby.Data[PLAYER_KEYS.KEY_GAME_MODE].Value;
+            gameModeText.text = lobby.Data[LobbyKey.GAME_MODE].Value;
         }
 
 

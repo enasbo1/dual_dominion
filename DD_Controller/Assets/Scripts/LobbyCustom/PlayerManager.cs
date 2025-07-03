@@ -7,13 +7,19 @@ using UnityEngine;
 
 namespace LobbyCustom
 {
-    public static class PLAYER_KEYS
+    public static class PlayerKey
     {
-        public const string KEY_PLAYER_NAME = "PlayerName";
-        public const string KEY_PLAYER_CHARACTER = "Character";
-        public const string KEY_GAME_MODE = "GameMode";
-        public const string KEY_READY = "Ready";
+        public const string PLAYER_NAME = "PlayerName";
+        public const string PLAYER_CHARACTER = "Character";
+        public const string READY = "Ready";
     }
+
+    public static class LobbyKey
+    {
+        public const string GAME_MODE = "GameMode";
+        public const string RELAY_CODE = "RelayCode";
+    }
+        
     
     public enum PlayerCharacter {
         Random,
@@ -49,9 +55,9 @@ namespace LobbyCustom
         
         public Player GetPlayer() {
             return new Player(AuthenticationService.Instance.PlayerId, null, new Dictionary<string, PlayerDataObject> {
-                { PLAYER_KEYS.KEY_PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, _playerName) },
-                { PLAYER_KEYS.KEY_PLAYER_CHARACTER, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, PlayerCharacter.Random.ToString()) },
-                { PLAYER_KEYS.KEY_READY, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, _playerStatus) }
+                { PlayerKey.PLAYER_NAME, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, _playerName) },
+                { PlayerKey.PLAYER_CHARACTER, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, PlayerCharacter.Random.ToString()) },
+                { PlayerKey.READY, new PlayerDataObject(PlayerDataObject.VisibilityOptions.Public, _playerStatus) }
             });
         }
         
@@ -83,7 +89,7 @@ namespace LobbyCustom
                 {
                     Data = new Dictionary<string, PlayerDataObject>() {
                         {
-                            PLAYER_KEYS.KEY_PLAYER_NAME, new PlayerDataObject(
+                            PlayerKey.PLAYER_NAME, new PlayerDataObject(
                                 visibility: PlayerDataObject.VisibilityOptions.Public,
                                 value: playerName)
                         }
@@ -108,7 +114,7 @@ namespace LobbyCustom
                 {
                     Data = new Dictionary<string, PlayerDataObject>() {
                         {
-                            PLAYER_KEYS.KEY_READY, new PlayerDataObject(
+                            PlayerKey.READY, new PlayerDataObject(
                                 visibility: PlayerDataObject.VisibilityOptions.Public,
                                 value: _playerStatus)
                         }
@@ -133,7 +139,7 @@ namespace LobbyCustom
                 {
                     Data = new Dictionary<string, PlayerDataObject>() {
                         {
-                            PLAYER_KEYS.KEY_PLAYER_CHARACTER, new PlayerDataObject(
+                            PlayerKey.PLAYER_CHARACTER, new PlayerDataObject(
                                 visibility: PlayerDataObject.VisibilityOptions.Public,
                                 value: playerCharacter.ToString())
                         }

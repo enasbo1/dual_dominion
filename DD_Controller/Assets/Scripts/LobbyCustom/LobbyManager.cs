@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Unity.Services.Authentication;
 using Unity.Services.Core;
@@ -23,6 +24,7 @@ namespace LobbyCustom
         public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
         public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
         public event EventHandler<LobbyEventArgs> OnLobbyGameModeChanged;
+        public event EventHandler<LobbyEventArgs> OnRelayCodeGiven;
         public class LobbyEventArgs : EventArgs {
             public Lobby lobby;
         }
@@ -108,12 +110,11 @@ namespace LobbyCustom
         }
 
         private bool IsPlayerInLobby() {
-            if (joinedLobby != null && joinedLobby.Players != null) {
-                foreach (Player player in joinedLobby.Players) {
-                    if (player.Id == AuthenticationService.Instance.PlayerId) {
-                        // This player is in this lobby
-                        return true;
-                    }
+            if (joinedLobby is not { Players: not null }) return false;
+            foreach (Player player in joinedLobby.Players) {
+                if (player.Id == AuthenticationService.Instance.PlayerId) {
+                    // This player is in this lobby
+                    return true;
                 }
             }
             return false;
@@ -122,7 +123,7 @@ namespace LobbyCustom
         public bool ArePlayersReady()
         {
             if (joinedLobby == null) return false;
-            return !joinedLobby.Players.Exists(player => player.Data[PLAYER_KEYS.KEY_READY].Value != "Ready");
+            return !joinedLobby.Players.Exists(player => player.Data[PlayerKey.READY].Value != "Ready");
         }
 
         public async void CreateLobby(string lobbyName, int maxPlayers, bool isPrivate, GameMode gameMode) {
@@ -133,7 +134,8 @@ namespace LobbyCustom
                 Player = player,
                 IsPrivate = isPrivate,
                 Data = new Dictionary<string, DataObject> {
-                    { PLAYER_KEYS.KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
+                    { LobbyKey.GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) },
+                    { LobbyKey.RELAY_CODE, new DataObject(DataObject.VisibilityOptions.Public, "") }
                 }
             };
 
@@ -180,7 +182,7 @@ namespace LobbyCustom
             
             if (IsLobbyHost()) {
                 GameMode gameMode =
-                    Enum.Parse<GameMode>(joinedLobby.Data[PLAYER_KEYS.KEY_GAME_MODE].Value);
+                    Enum.Parse<GameMode>(joinedLobby.Data[LobbyKey.GAME_MODE].Value);
 
                 switch (gameMode) {
                     default:
@@ -201,7 +203,7 @@ namespace LobbyCustom
             
                 joinedLobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions {
                     Data = new Dictionary<string, DataObject> {
-                        { PLAYER_KEYS.KEY_GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
+                        { LobbyKey.GAME_MODE, new DataObject(DataObject.VisibilityOptions.Public, gameMode.ToString()) }
                     }
                 });
 
@@ -210,6 +212,28 @@ namespace LobbyCustom
                 Debug.Log(e);
             }
         }
+
+        public async Task SetRelayCode(string relayCode)
+        {
+            if (joinedLobby == null) return;
+            
+            try {
+                Debug.Log("SetRelayCode " + relayCode);
+            
+                joinedLobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions {
+                    Data = new Dictionary<string, DataObject> {
+                        { LobbyKey.RELAY_CODE, new DataObject(DataObject.VisibilityOptions.Public, relayCode) }
+                    }
+                });
+
+                OnRelayCodeGiven?.Invoke(this, new LobbyEventArgs { lobby = joinedLobby });
+            } catch (LobbyServiceException e) {
+                Debug.Log(e);
+            }
+        }
+        
+        public DataObject GetRelayCode => joinedLobby?.Data[LobbyKey.RELAY_CODE];
+        public int? GetMaxPlayers => joinedLobby?.MaxPlayers;
 
         #region Join Lobby
         
