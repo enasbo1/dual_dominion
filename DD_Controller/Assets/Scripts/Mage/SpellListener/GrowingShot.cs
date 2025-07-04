@@ -4,20 +4,21 @@ using UnityEngine;
 
 namespace Mage.SpellListener
 {
-    public class UnnamedSpell : MonoBehaviour
+    public class GrowingShot : MonoBehaviour
     {
         public Transform characterTransform;
         public SpellManager spellManager;
         public Transform castedGroupsPosition;
         public Transform defaultGroupsPosition;
         public float timeBetweenBullet = 0.2f;
-        public int spellId = 6;
+        public int spellId = 8;
+        public float defaultDamageMax = 20f;
 
         private readonly List<GroupOfTheSpell> _groupsOfTheSpell = new List<GroupOfTheSpell>();
         private int _groupCount;
         private int _groupToCast;
 
-        private Spell _unnamedSpell;
+        private Spell _growingShot;
         
         private class GroupOfTheSpell
         {
@@ -28,17 +29,36 @@ namespace Mage.SpellListener
             public float timeSinceLastBullet;
         }
         
-        private struct GroupBullet
+        private class GroupBullet
         {
+            public float growMultiplayer;
             public GameObject gameObject;
             public Transform transform;
-            public Collider bulletCollider;
             public Animation bulletAnimation;
+            public Collider bulletCollider;
+            public DamageDealerScript damageDealer;
+        }
+
+        private void GroupReset(GroupOfTheSpell group)
+        {
+            group.objectTransform.parent = defaultGroupsPosition;
+            group.objectTransform.localPosition = Vector3.zero;
+            group.isTriggerable = true;
+            
+            foreach (GroupBullet bullet in group.bullets)
+            {
+                bullet.gameObject.SetActive(false);
+                bullet.transform.localPosition = Vector3.zero;
+                bullet.transform.localScale = Vector3.one;
+                bullet.growMultiplayer = 1;
+                bullet.bulletCollider.enabled = false;
+                bullet.damageDealer.damageMax = defaultDamageMax;
+            }
         }
 
         private void Start()
         {
-            _unnamedSpell = spellManager.GetSpellById(spellId);
+            _growingShot = spellManager.GetSpellById(spellId);
             
             foreach (Transform group in defaultGroupsPosition.transform)
             {
@@ -53,7 +73,8 @@ namespace Mage.SpellListener
                         gameObject = bulletAnimation.gameObject,
                         transform = bulletAnimation.transform,
                         bulletAnimation = bulletAnimation,
-                        bulletCollider = bulletAnimation.GetComponent<Collider>()
+                        bulletCollider = bulletAnimation.GetComponent<Collider>(),
+                        damageDealer = bulletAnimation.GetComponent<DamageDealerScript>()
                     };
 
                     groupBullet.gameObject.SetActive(false);
@@ -66,27 +87,13 @@ namespace Mage.SpellListener
                     bullets = bullets,
                     objectTransform = group
                 };
-
+                
+                GroupReset(groupOfTheSpell);
                 _groupsOfTheSpell.Add(groupOfTheSpell);
             }
 
-            _unnamedSpell.AddSpellListener(_ => SpellCasted());
-            _unnamedSpell.AddSpellFailureListener(_ => SpellCastedAsFailure());
-        }
-        
-        private void GroupReset(GroupOfTheSpell group)
-        {
-            group.objectTransform.parent = defaultGroupsPosition;
-            group.objectTransform.localPosition = Vector3.zero;
-            group.isTriggerable = true;
-                        
-            foreach (GroupBullet bullet in group.bullets.Where(
-                         bullet => !bullet.bulletAnimation.isPlaying))
-            {
-                bullet.gameObject.SetActive(false);
-                bullet.transform.localPosition = Vector3.zero;
-                bullet.bulletCollider.enabled = false;
-            }
+            _growingShot.AddSpellListener(_ => SpellCasted());
+            _growingShot.AddSpellFailureListener(_ => SpellCastedAsFailure());
         }
 
         private void FixedUpdate()
@@ -135,7 +142,23 @@ namespace Mage.SpellListener
             GroupOfTheSpell groupOfTheSpellToCast = _groupsOfTheSpell[_groupToCast];
             if (!groupOfTheSpellToCast.isTriggerable) return;
             
-            groupOfTheSpellToCast.bullets.ForEach(bullet => bullet.gameObject.SetActive(spellManager.spellToCast.id == spellId));
+            groupOfTheSpellToCast.bullets.ForEach(bullet =>
+            {
+                bool isSpellToCast = spellManager.spellToCast.id == spellId && _growingShot.canBeCast;
+                bullet.gameObject.SetActive(isSpellToCast);
+                
+                if (!isSpellToCast) return;
+                float sizeToAdd = (0.25f / (bullet.growMultiplayer * bullet.growMultiplayer + 1)) * bullet.growMultiplayer;
+                
+                Vector3 bulletScale = bullet.transform.localScale;
+                Vector3 bulletPos = bullet.transform.localPosition;
+                bulletScale = new Vector3(bulletScale.x + sizeToAdd, bulletScale.y + sizeToAdd, bulletScale.z + sizeToAdd);
+                bulletPos = new Vector3(bulletPos.x, bulletScale.y / 2, bulletPos.z);
+                bullet.transform.localScale = bulletScale;
+                bullet.transform.localPosition = bulletPos;
+                bullet.growMultiplayer += Time.deltaTime;
+                bullet.damageDealer.damageMax += sizeToAdd;
+            });
         }
 
         private void SpellCasted()

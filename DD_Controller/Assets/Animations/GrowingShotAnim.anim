@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: UnnamedSpellV1Anim
+  m_Name: GrowingShotAnim
   serializedVersion: 7
   m_Legacy: 1
   m_Compressed: 0
@@ -22,15 +22,15 @@ AnimationClip:
         time: 0
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 3.75}
+        outSlope: {x: 0, y: 0, z: 5}
         tangentMode: 0
         weightedMode: 0
         inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
         outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
       - serializedVersion: 3
-        time: 4
-        value: {x: 0, y: 0, z: 15}
-        inSlope: {x: 0, y: 0, z: 3.75}
+        time: 10
+        value: {x: 0, y: 0, z: 50}
+        inSlope: {x: 0, y: 0, z: 5}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
         weightedMode: 0
@@ -56,7 +56,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 4
+    m_StopTime: 10
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -80,15 +80,15 @@ AnimationClip:
         time: 0
         value: 0
         inSlope: 0
-        outSlope: 3.75
+        outSlope: 5
         tangentMode: 69
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
       - serializedVersion: 3
-        time: 4
-        value: 15
-        inSlope: 3.75
+        time: 10
+        value: 50
+        inSlope: 5
         outSlope: 0
         tangentMode: 69
         weightedMode: 0

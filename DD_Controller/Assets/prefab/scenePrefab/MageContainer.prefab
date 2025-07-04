@@ -261,7 +261,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2793386540
+  GlobalObjectIdHash: 1021894217
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 2
@@ -1202,6 +1202,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 7907222497124521009}
     m_Modifications:
     - target: {fileID: 1185008970497307522, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: characterTransform
+      value: 
+      objectReference: {fileID: 5313604575902248990}
+    - target: {fileID: 1185008970497307522, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: castedGroupsPosition
       value: 
       objectReference: {fileID: 7907222497124521009}
@@ -1290,6 +1294,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5530530155456345702, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: characterTransform
+      value: 
+      objectReference: {fileID: 5313604575902248990}
+    - target: {fileID: 5530530155456345702, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: castedGroupsPosition
       value: 
       objectReference: {fileID: 7907222497124521009}
@@ -1317,6 +1325,14 @@ PrefabInstance:
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25
       objectReference: {fileID: 0}
+    - target: {fileID: 7548388887456912831, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: characterTransform
+      value: 
+      objectReference: {fileID: 5313604575902248990}
+    - target: {fileID: 7548388887456912831, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: castedGroupsPosition
+      value: 
+      objectReference: {fileID: 7907222497124521009}
     - target: {fileID: 7788040188094330477, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

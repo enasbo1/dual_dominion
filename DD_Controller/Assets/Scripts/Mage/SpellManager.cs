@@ -143,6 +143,17 @@ namespace Mage
                     false
                 ),
                 new Spell(
+                    8,
+                    "GrowingShot",
+                    new List<SpellDirections>
+                    {
+                        SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Up
+                    },
+                    4,
+                    true,
+                    true
+                ),
+                new Spell(
                     2,
                     "SkyView",
                     new List<SpellDirections>

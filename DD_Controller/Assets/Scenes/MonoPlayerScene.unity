@@ -8625,6 +8625,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ManagerBarrer
       objectReference: {fileID: 0}
+    - target: {fileID: 5574618041224519943, guid: 0cc49d5e6a322f742ab432998aa66ee5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5798137433258630259, guid: 0cc49d5e6a322f742ab432998aa66ee5, type: 3}
       propertyPath: m_Enabled
       value: 1

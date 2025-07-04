@@ -60,6 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce74d462489f3e146bd2f27e9a3c5dab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  characterTransform: {fileID: 0}
   spellManager: {fileID: 0}
   castedGroupsPosition: {fileID: 0}
   defaultGroupsPosition: {fileID: 31023029417989524}
@@ -235,6 +236,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2285756501918064436, guid: 2fadf68d0f236fe4eb05b4e21187e645, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062435370082734474, guid: 2fadf68d0f236fe4eb05b4e21187e645, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062435370082734474, guid: 2fadf68d0f236fe4eb05b4e21187e645, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4062435370082734474, guid: 2fadf68d0f236fe4eb05b4e21187e645, type: 3}
+      propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8622813859101144291, guid: 2fadf68d0f236fe4eb05b4e21187e645, type: 3}
