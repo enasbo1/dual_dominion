@@ -1,5 +1,8 @@
 ﻿using Globals;
+using JetBrains.Annotations;
+using Unity.Mathematics;
 using Unity.Netcode;
+using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 namespace network
@@ -8,8 +11,11 @@ namespace network
     {
         [SerializeField] private bool isEnableOnStart = true;
 
+        [CanBeNull] private Rigidbody _rigidbody;
+
         void Start()
         {
+            _rigidbody = GetComponent<Rigidbody>();
             SceneObjectReferencer.WaitingInit += sor =>
             {
                 if (!isEnableOnStart && sor.isNetworkScene && !IsServer)
@@ -18,10 +24,16 @@ namespace network
         }
         
         [Rpc(SendTo.NotServer)]
-        private void SetActiveRpc(bool active)
+        private void SetActiveRpc(bool active, Vector3 position = default, Quaternion rotation = default)
         {
             Debug.Log("here");
             gameObject.SetActive(active);
+            if (!active) return;
+            if (position != Vector3.zero) transform.position = new Vector3(position.x, position.y, position.z);
+            
+            if (rotation == Quaternion.identity) return;
+            if (_rigidbody) _rigidbody.rotation = rotation;
+            else transform.rotation = rotation;
         }
 
         private void OnDisable()
@@ -35,7 +47,7 @@ namespace network
         {            
             if (!SceneObjectReferencer.MainInstance) return;
             if (SceneObjectReferencer.MainInstance.isNetworkScene && IsServer)
-                SetActiveRpc(true);
+                SetActiveRpc(true, position:transform.position, rotation:transform.rotation);
         }
     }
 }

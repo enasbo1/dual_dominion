@@ -93,13 +93,15 @@ namespace Shared
                 }
             }
 
-            newDealer.gameObject.SetActive(true);
             newDealer.ApplyVariant(variant);
-            
-            if (!newDealer.mainTransform) return newDealer;
 
-            newDealer.mainTransform.position = position;
-            newDealer.mainTransform.rotation = rotation;
+            if (newDealer.mainTransform)
+            {
+                newDealer.mainTransform.position = position;
+                newDealer.mainTransform.rotation = rotation;
+            }
+            
+            newDealer.gameObject.SetActive(true);
 
 
             if (deal && dealingManager)

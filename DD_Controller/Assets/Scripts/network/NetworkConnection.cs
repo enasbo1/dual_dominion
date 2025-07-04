@@ -40,11 +40,11 @@ namespace network
         public static async Task SetRelayHostConnection()
         {
             UnityTransport transport = NetworkManager.Singleton.GetComponentInChildren<UnityTransport>();
-            var allocation = await RelayService.Instance.CreateAllocationAsync(LobbyManager.Instance.GetMaxPlayers ?? 2);
-            var joincode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
+            Allocation allocation = await RelayService.Instance.CreateAllocationAsync(LobbyManager.Instance.GetMaxPlayers ?? 2);
+            string joincode = await RelayService.Instance.GetJoinCodeAsync(allocation.AllocationId);
             await LobbyManager.Instance.SetRelayCode(joincode);
-            bool isSecure = false;
-            var endpoint = GetEndpointForAllocation(allocation.ServerEndpoints,
+            bool isSecure;
+            NetworkEndpoint endpoint = GetEndpointForAllocation(allocation.ServerEndpoints,
                 allocation.RelayServer.IpV4, allocation.RelayServer.Port, out isSecure);
 
             transport.SetHostRelayData(AddressFromEndpoint(endpoint), endpoint.Port,
@@ -57,16 +57,16 @@ namespace network
         {
             UnityTransport transport = NetworkManager.Singleton.GetComponentInChildren<UnityTransport>();
             Debug.Log("Trying to Join Session");
-            var joinAllocation = await RelayService.Instance.JoinAllocationAsync(LobbyManager.Instance.GetRelayCode.Value);
-            bool isSecure = false;
-            var endpoint = GetEndpointForAllocation(joinAllocation.ServerEndpoints,
+            JoinAllocation joinAllocation = await RelayService.Instance.JoinAllocationAsync(LobbyManager.Instance.GetRelayCode.Value);
+            bool isSecure;
+            NetworkEndpoint endpoint = GetEndpointForAllocation(joinAllocation.ServerEndpoints,
                 joinAllocation.RelayServer.IpV4, joinAllocation.RelayServer.Port, out isSecure);
 
             transport.SetClientRelayData(AddressFromEndpoint(endpoint), endpoint.Port,
                 joinAllocation.AllocationIdBytes, joinAllocation.Key,
                 joinAllocation.ConnectionData, joinAllocation.HostConnectionData, isSecure);
             Debug.Log("Connection Data Set");
-            GameMultiplayer.Instance.StartClient();
+                GameMultiplayer.Instance.StartClient();
 
         }
     }
