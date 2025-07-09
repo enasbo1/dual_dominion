@@ -1233,6 +1233,10 @@ PrefabInstance:
       propertyPath: castedGroupsPosition
       value: 
       objectReference: {fileID: 7907222497124521009}
+    - target: {fileID: 3005969914805125118, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: playerDealer
+      value: 
+      objectReference: {fileID: 2800593394507225767}
     - target: {fileID: 3241785497805355682, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: playerDealer
       value: 

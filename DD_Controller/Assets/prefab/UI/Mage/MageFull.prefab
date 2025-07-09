@@ -2411,6 +2411,7 @@ GameObject:
   - component: {fileID: 1564173966971634065}
   - component: {fileID: 5831827844683759926}
   - component: {fileID: 5079138801271962013}
+  - component: {fileID: 3005969914805125118}
   m_Layer: 0
   m_Name: ScriptsMage
   m_TagString: Untagged
@@ -2551,6 +2552,21 @@ MonoBehaviour:
   spellManager: {fileID: 8986099243556552578}
   levelUpGrimoireUI: {fileID: 7752186575266202853}
   transitionDistance: 1
+--- !u!114 &3005969914805125118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696d59d3e902418b9f15ad67a3cef1ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 8986099243556552578}
+  playerDealer: {fileID: 0}
+  godManager: {fileID: 0}
 --- !u!1 &5129525911974879812
 GameObject:
   m_ObjectHideFlags: 0
