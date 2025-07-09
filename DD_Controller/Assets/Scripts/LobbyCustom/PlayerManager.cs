@@ -104,11 +104,11 @@ namespace LobbyCustom
             }
         }
         
-        public async void UpdateReadyStatus()
+        public async void UpdateReadyStatus(bool status)
         {
             if (LobbyManager.Instance.joinedLobby == null) return;
             
-            _playerStatus = IsPlayerReady() ? "Not Ready" : "Ready";
+            _playerStatus = status ? "Not Ready" : "Ready";
             try {
                 UpdatePlayerOptions options = new UpdatePlayerOptions
                 {

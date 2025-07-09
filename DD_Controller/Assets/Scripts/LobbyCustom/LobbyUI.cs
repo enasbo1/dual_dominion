@@ -1,4 +1,4 @@
-using network;
+﻿using network;
 using TMPro;
 using Unity.Services.Authentication;
 using Unity.Services.Lobbies.Models;
@@ -16,17 +16,17 @@ namespace LobbyCustom
         [SerializeField] private TextMeshProUGUI lobbyNameText;
         [SerializeField] private TextMeshProUGUI playerCountText;
         [SerializeField] private TextMeshProUGUI gameModeText;
-    
+
         [Header("Menu UI Buttons")]
-        [FormerlySerializedAs("changeMarineButton")] [SerializeField] private Button randomButton;
-        [FormerlySerializedAs("changeNinjaButton")] [SerializeField] private Button mageButton;
-        [FormerlySerializedAs("changeZombieButton")] [SerializeField] private Button godButton;
+        [FormerlySerializedAs("changeMarineButton")][SerializeField] private Button randomButton;
+        [FormerlySerializedAs("changeNinjaButton")][SerializeField] private Button mageButton;
+        [FormerlySerializedAs("changeZombieButton")][SerializeField] private Button godButton;
         [SerializeField] private Button leaveLobbyButton;
         [SerializeField] private Button changeGameModeButton;
         [SerializeField] private Button launchGameButton;
 
         private TextMeshProUGUI _launchText;
-    
+
         private void LoadNextScene()
         {
             if (playerCountText.text.StartsWith("1"))
@@ -35,11 +35,11 @@ namespace LobbyCustom
                 return;
             }
             Lobby lobby = LobbyManager.Instance.GetJoinedLobby();
-        
+
             foreach (Player player in lobby.Players)
             {
                 if (player.Id != AuthenticationService.Instance.PlayerId) continue;
-            
+
                 if (LobbyManager.Instance.IsLobbyHost())
                 {
                     GameMultiplayer.Instance.StartHost();
@@ -55,7 +55,7 @@ namespace LobbyCustom
         {
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
-            
+
             _launchText = launchGameButton.GetComponentInChildren<TextMeshProUGUI>();
 
             playerSingleTemplate.gameObject.SetActive(false);
@@ -80,18 +80,124 @@ namespace LobbyCustom
 
             launchGameButton.onClick.AddListener(() =>
             {
+                var players = LobbyManager.Instance.GetJoinedLobby().Players;
+                if (players.Count != 2)
+                {
+                    launchGameButton.interactable = false;
+                    return;
+                }
 
-                if (LobbyManager.Instance.IsLobbyHost())
+                var player1 = players[0];
+                var player2 = players[1];
+                string role1 = player1.Data[PlayerKey.PLAYER_CHARACTER].Value;
+                string role2 = player2.Data[PlayerKey.PLAYER_CHARACTER].Value;
+                string localPlayerId = AuthenticationService.Instance.PlayerId;
+
+                bool isSurvivorHost =
+                    (role1 == "Survivor" && player1.Id == localPlayerId) ||
+                    (role2 == "Survivor" && player2.Id == localPlayerId);
+
+                Debug.Log($"Player 1: {player1.Id} - Role: {role1}");
+                Debug.Log($"Player 2: {player2.Id} - Role: {role2}");
+                if (role1 == "Random" && role2 == "Random")
+                {
+                    bool flip = UnityEngine.Random.value < 0.5f;
+                    string newRole1 = flip ? "God" : "Survivor";
+                    string newRole2 = flip ? "Survivor" : "God";
+
+                    Debug.Log($"Assigning roles: Player 1: {newRole1}, Player 2: {newRole2}");
+                    PlayerManager.Instance.UpdatePlayerCharacter(
+                        player1.Id == localPlayerId ?
+                        (newRole1 == "God" ? PlayerCharacter.God : PlayerCharacter.Survivor) :
+                        (newRole2 == "God" ? PlayerCharacter.God : PlayerCharacter.Survivor)
+                    );
+
+
+                    Debug.Log("Roles assigned, updating lobby status.");
+                    if (isSurvivorHost)
+                    {
+                        Debug.Log("Host is Survivor, setting relay host connection.");
+                        if (LobbyManager.Instance.ArePlayersReady())
+                        {
+                            Debug.Log("setRelayHostData");
+                            NetworkConnection.SetRelayHostConnection();
+                        }
+
+                        return;
+                    }
+
+                    PlayerManager.Instance.UpdateReadyStatus(false);
+                    _launchText.text = PlayerManager.Instance.GetPlayerStatus();
+                    return;
+                }
+
+                if (role1 == "Random" && (role2 == "God" || role2 == "Survivor"))
+                {
+                    string newRole1 = role2 == "God" ? "Survivor" : "God";
+
+                    if (player1.Id == localPlayerId)
+                        PlayerManager.Instance.UpdatePlayerCharacter(newRole1 == "God" ? PlayerCharacter.God : PlayerCharacter.Survivor);
+
+                    if (isSurvivorHost)
+                    {
+                        if (LobbyManager.Instance.ArePlayersReady())
+                        {
+                            Debug.Log("setRelayHostData");
+                            NetworkConnection.SetRelayHostConnection();
+                        }
+
+                        return;
+                    }
+
+                    PlayerManager.Instance.UpdateReadyStatus(false);
+                    _launchText.text = PlayerManager.Instance.GetPlayerStatus();
+                    return;
+                }
+
+                if (role2 == "Random" && (role1 == "God" || role1 == "Survivor"))
+                {
+                    string newRole2 = role1 == "God" ? "Survivor" : "God";
+
+                    if (player2.Id == localPlayerId)
+                        PlayerManager.Instance.UpdatePlayerCharacter(newRole2 == "God" ? PlayerCharacter.God : PlayerCharacter.Survivor);
+
+                    if (isSurvivorHost)
+                    {
+                        if (LobbyManager.Instance.ArePlayersReady())
+                        {
+                            Debug.Log("setRelayHostData");
+                            NetworkConnection.SetRelayHostConnection();
+                        }
+
+                        return;
+                    }
+
+                    PlayerManager.Instance.UpdateReadyStatus(false);
+                    _launchText.text = PlayerManager.Instance.GetPlayerStatus();
+                    return;
+                }
+
+                if (role1 == role2)
+                {
+                    launchGameButton.interactable = false;
+                    PlayerManager.Instance.UpdateReadyStatus(false);
+                    return;
+                }
+
+                launchGameButton.interactable = true;
+
+                if (isSurvivorHost)
                 {
                     if (LobbyManager.Instance.ArePlayersReady())
                     {
                         Debug.Log("setRelayHostData");
                         NetworkConnection.SetRelayHostConnection();
-                    };
+                    }
+
                     return;
                 }
-                
-                PlayerManager.Instance.UpdateReadyStatus();
+
+                PlayerManager.Instance.UpdateReadyStatus(false);
                 _launchText.text = PlayerManager.Instance.GetPlayerStatus();
             });
 
@@ -164,7 +270,7 @@ namespace LobbyCustom
                 JoinIfClient();
                 return;
             }
-            
+
             ClearLobby();
 
             foreach (Player player in lobby.Players)
@@ -188,10 +294,10 @@ namespace LobbyCustom
 
                 if (LobbyManager.Instance.IsLobbyHost())
                 {
-                    _launchText.text = LobbyManager.Instance.ArePlayersReady() ? "Launch": "Waiting Players";
-                    _launchText.color = LobbyManager.Instance.ArePlayersReady() ? Color.black: Color.gray;
+                    _launchText.text = LobbyManager.Instance.ArePlayersReady() ? "Launch" : "Waiting Players";
+                    _launchText.color = LobbyManager.Instance.ArePlayersReady() ? Color.black : Color.gray;
                 }
-            }   
+            }
 
             changeGameModeButton.gameObject.SetActive(LobbyManager.Instance.IsLobbyHost());
 

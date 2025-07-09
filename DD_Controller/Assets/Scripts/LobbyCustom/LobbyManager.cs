@@ -230,8 +230,8 @@ namespace LobbyCustom
             } catch (LobbyServiceException e) {
                 Debug.Log(e);
             }
-        }
-        
+        }   
+
         public DataObject GetRelayCode => joinedLobby?.Data[LobbyKey.RELAY_CODE];
         public int? GetMaxPlayers => joinedLobby?.MaxPlayers;
 

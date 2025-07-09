@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "D:\\Travail\\dual_dominion\\DD_Controller\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\initscene\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\lobbycustom\\lobbyui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbycustom\\lobbyui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\scripts\\initscene\\cameracontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\initscene\\cameracontainer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\lobbycustom\\lobbymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbycustom\\lobbymanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\lobby\\scripts\\gamemultiplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\lobby\\scripts\\gamemultiplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\lobbycustom\\lobbylistui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbycustom\\lobbylistui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\lobby\\scripts\\playerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\lobby\\scripts\\playerdata.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\lobbycustom\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbycustom\\playermanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|D:\\Travail\\dual_dominion\\DD_Controller\\assets\\lobby\\scripts\\lobbyui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\lobby\\scripts\\lobbyui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|d:\\travail\\dual_dominion\\dd_controller\\assets\\scripts\\lobbycustom\\lobbylistsingleui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7A597B76-B488-563F-A502-799085CAFD09}|Assembly-CSharp.csproj|solutionrelative:assets\\scripts\\lobbycustom\\lobbylistsingleui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,69 +30,72 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LobbyUI.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "RelativeToolTip": "Assets\\Lobby\\Scripts\\LobbyUI.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAAADAAAAARAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "LobbyListUI.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyListUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyCustom\\LobbyListUI.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyListUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LobbyCustom\\LobbyListUI.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T07:02:11.466Z",
-              "IsPinned": true
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "PlayerData.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\PlayerData.cs",
-              "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\PlayerData.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\PlayerData.cs",
-              "RelativeToolTip": "Assets\\Lobby\\Scripts\\PlayerData.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T13:14:43.234Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CameraContainer.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\CameraContainer.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\initScene\\CameraContainer.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\CameraContainer.cs",
-              "RelativeToolTip": "Assets\\Scripts\\initScene\\CameraContainer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAUwBIAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-11T07:14:18.532Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PlayerManager.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\PlayerManager.cs",
-              "RelativeDocumentMoniker": "Assets\\Scripts\\initScene\\PlayerManager.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\initScene\\PlayerManager.cs",
-              "RelativeToolTip": "Assets\\Scripts\\initScene\\PlayerManager.cs",
-              "ViewState": "AgIAABIAAAAAAAAAAAAQwB0AAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T08:32:42.405Z",
+              "WhenOpened": "2025-07-09T18:07:37.989Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "GameMultiplayer.cs",
-              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
-              "RelativeDocumentMoniker": "Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
-              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
-              "RelativeToolTip": "Assets\\Lobby\\Scripts\\GameMultiplayer.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAuwGwAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "PlayerManager.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\PlayerManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyCustom\\PlayerManager.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\PlayerManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LobbyCustom\\PlayerManager.cs",
+              "ViewState": "AgIAAEwAAAAAAAAAAAA2wAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T07:02:42.099Z"
+              "WhenOpened": "2025-07-09T18:03:34.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "LobbyManager.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyManager.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyCustom\\LobbyManager.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyManager.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LobbyCustom\\LobbyManager.cs",
+              "ViewState": "AgIAAOsAAAAAAAAAAAAAwP8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T18:03:20.177Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LobbyListSingleUI.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyListSingleUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyCustom\\LobbyListSingleUI.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyListSingleUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LobbyCustom\\LobbyListSingleUI.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T18:03:09.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "LobbyUI.cs",
+              "DocumentMoniker": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyUI.cs",
+              "RelativeDocumentMoniker": "Assets\\Scripts\\LobbyCustom\\LobbyUI.cs",
+              "ToolTip": "D:\\Travail\\dual_dominion\\DD_Controller\\Assets\\Scripts\\LobbyCustom\\LobbyUI.cs",
+              "RelativeToolTip": "Assets\\Scripts\\LobbyCustom\\LobbyUI.cs",
+              "ViewState": "AgIAAE4AAAAAAAAAAAAowFoAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-09T18:02:23.746Z",
+              "EditorCaption": ""
             }
           ]
         }
