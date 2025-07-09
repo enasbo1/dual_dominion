@@ -665,6 +665,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4700211296933262842}
     m_Modifications:
+    - target: {fileID: 1084533602645161661, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1126943322615663827, guid: fa6a3d84ad5153c48b5c6683c8e40d42, type: 3}
       propertyPath: pointerManager
       value: 

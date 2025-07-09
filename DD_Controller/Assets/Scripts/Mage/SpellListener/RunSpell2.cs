@@ -4,13 +4,13 @@ using UnityEngine.Serialization;
 
 namespace Mage.SpellListener
 {
-    public class RunSpell : MonoBehaviour
+    public class RunSpell2 : MonoBehaviour
     {
         public SpellManager spellManager;
         public FootMove footMoveScript;
         public Material effectMaterial;
         public Material effectFailureMaterial;
-        [FormerlySerializedAs("effectBarrer")] public SkinnedMeshRenderer effectRenderer;
+        public SkinnedMeshRenderer effectRenderer;
         private bool _active;
 
         private float _initialValue;
@@ -18,15 +18,15 @@ namespace Mage.SpellListener
 
         private float _timer;
         
-        private Spell _runSpell;
+        private Spell _runSpell2;
 
         private void Start()
         {
-            _runSpell = spellManager.GetSpellById(1);
+            _runSpell2 = spellManager.GetSpellById(9);
             _initialValue = footMoveScript.movementSpeed;
             _originalMaterial = effectRenderer.material;
-            _runSpell.AddSpellListener(OnSpell);
-            _runSpell.AddSpellFailureListener(OnSpellFailure);
+            _runSpell2.AddSpellListener(OnSpell);
+            _runSpell2.AddSpellFailureListener(OnSpellFailure);
         }
         
         private void FixedUpdate()
@@ -38,14 +38,14 @@ namespace Mage.SpellListener
                 footMoveScript.movementSpeed = _initialValue;
                 effectRenderer.material = _originalMaterial;
                 _active = false;
-                _runSpell.isInCast = false;
+                _runSpell2.isInCast = false;
             }
         }
 
         private void OnSpell(Spell spell)
         {
-            _timer = 5;
-            footMoveScript.movementSpeed = _initialValue * 3f;
+            _timer = 15;
+            footMoveScript.movementSpeed = _initialValue * 5f;
             effectRenderer.material = effectMaterial;
             _active = true;
             spell.isInCast = true;
@@ -53,8 +53,8 @@ namespace Mage.SpellListener
         
         private void OnSpellFailure(Spell spell)
         {
-            _timer = 2;
-            footMoveScript.movementSpeed = _initialValue * 1.5f;
+            _timer = 5;
+            footMoveScript.movementSpeed = _initialValue * 2.5f;
             effectRenderer.material = effectFailureMaterial;
             _active = true;
         }

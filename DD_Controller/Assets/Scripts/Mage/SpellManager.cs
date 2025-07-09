@@ -113,6 +113,19 @@ namespace Mage
                     true
                 ),
                 new Spell(
+                    9,
+                    "Run 2",
+                    new List<SpellDirections>
+                    {
+                        SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down,
+                        SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up,
+                        SpellDirections.Down, SpellDirections.Up, SpellDirections.Up
+                    },
+                    5,
+                    true,
+                    false
+                ),
+                new Spell(
                     5,
                     "Jump",
                     new List<SpellDirections>
