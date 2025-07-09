@@ -145,6 +145,7 @@ namespace Monster.Behavior
             if (element.witnessBlessing != null)
                 for (int j = 0; j < DefaultMaterials[i].Length; j++)
                     element.witnessBlessing[j].material = DefaultMaterials[i][j];
+            MonsterBehaviors.BehaviorMap[ActivesBehaviors[i]].Stop(i, this);
             ActivesBehaviors[i] = MonsterBehaviorEnum.Start;
             BehaviorEnd[i] = 0f;
         }
