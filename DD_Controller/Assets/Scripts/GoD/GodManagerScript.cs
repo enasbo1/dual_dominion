@@ -45,6 +45,7 @@ namespace GoD
     {
         public double karmaPoint;
         public MonsterSpawnScript monsterSpawnScript;
+        [SerializeField] public Transform monsterSpawnPoint;
         [FormerlySerializedAs("_karmaCounter")] [SerializeField] private TextMeshProUGUI karmaCounter;
         [SerializeField] private Sprite[] monsterIcons;
         [SerializeField] private WalkerEnum[] monsterTypes;

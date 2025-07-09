@@ -1,5 +1,4 @@
 using System;
-using Globals;
 using Monster;
 using Shared;
 using Unity.Netcode;
@@ -13,15 +12,16 @@ namespace GoD
         
         private void Update()
         {
+            if (!spawnLocation?.gameObject.activeSelf?? true) return; 
             if (NetworkManager.Singleton.IsServer) return;
             if (Input.GetKeyDown(KeyCode.Space) && type != WalkerEnum.None)
             {
                 MonsterSpawnButton monsterSpawn = godManagerScript.GetMonsterSpawnerByType(type, variant);
-
+                if (monsterSpawn == null) return;
                 if (godManagerScript.karmaPoint > monsterSpawn.cost)
                 {
                     godManagerScript.karmaPoint -= monsterSpawn.cost;
-                    SpawnOneRpc(type, spawnLocation.position, Quaternion.identity, variant);
+                    SpawnOneRpc(type, godManagerScript.monsterSpawnPoint.position, godManagerScript.monsterSpawnPoint.rotation, variant);
                 }
             }
         }

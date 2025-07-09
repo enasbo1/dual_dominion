@@ -40,7 +40,6 @@ namespace Globals
         {
             if (MainInstance == this)
                 MainInstance = null;
-
         }
         
     }

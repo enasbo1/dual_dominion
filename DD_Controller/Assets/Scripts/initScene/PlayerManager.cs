@@ -42,8 +42,6 @@ namespace initScene
             else
             {
                 GodManagerScript godManager = go.GetComponentInChildren<GodManagerScript>();
-                Transform spawners = go.transform.GetChild(5);
-                monsterSpawnScript.spawnLocation = spawners;
                 godManager.monsterSpawnScript = monsterSpawnScript;
                 monsterSpawnScript.godManagerScript = godManager;
             }

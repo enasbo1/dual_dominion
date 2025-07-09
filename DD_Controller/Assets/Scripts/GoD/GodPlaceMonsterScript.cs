@@ -15,7 +15,7 @@ namespace GoD
 
         private InputAction _rotationTrigger;
         private float _warnTimer = 0f;
-
+        private bool _touched = true;
         private void Start()
         {
             _rotationTrigger = godInputs.actions["Look"];
@@ -28,8 +28,9 @@ namespace GoD
             cameraHolder.rotation = Quaternion.Euler(-_directions.y, 0f, _directions.x);
 
             Vector3 cameraPos = Input.mousePosition;
-            Vector3 targetPosition = targetTransform.position;
 
+            cameraPos.z = 1f;
+            
             if (!SceneObjectReferencer.MainInstance.camera)
             {
                 if (Time.time < _warnTimer) return;
@@ -39,13 +40,29 @@ namespace GoD
             }
 
             Vector3 pos = SceneObjectReferencer.MainInstance.camera.ScreenToWorldPoint(cameraPos);
-
+            
             Vector3 satellitePosition = SceneObjectReferencer.MainInstance.camera.transform.position;
+            
+            Vector3 direction = pos - satellitePosition;
 
-            cameraPos.z = satellitePosition.y - targetPosition.y;
-            pos.y = targetPosition.y;
-            targetPosition = pos;
-            targetTransform.position = targetPosition;
+            if (Physics.Raycast(pos, direction, out RaycastHit hitInfo,
+                    SceneObjectReferencer.MainInstance.camera.farClipPlane,
+                    SceneObjectReferencer.MainInstance.MapLayer))
+            {
+                if (!_touched)
+                {
+                    _touched = true;
+                    targetTransform.gameObject.SetActive(true);
+                }
+               
+                targetTransform.position = hitInfo.point + Vector3.up;
+                targetTransform.rotation *= Quaternion.Euler(0,Time.deltaTime*10f,0);
+            }
+            else if (_touched)
+            {
+                _touched = false;
+                targetTransform.gameObject.SetActive(false);
+            }
         }
     }
 }

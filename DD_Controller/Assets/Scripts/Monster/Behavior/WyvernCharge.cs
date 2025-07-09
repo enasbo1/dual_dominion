@@ -120,7 +120,6 @@ namespace Monster.Behavior
             angles.y += change;
             
             
-            
             if (behaviorManager.Bodies[index]) 
                 behaviorManager.Bodies[index].rotation = Quaternion.Euler(angles);
             else
