@@ -22,6 +22,15 @@ namespace Shared
         private readonly List<TDealer> _dealers = new();
         private readonly List<bool> _isDead = new();
 
+        private void Awake()
+        {
+            if (reserve == null) return;
+            foreach (TDealer dealer in reserve)
+            {
+                dealer.gameObject.SetActive(false);
+            }
+        }
+
         public TDealer Spawn(TEnum typeKey, Vector3 position, Quaternion rotation, TVariant variant = default,
             bool deal = true)
         {

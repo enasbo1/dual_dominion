@@ -121,10 +121,10 @@ namespace Monster
             for (int i = 0; i < appliers.Length; ++i)
                 appliers[i].RestoreDefault(this);
             
-            mainTransform.localScale = Vector3.one * (variant == MonsterVariants.Big ? 1.4f : 1);
+            mainTransform.localScale = Vector3.one * (variant == MonsterVariants.Big ? 2f : 1);
 
             if (body)
-                body.mass *= variant == MonsterVariants.Big ? 1.5f : 1;
+                body.mass *= variant == MonsterVariants.Big ? 4f : 1;
 
             for (int i = 0; i < appliers.Length; ++i)
                 appliers[i].ApplyVariant(this, variant);

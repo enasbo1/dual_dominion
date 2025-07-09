@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class SensorScript : MonoBehaviour
 {
+    [SerializeField][CanBeNull] public Renderer renderer;
     [DoNotSerialize] public List<Collider> nearby = new();
     [DoNotSerialize] public bool keepPresent = false;
 

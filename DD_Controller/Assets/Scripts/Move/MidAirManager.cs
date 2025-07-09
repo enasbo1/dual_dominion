@@ -1,4 +1,5 @@
 using System;
+using Globals;
 using Shared;
 using Shared.AnimParameter;
 using UnityEngine;
@@ -27,7 +28,8 @@ namespace Move
                             0.45f * size,
                             Vector3.down,
                             out RaycastHit _,
-                            1.0f * size);
+                            1.0f * size,
+                            SceneObjectReferencer.MainInstance.MapLayer);
                         bool hist = _moveScript[i].canMove;
 
                         _animators[i].SetBool(WalkerAnimP.MidAir, !floored);

@@ -184,6 +184,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e23ca227f9cf84648bb94ee1b635b775, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 919132149155446097, guid: e23ca227f9cf84648bb94ee1b635b775, type: 3}
       propertyPath: m_Name
       value: HornII
@@ -496,6 +500,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 461d34706863ba24196b25f72d27c600, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 919132149155446097, guid: 461d34706863ba24196b25f72d27c600, type: 3}
       propertyPath: m_Name
       value: ecaille_LupArm_III
@@ -597,6 +605,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a7be2e6e9a91aad40ace5daeaaf1f0ba, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 919132149155446097, guid: a7be2e6e9a91aad40ace5daeaaf1f0ba, type: 3}
       propertyPath: m_Name
       value: ecaille_RupArm_III
@@ -698,6 +710,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: ff8fa6c16774e7e4faaa22717f35507a, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 919132149155446097, guid: ff8fa6c16774e7e4faaa22717f35507a, type: 3}
       propertyPath: m_Name
       value: ecaille_RArm_II
@@ -939,6 +955,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: HornIII
       objectReference: {fileID: 0}
+    - target: {fileID: 1772291417175828538, guid: 44c3ce4ffdb55104192860fe638842ae, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
+    - target: {fileID: 2555646947897604622, guid: 44c3ce4ffdb55104192860fe638842ae, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 5510607541907091483, guid: 44c3ce4ffdb55104192860fe638842ae, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1653,6 +1677,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 4b410a329cfde5a4186de1a1ffbe1df4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 919132149155446097, guid: 4b410a329cfde5a4186de1a1ffbe1df4, type: 3}
       propertyPath: m_Name
       value: ecaille_LArm_II

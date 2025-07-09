@@ -45,8 +45,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c07ff463776779641b0cc9ca345d1d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MapLayer:
+    serializedVersion: 2
+    m_Bits: 256
   camera: {fileID: 0}
   isNetworkScene: 0
+  monsterStandByManager: {fileID: 0}
 --- !u!114 &604951058825950401
 MonoBehaviour:
   m_ObjectHideFlags: 0

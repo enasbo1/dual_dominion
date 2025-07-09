@@ -17,7 +17,8 @@ namespace Monster.Behavior
             { MonsterBehaviorEnum.Regroup, new Regroup() },
             { MonsterBehaviorEnum.Target, new Target() },
             { MonsterBehaviorEnum.MeleeAttack, new MeleeAttack()},
-            { MonsterBehaviorEnum.Slash, new Slash()}
+            { MonsterBehaviorEnum.Slash, new Slash()},
+            { MonsterBehaviorEnum.WyvernCharge, new WyvernCharge()}
         };
     }
 

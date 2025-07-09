@@ -8,7 +8,7 @@ namespace Globals
     public class SceneObjectReferencer : MonoBehaviour
     {
         public static SceneObjectReferencer MainInstance;
-         
+        public LayerMask MapLayer;
         public Camera camera;
         public bool isNetworkScene;
         public MonsterStandByManager monsterStandByManager;

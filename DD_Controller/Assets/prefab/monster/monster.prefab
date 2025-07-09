@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3779386104611836642}
   - component: {fileID: 4317772441825741990}
   - component: {fileID: 7270086894387072600}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca3bb5362069e4a959bc83bf707714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   nearby: []
   keepPresent: 1
 --- !u!1 &4791472153955484652
@@ -252,6 +253,12 @@ MonoBehaviour:
   variants: 
   curentVariant: 0
   sensor: {fileID: 0}
+  appliers: []
+  firstVariant: []
+  secondVariant: []
+  thirdVariant: []
+  fourthVariant: []
+  fifthVariant: []
 --- !u!114 &3798438813408115782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -326,6 +333,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  isEnableOnStart: 0
 --- !u!114 &1569223895595812764
 MonoBehaviour:
   m_ObjectHideFlags: 0

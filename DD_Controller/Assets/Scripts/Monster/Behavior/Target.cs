@@ -25,7 +25,7 @@ namespace Monster.Behavior
             if (dealer.witnessBlessing == null) return 3;
 
             foreach (Renderer renderer in dealer.witnessBlessing) renderer.material = behaviorManager.targetMaterial;
-            return 10;
+            return 4;
         }
 
         public bool Step(int index, BehaviorManager behaviorManager)
