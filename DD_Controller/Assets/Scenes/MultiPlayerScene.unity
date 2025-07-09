@@ -344,7 +344,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 424059405}
-  - component: {fileID: 424059406}
   m_Layer: 0
   m_Name: head
   m_TagString: Untagged
@@ -370,24 +369,6 @@ Transform:
   - {fileID: 1484353551}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &424059406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 424059404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c07ff463776779641b0cc9ca345d1d83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MapLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  camera: {fileID: 408239705}
-  isNetworkScene: 1
-  monsterStandByManager: {fileID: 0}
 --- !u!1001 &688872914
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -887,7 +868,7 @@ MonoBehaviour:
   standByManager: {fileID: 1174092480}
   dealingManager: {fileID: 933202962}
   spawnLocation: {fileID: 1484353551}
-  spawnLimit: 20
+  spawnLimit: 200
   type: 1
   variant: 0
   godManagerScript: {fileID: 0}
@@ -1096,6 +1077,10 @@ PrefabInstance:
       propertyPath: isNetworkScene
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5910750721984070646, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
+      propertyPath: monsterStandByManager
+      value: 
+      objectReference: {fileID: 1174092480}
     - target: {fileID: 6248618603492485452, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
       propertyPath: m_Name
       value: sceneParameters

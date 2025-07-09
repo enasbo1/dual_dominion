@@ -30,8 +30,8 @@ namespace Monster
                         standBy.Spawn(prefab, _transform[i].position, _transform[i].rotation,
                             dealer.variants[Random.Range(0, dealer.variants.Length)]);
                     else standBy.Spawn(prefab, _transform[i].position, _transform[i].rotation);
-                    _nextSpawnTime[i] = Time.time + Random.Range(10, 30) / 30f;
-                }
+                    _nextSpawnTime[i] = Time.time + Random.Range(10, 30) / 5f;
+                } 
         }
 
 

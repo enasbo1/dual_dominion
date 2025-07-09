@@ -14,9 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MonoPlayerScene.unity
     guid: a8164fb07666df749ad8fc140ee4119b
-  - enabled: 1
-    path: Assets/Scenes/GodScene2.unity
-    guid: c59e790c86af4224f98f804ad8c32a28
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 75b2c1c6945d61e4c86faa0f97a0381e, type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: be08029dfa625304d9a620413dbe64e4, type: 2}

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Linq;
-using Globals;
+﻿using Globals;
 using Monster.AnimParameter;
 using Move;
 using Shared;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Monster.Behavior

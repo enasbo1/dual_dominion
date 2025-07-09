@@ -2,6 +2,7 @@
 using end_game;
 using Shared;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -110,7 +111,7 @@ namespace Mage
         private void UpdateHealthUI()
         {
             healthBarSlider.value = lifePoints / maxHealth;
-            textHp.text = $"{lifePoints.ToString(CultureInfo.CurrentCulture)} / {_stringMaxHp}";
+            textHp.text = $"{math.round(lifePoints).ToString(CultureInfo.CurrentCulture)} / {_stringMaxHp}";
             
             Color damageEffectColor = damageEffect.color;
             damageEffectColor.a = 1f;

@@ -22,7 +22,7 @@ namespace Globals
         private void Awake()
         {
             if (MainInstance != null)
-                throw new Exception("there is More than one instance of SceneReferencer");
+                Debug.LogWarning("there is More than one instance of SceneReferencer");
             
             MainInstance = this;
             foreach (Action<SceneObjectReferencer> actions in OnInitialized)

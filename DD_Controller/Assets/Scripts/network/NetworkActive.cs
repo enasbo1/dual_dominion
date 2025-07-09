@@ -1,9 +1,7 @@
 ﻿using Globals;
 using JetBrains.Annotations;
-using Unity.Mathematics;
 using Unity.Netcode;
 using Unity.Netcode.Components;
-using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
 namespace network
