@@ -9,8 +9,9 @@ namespace Mage
 {
     public class PlayerDealer : WalkerDdDealer
     {
-        
         [SerializeField] private GameEnd gameEnd;
+        [SerializeField] private GameObject levelUpGrimoireObject;
+        [SerializeField] private SpellManager spellManager;
         
         [Header("Health")]
         [SerializeField] public float lifePoints;
@@ -19,11 +20,12 @@ namespace Mage
         [SerializeField] private Image damageEffect;
         
         [Header("XP Bar")]
-        [SerializeField] public float levelXpPoints = 100;
+        [SerializeField] public float levelXpPoints = 1000;
         [SerializeField] private float currentXP = 0;
         [SerializeField] private Slider xpBarSlider;
         [SerializeField] private TextMeshProUGUI textXp;        
         [SerializeField] private Image scoreEffect;
+        public int skillsToUnlock;
         
         
         private string _stringMaxHp;
@@ -62,12 +64,20 @@ namespace Mage
             UpdateXpUI();
             if (levelXpPoints <= currentXP)
             {
-                gameEnd.GameWon();
+                currentXP -= levelXpPoints;
+                skillsToUnlock += 1;
+
+                if (skillsToUnlock > 0 && spellManager.spellsToUnlock.Count == 0)
+                {
+                    gameEnd.GameWon();
+                }
             }
         }
 
         private void Update()
         {
+            levelUpGrimoireObject.SetActive(skillsToUnlock > 0);
+            
             if (!damageEffect) return;
             if (!scoreEffect) return;
             if (damageEffect.color.a > 0f)
@@ -94,7 +104,6 @@ namespace Mage
                     
                 scoreEffect.color = temp;
             }
-
         }
         
         private void UpdateHealthUI()
