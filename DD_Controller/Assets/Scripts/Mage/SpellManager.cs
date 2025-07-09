@@ -28,10 +28,11 @@ namespace Mage
         public float cooldown;
         public bool isActive;
         public bool isUnlockable;
+        public bool isHidden;
         public bool isInCast;
 
         public Spell(int id, string name, List<SpellDirections> inputs, float recastDelay, bool canRecastWhileInCast,
-            bool enableByDefault, bool isUnlockable = true)
+            bool enableByDefault, bool isUnlockable = true, bool isHidden = false)
         {
             this.id = id;
             this.name = name;
@@ -40,6 +41,7 @@ namespace Mage
             this.recastDelay = recastDelay;
             this.isActive = enableByDefault;
             this.isUnlockable = !enableByDefault && isUnlockable;
+            this.isHidden = isHidden;
 
             this.inputs = inputs;
 
@@ -199,7 +201,8 @@ namespace Mage
                     },
                     10,
                     true,
-                    true
+                    true,
+                    isHidden: true
                 )
             };
 
