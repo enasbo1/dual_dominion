@@ -1,6 +1,5 @@
 using Move;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Mage.SpellListener
 {

@@ -22,7 +22,7 @@ namespace Mage
         
         [Header("XP Bar")]
         [SerializeField] public float levelXpPoints = 1000;
-        [SerializeField] private float currentXP = 0;
+        [SerializeField] private float currentXP;
         [SerializeField] private Slider xpBarSlider;
         [SerializeField] private TextMeshProUGUI textXp;        
         [SerializeField] private Image scoreEffect;
@@ -67,6 +67,7 @@ namespace Mage
             {
                 currentXP -= levelXpPoints;
                 skillsToUnlock += 1;
+                levelXpPoints += 250;
 
                 if (skillsToUnlock > 0 && spellManager.spellsToUnlock.Count == 0)
                 {

@@ -203,6 +203,18 @@ namespace Mage
                     true,
                     true,
                     isHidden: true
+                ),
+                new Spell(
+                    10,
+                    "Healing",
+                    new List<SpellDirections>
+                    {
+                        SpellDirections.Left, SpellDirections.Right, SpellDirections.Down, SpellDirections.Up,
+                        SpellDirections.Right, SpellDirections.Left, SpellDirections.Up, SpellDirections.Down
+                    },
+                    30,
+                    false,
+                    true
                 )
             };
 
