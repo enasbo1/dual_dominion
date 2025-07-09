@@ -79,13 +79,11 @@ namespace GoD
             {
                 if (i >= monsterIcons.Length && i >= monsterTypes.Length && i >= monsterVariants.Length) break;
                 
-                Debug.Log(button);
                 Sprite monsterIcon = monsterIcons[i];
                 WalkerEnum monsterType = monsterTypes[i];
                 MonsterVariants monsterVariant = monsterVariants[i];
                 float monsterCost = monsterCosts[i];
                 
-                Debug.Log("2");
                 button.GetChild(0).GetComponent<Image>().sprite = monsterIcon;
                 button.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = monsterCost.ToString(CultureInfo.CurrentCulture);
                 button.GetComponent<Button>().onClick.AddListener(() => {
@@ -95,7 +93,6 @@ namespace GoD
                     button.GetComponent<Image>().color = Color.gray;
                 });
                 
-                Debug.Log("3");
                 _monsterSpawnButtonList.Add(new MonsterSpawnButton(
                     i,
                     monsterType,
@@ -107,11 +104,8 @@ namespace GoD
 
                 i++;
             }
-            Debug.Log("4");
 
             //_monsterSpawnButtonAvailable = _monsterSpawnButtonList;
-            Debug.Log(_monsterSpawnButtonList.Count);
-            
         }
 
         // Update is called once per frame
@@ -139,7 +133,6 @@ namespace GoD
 
         public MonsterSpawnButton GetMonsterSpawnerByType(WalkerEnum type, MonsterVariants variant)
         {
-            Debug.Log(_monsterSpawnButtonList.Count);
             return _monsterSpawnButtonList.Find(x => x.type == type && x.variant == variant);
         }
 

@@ -1,5 +1,4 @@
 using Globals;
-using initScene;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
