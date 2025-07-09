@@ -18,20 +18,19 @@ namespace Mage
 
         [Header("GameObjects needed")] public PlayerInput playerInputs;
 
+        public PlayerDealer playerDealer;
         public SpellManager spellManager;
         public MageUIRendererScript mageUIRenderer;
         public Slider timeBarSlider;
         public RectTransform inputsUI;
 
         [Header("QTE values")] public ControllerInputType controllerInputType;
-
         [Range(0f, 0.9f)] public float crossDetectionSensibility = 0.7f;
-
         public float timeLimit = 15f;
         public float bonusTimePerInput = 0.1f;
 
 
-        private readonly List<Image> _inputsPerformedUI = new();
+        private readonly List<Image> _inputsPerformedUI = new List<Image>();
         private InputAction _actionMove;
         private InputAction _incantationMove;
 
@@ -43,7 +42,8 @@ namespace Mage
         private float _inputTimer;
         private Vector2 _moveVector;
 
-        private List<Spell> _spellsAvailable = new();
+        private List<Spell> _spellsAvailable = new List<Spell>();
+        private List<Spell> _spellsToUnlock = new List<Spell>();
         private InputAction _spellTrigger;
 
         private float _timeBarWidth;
@@ -111,6 +111,7 @@ namespace Mage
             }
 
             _spellsAvailable = spellManager.spellsAvailable;
+            _spellsToUnlock = spellManager.spellsToUnlock;
             IncantationEnd();
         }
 
@@ -123,12 +124,11 @@ namespace Mage
         {
             if (_inputStep > 0) _inputTimer += Time.deltaTime;
             if (spellManager.isIncanting) Incanting();
-
+            
             // Condition to fail an incantation
             if (_spellsAvailable.Count > 0 && _inputTimer < timeLimit) return;
 
             CastSpell(true);
-            Debug.Log("Failed");
         }
 
         private void LateUpdate()
@@ -144,6 +144,7 @@ namespace Mage
             _inputTimer = 0f;
 
             spellManager.ResetSpellsAvailable();
+            spellManager.ResetSpellsToUnlock();
             spellManager.spellToCast = spellManager.defaultSpell;
 
             _inputsPerformedUI.ForEach(input => input.gameObject.SetActive(false));
@@ -153,13 +154,26 @@ namespace Mage
         private void CastSpell(bool castAsError = false)
         {
             Spell spellToCast = spellManager.spellToCast;
-
+            
             if (spellToCast == null)
             {
                 IncantationEnd();
                 return;
             }
+            
+            if (playerDealer.skillsToUnlock >= 1)
+            {
+                if (spellToCast.id != spellManager.defaultSpell.id)
+                {
+                    spellToCast.isActive = true;
+                    spellToCast.isUnlockable = false;
+                    playerDealer.skillsToUnlock -= 1;
+                }
 
+                IncantationEnd();
+                return;
+            }
+            
             if (castAsError) spellToCast.CastFailure();
             else if (spellToCast.canBeCast) spellToCast.Cast();
 
@@ -240,17 +254,34 @@ namespace Mage
 
             if (_inputCurrent == SpellDirections.None) return;
 
-            spellManager.SetSpellsAvailable(_spellsAvailable.Where(spell =>
+            if (playerDealer.skillsToUnlock > 0)
             {
-                if (spell.inputs.Count <= _inputStep) return false;
+                spellManager.SetSpellsToUnlock(_spellsToUnlock.Where(spell =>
+                {
+                    if (spell.inputs.Count <= _inputStep) return false;
 
-                // If input not for this spell, remove it from the available ones
-                if (_inputCurrent != spell.inputs[_inputStep]) return false;
+                    // If input not for this spell, remove it from the unlockable ones
+                    if (_inputCurrent != spell.inputs[_inputStep]) return false;
 
-                if (_inputStep == spell.inputs.Count - 1) spellManager.spellToCast = spell;
+                    if (_inputStep == spell.inputs.Count - 1) spellManager.spellToCast = spell;
 
-                return true;
-            }).ToList());
+                    return true;
+                }).ToList());
+            }
+            else
+            {
+                spellManager.SetSpellsAvailable(_spellsAvailable.Where(spell =>
+                {
+                    if (spell.inputs.Count <= _inputStep) return false;
+
+                    // If input not for this spell, remove it from the available ones
+                    if (_inputCurrent != spell.inputs[_inputStep]) return false;
+
+                    if (_inputStep == spell.inputs.Count - 1) spellManager.spellToCast = spell;
+
+                    return true;
+                }).ToList());
+            }
 
             if (!spellManager.isIncanting) return;
 

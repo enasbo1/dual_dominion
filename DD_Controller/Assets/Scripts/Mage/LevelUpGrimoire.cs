@@ -4,27 +4,33 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mage.SpellListener
+namespace Mage
 {
-    public class Grimoire : MonoBehaviour
+    public class SpellUI
     {
-        private const float GRIMOIRE_UI_MIN_HEIGHT = 95f;
-        private const float GRIMOIRE_UI_MAX_HEIGHT = 200f;
+        public Image spellIcon;
+        public List<Image> spellInputs;
+        public TextMeshProUGUI spellName;
+        public RectTransform spellPosition;
+        public Image spellStatus;
+    }
+
+
+    public class LevelUpGrimoire : MonoBehaviour
+    {
         private const float SPELL_UI_HEIGHT = 70f;
         public MageUIRendererScript mageUIRenderer;
         public SpellManager spellManager;
-        public RectTransform grimoireUI;
+        public RectTransform levelUpGrimoireUI;
 
         [Range(0.1f, 5f)] public float transitionDistance = 1f;
 
-        private readonly Dictionary<int, SpellUI> _spellsForSpellsUI = new();
+        private readonly Dictionary<int, SpellUI> _spellsForSpellsUI = new Dictionary<int, SpellUI>();
 
-        private Spell _grimoireSpell;
         private float _grimoryOpeningTime;
-        private Vector2 _scrollGrimoryUISize;
 
         private Vector2 _scrollSpell;
-        private List<Spell> _spellsAvailable = new();
+        private List<Spell> _spellsToUnlock = new List<Spell>();
 
         private RectTransform _spellsDisplayUI;
         private RectTransform _spellsUI;
@@ -39,35 +45,27 @@ namespace Mage.SpellListener
 
         private void Awake()
         {
-            _grimoireSpell = spellManager.GetSpellById(0);
-
-            _scrollGrimoryUISize = grimoireUI.sizeDelta;
-            _spellsDisplayUI = grimoireUI.GetChild(0).GetComponentInChildren<RectTransform>();
+            _spellsDisplayUI = levelUpGrimoireUI.GetChild(0).GetComponentInChildren<RectTransform>();
             _spellsUI = _spellsDisplayUI.GetChild(0).GetComponentInChildren<RectTransform>();
             _spellsUIStartPosition = _spellsUI.anchoredPosition;
 
             SetAllSpellsInUI(spellManager.GetSpells());
-            _spellsAvailable = spellManager.spellsAvailable;
-
-            _grimoireSpell.AddSpellListener(_ => SpellCasted());
+            _spellsToUnlock = spellManager.spellsToUnlock;
         }
 
         private void Update()
         {
             RefreshSpellsUI();
-            if (!_grimoireSpell.isInCast) return;
-            _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellsAvailable.Count - 2) * 70);
+            _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellsToUnlock.Count - 2) * 70);
 
             if (spellManager.isIncanting) return;
             float transitionSpeed = Time.fixedDeltaTime / transitionDistance;
-            _grimoryOpeningTime = 1.1f * ((GRIMOIRE_UI_MAX_HEIGHT - GRIMOIRE_UI_MIN_HEIGHT) * transitionSpeed);
-            _timeLimit = SPELL_UI_HEIGHT * ((_spellsAvailable.Count + 1 / transitionDistance) * transitionSpeed);
+            _timeLimit = SPELL_UI_HEIGHT * ((_spellsToUnlock.Count + 1 / transitionDistance) * transitionSpeed);
         }
 
 
         private void FixedUpdate()
         {
-            if (!_grimoireSpell.isInCast) return;
             if (spellManager.isIncanting != _wasIncanting) OnIncantingChange();
 
             // Scroll back spells so that the 1st spell is on top of the UI
@@ -83,20 +81,12 @@ namespace Mage.SpellListener
                 return;
             }
 
-            // Open Grimory UI
-            if (grimoireUI.sizeDelta.y < GRIMOIRE_UI_MAX_HEIGHT)
-            {
-                _scrollGrimoryUISize.y += transitionDistance;
-                grimoireUI.sizeDelta = _scrollGrimoryUISize;
-                _spellsDisplayUI.sizeDelta = _scrollGrimoryUISize - new Vector2(0, 20);
-            }
-
             if (spellManager.isIncanting) return;
 
             _timer += Time.deltaTime;
 
             // Scroll spells
-            if (_spellsUI.anchoredPosition.y >= _spellsUIEndPosition.y || _timer < _grimoryOpeningTime) return;
+            if (_spellsUI.anchoredPosition.y >= _spellsUIEndPosition.y) return;
             _scrollSpell = _spellsUI.anchoredPosition + new Vector2(0f, transitionDistance);
             _spellsUI.anchoredPosition = _scrollSpell;
         }
@@ -119,23 +109,22 @@ namespace Mage.SpellListener
                     {
                         case SpellDirections.Up:
                             InputDisplay(inputsUI[i],
-                                spell.canBeCast ? mageUIRenderer.upArrowColor : mageUIRenderer.upDisabledArrowColor,
+                                mageUIRenderer.upArrowColor,
                                 0f);
                             break;
                         case SpellDirections.Right:
                             InputDisplay(inputsUI[i],
-                                spell.canBeCast
-                                    ? mageUIRenderer.rightArrowColor
-                                    : mageUIRenderer.rightDisabledArrowColor, -90f);
+                                mageUIRenderer.rightArrowColor,
+                                -90f);
                             break;
                         case SpellDirections.Down:
                             InputDisplay(inputsUI[i],
-                                spell.canBeCast ? mageUIRenderer.downArrowColor : mageUIRenderer.downDisabledArrowColor,
+                                mageUIRenderer.downArrowColor,
                                 180f);
                             break;
                         case SpellDirections.Left:
                             InputDisplay(inputsUI[i],
-                                spell.canBeCast ? mageUIRenderer.leftArrowColor : mageUIRenderer.leftDisabledArrowColor,
+                                mageUIRenderer.leftArrowColor,
                                 90f);
                             break;
                         case SpellDirections.None:
@@ -206,39 +195,21 @@ namespace Mage.SpellListener
             spellUI.anchoredPosition = spellUINewPosition;
         }
 
-        private static void RefreshSpellUIStatus(Image spellStatus, Spell spell, MageUIRendererScript mageUIRenderer)
+        private static void RefreshSpellUIStatus(Image spellStatus)
         {
-            if (spell.canBeCast)
-            {
-                if (spell.isInCast)
-                {
-                    spellStatus.gameObject.SetActive(true);
-                    spellStatus.color = mageUIRenderer.spellBackgroundColorInCast;
-                    return;
-                }
-
-                spellStatus.gameObject.SetActive(false);
-                return;
-            }
-
-            spellStatus.gameObject.SetActive(true);
-            spellStatus.color = mageUIRenderer.spellBackgroundColorOnCooldown;
-            spellStatus.fillAmount =
-                spell.recastDelay > 0f ? Mathf.Clamp01(1f - spell.cooldown / spell.recastDelay) : 1f;
+            spellStatus.gameObject.SetActive(false);
         }
 
-        private void RefreshSpellNameUI(SpellUI spellUI, Spell spell)
+        private void RefreshSpellNameUI(SpellUI spellUI)
         {
-            spellUI.spellName.color = spell.canBeCast
-                ? mageUIRenderer.spellNameColorOnCast
-                : mageUIRenderer.spellNameColorOnCooldown;
+            spellUI.spellName.color = mageUIRenderer.spellNameColorOnCast;
         }
 
         private void RefreshSpellsUI()
         {
-            Spell spellToCast = spellManager.spellToCast;
-            SpellUI spellToCastUI = _spellsForSpellsUI[spellToCast.id];
-            int spellToCastId = spellToCast.id;
+            Spell spellToUnlock = spellManager.spellToCast;
+            SpellUI spellToUnlockUI = _spellsForSpellsUI[spellToUnlock.id];
+            int spellToUnlockId = spellToUnlock.id;
 
             int i = 1;
             foreach (KeyValuePair<int, SpellUI> spellForSpellUI in _spellsForSpellsUI)
@@ -246,36 +217,30 @@ namespace Mage.SpellListener
                 int spellId = spellForSpellUI.Key;
                 SpellUI spellUI = spellForSpellUI.Value;
 
-                if (_spellsAvailable.All(s => s.id != spellId))
+                if (_spellsToUnlock.All(s => s.id != spellId))
                 {
                     spellUI.spellPosition.gameObject.SetActive(false);
                     continue;
                 }
 
-                if (spellId == spellToCastId) continue;
+                if (spellId == spellToUnlockId) continue;
 
-                Spell spell = _spellsAvailable.First(s => s.id == spellId);
+                Spell spell = _spellsToUnlock.First(s => s.id == spellId);
 
                 RefreshSpellUIPosition(spellUI.spellPosition, i);
 
-                RefreshSpellNameUI(spellUI, spell);
-                RefreshSpellUIStatus(spellUI.spellStatus, spell, mageUIRenderer);
+                RefreshSpellNameUI(spellUI);
+                RefreshSpellUIStatus(spellUI.spellStatus);
                 RefreshInputs(spellUI.spellInputs, spell);
 
                 i++;
             }
 
-            RefreshSpellUIPosition(spellToCastUI.spellPosition, 0);
+            RefreshSpellUIPosition(spellToUnlockUI.spellPosition, 0);
 
-            RefreshSpellNameUI(spellToCastUI, spellToCast);
-            RefreshSpellUIStatus(spellToCastUI.spellStatus, spellToCast, mageUIRenderer);
-            RefreshInputs(spellToCastUI.spellInputs, spellToCast);
-        }
-
-        private void SpellCasted()
-        {
-            _grimoireSpell.isInCast = true;
-            _timer = 0;
+            RefreshSpellNameUI(spellToUnlockUI);
+            RefreshSpellUIStatus(spellToUnlockUI.spellStatus);
+            RefreshInputs(spellToUnlockUI.spellInputs, spellToUnlock);
         }
 
         private void CastEnd()
@@ -290,16 +255,7 @@ namespace Mage.SpellListener
                 return;
             }
 
-            // Close Grimory UI
-            if (grimoireUI.sizeDelta.y > GRIMOIRE_UI_MIN_HEIGHT)
-            {
-                _scrollGrimoryUISize.y -= transitionDistance;
-                grimoireUI.sizeDelta = _scrollGrimoryUISize;
-                _spellsDisplayUI.sizeDelta = _scrollGrimoryUISize - new Vector2(0, 20);
-                return;
-            }
-
-            _grimoireSpell.isInCast = false;
+            _timer = 0;
         }
 
         private void OnIncantingChange()

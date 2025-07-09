@@ -27,22 +27,24 @@ namespace Mage
         public bool canBeCast;
         public float cooldown;
         public bool isActive;
+        public bool isUnlockable;
         public bool isInCast;
 
         public Spell(int id, string name, List<SpellDirections> inputs, float recastDelay, bool canRecastWhileInCast,
-            bool enableByDefault)
+            bool enableByDefault, bool isUnlockable = true)
         {
             this.id = id;
             this.name = name;
             this.canRecastWhileInCast = canRecastWhileInCast;
-            isInCast = false;
+            this.isInCast = false;
             this.recastDelay = recastDelay;
-            isActive = enableByDefault;
+            this.isActive = enableByDefault;
+            this.isUnlockable = !enableByDefault && isUnlockable;
 
             this.inputs = inputs;
 
-            _spellEvents = new List<Action<Spell>>();
-            _spellFailureEvents = new List<Action<Spell>>();
+            this._spellEvents = new List<Action<Spell>>();
+            this._spellFailureEvents = new List<Action<Spell>>();
         }
 
         public void AddSpellListener(Action<Spell> spellEvent)
@@ -80,6 +82,7 @@ namespace Mage
         private readonly List<Spell> _spellList;
         public readonly Spell defaultSpell;
         public readonly List<Spell> spellsAvailable;
+        public readonly List<Spell> spellsToUnlock;
         private bool _forcedEnabled;
 
         [NonSerialized] public bool isIncanting;
@@ -87,7 +90,7 @@ namespace Mage
 
         public SpellManager()
         {
-            List<Spell> test = new()
+            List<Spell> test = new List<Spell>()
             {
                 new Spell(
                     0,
@@ -147,11 +150,12 @@ namespace Mage
                     "GrowingShot",
                     new List<SpellDirections>
                     {
+                        SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down,
                         SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Up
                     },
-                    4,
+                    5,
                     true,
-                    true
+                    false
                 ),
                 new Spell(
                     2,
@@ -168,6 +172,7 @@ namespace Mage
                     new List<SpellDirections> { SpellDirections.Down },
                     0,
                     true,
+                    false,
                     false
                 ),
                 new Spell(
@@ -187,6 +192,7 @@ namespace Mage
 
             _spellList = test;
             spellsAvailable = test.Where(spell => spell.isActive).ToList();
+            spellsToUnlock = test.Where(spell => spell.isUnlockable).ToList();
             defaultSpell = GetSpellById(0);
             spellToCast = defaultSpell;
         }
@@ -235,6 +241,18 @@ namespace Mage
         {
             spellsAvailable.Clear();
             spellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
+        }
+        
+        public void SetSpellsToUnlock(List<Spell> spellsToUnlock)
+        {
+            this.spellsToUnlock.Clear();
+            this.spellsToUnlock.AddRange(spellsToUnlock);
+        }
+
+        public void ResetSpellsToUnlock()
+        {
+            spellsToUnlock.Clear();
+            spellsToUnlock.AddRange(_spellList.Where(spell => spell.isUnlockable));
         }
 
         private void OnDestroy()

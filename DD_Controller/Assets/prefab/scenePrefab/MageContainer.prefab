@@ -376,15 +376,18 @@ MonoBehaviour:
   maxHealth: 100
   group: 0
   gameEnd: {fileID: 6277412911993343772}
+  levelUpGrimoireObject: {fileID: 505107631431152640}
+  spellManager: {fileID: 4718062114245178048}
   lifePoints: 0
   healthBarSlider: {fileID: 4399138162147914700}
   textHp: {fileID: 2110949284355283334}
   damageEffect: {fileID: 1750091918387609345}
-  levelXpPoints: 100
+  levelXpPoints: 1000
   currentXP: 0
   xpBarSlider: {fileID: 2906513661562100444}
   textXp: {fileID: 5931273844642078294}
   scoreEffect: {fileID: 3272210534737848676}
+  skillsToUnlock: 0
 --- !u!1001 &707137759972952131
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1210,6 +1213,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7907222497124521009}
     - target: {fileID: 3241785497805355682, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: playerDealer
+      value: 
+      objectReference: {fileID: 2800593394507225767}
+    - target: {fileID: 3241785497805355682, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: playerInputs
       value: 
       objectReference: {fileID: 4154993054957006553}
@@ -1386,6 +1393,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 4791837992980438378}
   m_SourcePrefab: {fileID: 100100000, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+--- !u!1 &505107631431152640 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4237435826744408386, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+  m_PrefabInstance: {fileID: 4453186847628578114}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1238990604846020576 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3241785497805355682, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
