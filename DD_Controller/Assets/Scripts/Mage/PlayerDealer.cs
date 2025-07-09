@@ -76,6 +76,7 @@ namespace Mage
 
         private void Update()
         {
+            if (networkObject != null && networkObject.isActiveAndEnabled && !networkObject.IsOwner) return;
             levelUpGrimoireObject.SetActive(skillsToUnlock > 0);
             
             if (!damageEffect) return;

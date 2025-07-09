@@ -255,6 +255,11 @@ namespace Mage.SpellListener
                 if (spellId == spellToCastId) continue;
 
                 Spell spell = _spellsAvailable.First(s => s.id == spellId);
+                if (spell.isHidden)
+                {
+                    spellUI.spellPosition.gameObject.SetActive(false);
+                    continue;
+                };
 
                 RefreshSpellUIPosition(spellUI.spellPosition, i);
 

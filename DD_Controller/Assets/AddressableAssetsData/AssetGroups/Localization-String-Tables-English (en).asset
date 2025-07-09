@@ -27,6 +27,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-en
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a1061133f61816d45ace4f5073677b49
+    m_Address: Mage Table_en
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-en
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: a1771fec9c3a2a84eb623ce4a0cf5f10
     m_Address: LobbyTable_en
     m_ReadOnly: 1

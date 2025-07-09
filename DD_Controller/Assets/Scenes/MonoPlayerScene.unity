@@ -3628,7 +3628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2800593394507225767, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: currentXP
-      value: 995
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2800593394507225767, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: maxHealth
@@ -3637,6 +3637,10 @@ PrefabInstance:
     - target: {fileID: 2859179886564683440, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2886648923372496236, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
+      propertyPath: m_text
+      value: Repeat a pattern to unlock (localized)
       objectReference: {fileID: 0}
     - target: {fileID: 2917904049675883301, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
       propertyPath: m_Layer
