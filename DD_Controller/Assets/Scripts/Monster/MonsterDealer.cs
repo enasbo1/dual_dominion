@@ -22,7 +22,7 @@ namespace Monster
         [SerializeField] public SensorScript sensor;
         
         [Header("Monster Variant attributes")]
-        [SerializeField] private VariantApplier[] appliers;
+        [SerializeField] private VariantApplier<MonsterDealer>[] appliers;
         [SerializeField] private List<GameObject> firstVariant;
         [SerializeField] private List<GameObject> secondVariant;
         [SerializeField] private List<GameObject> thirdVariant;

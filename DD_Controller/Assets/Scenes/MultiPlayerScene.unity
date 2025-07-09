@@ -1028,7 +1028,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   standByManager: {fileID: 1174092480}
   dealingManager: {fileID: 933202962}
-  spawnLocation: {fileID: 0}
+  spawnLocation: {fileID: 1484353551}
   spawnLimit: 20
   type: 1
   godManagerScript: {fileID: 0}

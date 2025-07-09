@@ -23,9 +23,6 @@ namespace initScene
             if (!NetworkManager.Singleton.IsServer) 
                 managerBearer.SetActive(false);
             
-            GodManagerScript godManager = godScenePrefab.GetComponentInChildren<GodManagerScript>();
-            godManager.monsterSpawnScript = monsterSpawnScript;
-            monsterSpawnScript.godManagerScript = godManager;
             
             GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godScenePrefab;
             
@@ -41,6 +38,12 @@ namespace initScene
                 playerBearer.MainPlayer = player;
                 playerDealingManager.ForceStart();      
                 playerDealingManager.Add(playerBearer.MainPlayer);
+            }
+            else
+            {
+                GodManagerScript godManager = go.GetComponentInChildren<GodManagerScript>();
+                godManager.monsterSpawnScript = monsterSpawnScript;
+                monsterSpawnScript.godManagerScript = godManager;
             }
             
             NetworkObject no = go.GetComponent<NetworkObject>();

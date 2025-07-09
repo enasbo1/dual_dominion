@@ -2,6 +2,7 @@
 using JetBrains.Annotations;
 using Unity.Mathematics;
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEditor.Localization.Plugins.XLIFF.V12;
 using UnityEngine;
 
@@ -12,10 +13,11 @@ namespace network
         [SerializeField] private bool isEnableOnStart = true;
 
         [CanBeNull] private Rigidbody _rigidbody;
-
+        private bool _hasNetworkTransform;
         void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
+            _hasNetworkTransform = GetComponent<NetworkTransform>();
             SceneObjectReferencer.WaitingInit += sor =>
             {
                 if (!isEnableOnStart && sor.isNetworkScene && !IsServer)
@@ -29,6 +31,7 @@ namespace network
             Debug.Log("here");
             gameObject.SetActive(active);
             if (!active) return;
+            if (!_hasNetworkTransform) return;
             if (position != Vector3.zero) transform.position = new Vector3(position.x, position.y, position.z);
             
             if (rotation == Quaternion.identity) return;

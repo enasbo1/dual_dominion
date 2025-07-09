@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using Globals;
+using Unity.Netcode;
+using UnityEngine;
 
 namespace Monster.Variants
 {
-    public class WarriorVariants : VariantApplier
+    public class WarriorVariants : VariantApplier<MonsterDealer>
     {
         
         [SerializeField] private Material[] skinMaterialsI;
@@ -10,12 +12,27 @@ namespace Monster.Variants
         [SerializeField] private Material[] skinMaterialsIII;
         [SerializeField] private Renderer skin;
         
+        
         private Material[] skinMaterialsD;
         private float _defaultMoveSpeed;
         private float _defaultMaxHealth;
         public override void ApplyVariant(MonsterDealer dealer, MonsterVariants variant)
         {
-            
+            if ((SceneObjectReferencer.MainInstance?.isNetworkScene ?? false) && dealer == Dealer)
+                ApplyVariantRpc((int)variant);
+            else
+                ApplyOneVariant(dealer, variant);
+ 
+        }
+        
+        [Rpc(SendTo.Everyone)]
+        private void ApplyVariantRpc(int dealedVariant)
+        {
+            ApplyOneVariant(Dealer, (MonsterVariants)dealedVariant);
+        }
+
+        private void ApplyOneVariant(MonsterDealer dealer, MonsterVariants variant)
+        {
             switch (variant)
             {
                 case MonsterVariants.DWarrior:

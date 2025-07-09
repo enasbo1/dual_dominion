@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Monster;
 using Shared;
 using TMPro;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace GoD
     {
         public readonly int id;
         public readonly WalkerEnum type;
+        public readonly MonsterVariants variant;
         public readonly float respawnDelay;
         public readonly float cost;
 
@@ -24,12 +26,15 @@ namespace GoD
         public MonsterSpawnButton(
             int id,
             WalkerEnum type,
+            MonsterVariants variant,
             float recastDelay,
             float cost,
-            bool enableByDefault)
+            bool enableByDefault
+            )
         {
             this.id = id;
             this.type = type;
+            this.variant = variant;
             this.respawnDelay = recastDelay;
             this.cost = cost;
             isActive = enableByDefault;
@@ -41,30 +46,26 @@ namespace GoD
         public double karmaPoint;
         public MonsterSpawnScript monsterSpawnScript;
         [FormerlySerializedAs("_karmaCounter")] [SerializeField] private TextMeshProUGUI karmaCounter;
-        [SerializeField] private List<Sprite> monsterIcons = new List<Sprite>();
-        [SerializeField] private List<WalkerEnum> monsterTypes = new List<WalkerEnum>();
+        [SerializeField] private Sprite[] monsterIcons;
+        [SerializeField] private WalkerEnum[] monsterTypes;
+        [SerializeField] private MonsterVariants[] monsterVariants;
         [SerializeField] private List<float> monsterCosts = new List<float>();
-        [SerializeField] private Transform buttonList;
+        [SerializeField] private Transform[] buttonList;
         
         private List<Image> _buttonsBackground = new List<Image>();
         
-        private List<MonsterSpawnButton> _monsterSpawnButtonList;
+        private readonly List<MonsterSpawnButton> _monsterSpawnButtonList = new ();
         private List<MonsterSpawnButton> _monsterSpawnButtonAvailable;
 
-        private void Start()
+        private void Awake()
         {
-            List<MonsterSpawnButton> test = new List<MonsterSpawnButton>();
-            List<WalkerEnum> typeOrder = new List<WalkerEnum>()
-            {
-                WalkerEnum.DominionArmy,
-            };
             
             int i = 0;
             foreach (Transform button in buttonList)
             {
-                if (i >= monsterIcons.Count && i >= typeOrder.Count)
+                if (i >= monsterIcons.Length && i >= monsterTypes.Length && i >= monsterVariants.Length)
                 {
-                    Destroy(button.gameObject);
+                    button.gameObject.SetActive(false);
                     continue;
                 }
                 
@@ -73,13 +74,15 @@ namespace GoD
             }
 
             i = 0;
+            
             foreach (Transform button in buttonList)
             {
-                if (i >= monsterIcons.Count && i >= typeOrder.Count) break;
+                if (i >= monsterIcons.Length && i >= monsterTypes.Length && i >= monsterVariants.Length) break;
                 
-                Debug.Log("1");
+                Debug.Log(button);
                 Sprite monsterIcon = monsterIcons[i];
                 WalkerEnum monsterType = monsterTypes[i];
+                MonsterVariants monsterVariant = monsterVariants[i];
                 float monsterCost = monsterCosts[i];
                 
                 Debug.Log("2");
@@ -87,14 +90,16 @@ namespace GoD
                 button.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = monsterCost.ToString(CultureInfo.CurrentCulture);
                 button.GetComponent<Button>().onClick.AddListener(() => {
                     monsterSpawnScript.type = monsterType;
+                    monsterSpawnScript.variant = monsterVariant;
                     _buttonsBackground.ForEach(background => background.color = Color.black);
                     button.GetComponent<Image>().color = Color.gray;
                 });
                 
                 Debug.Log("3");
-                test.Add(new MonsterSpawnButton(
+                _monsterSpawnButtonList.Add(new MonsterSpawnButton(
                     i,
                     monsterType,
+                    monsterVariants[i],
                     5,
                     monsterCost,
                     true
@@ -104,10 +109,8 @@ namespace GoD
             }
             Debug.Log("4");
 
-            _monsterSpawnButtonList = test;
-            _monsterSpawnButtonAvailable = _monsterSpawnButtonList;
-            Debug.Log(test);
-            Debug.Log(_monsterSpawnButtonList);
+            //_monsterSpawnButtonAvailable = _monsterSpawnButtonList;
+            Debug.Log(_monsterSpawnButtonList.Count);
             
         }
 
@@ -121,7 +124,7 @@ namespace GoD
         private void FixedUpdate()
         {
             float timeIncrement = Time.deltaTime;
-
+            /*
             for (int i = _monsterSpawnButtonAvailable.Count - 1; i >= 0; i--)
             {
                 MonsterSpawnButton monsterSpawnButton = _monsterSpawnButtonAvailable[i];
@@ -131,12 +134,13 @@ namespace GoD
 
                 if (!monsterSpawnButton.isActive) _monsterSpawnButtonAvailable.RemoveAt(i);
             }
+            */
         }
 
-        public MonsterSpawnButton GetMonsterSpawnerByType(WalkerEnum type)
+        public MonsterSpawnButton GetMonsterSpawnerByType(WalkerEnum type, MonsterVariants variant)
         {
-            Debug.Log(_monsterSpawnButtonList);
-            return _monsterSpawnButtonList.Find(x => x.type == type);
+            Debug.Log(_monsterSpawnButtonList.Count);
+            return _monsterSpawnButtonList.Find(x => x.type == type && x.variant == variant);
         }
 
         public List<MonsterSpawnButton> GetMonsterSpawners()
