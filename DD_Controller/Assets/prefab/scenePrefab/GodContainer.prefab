@@ -80,10 +80,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   karmaPoint: 0
-  _karmaCounter: {fileID: 6030480454502661406}
-  spawnerList:
-  - {fileID: 1028155094533050310}
-  spawnerButtonList: []
+  monsterSpawnScript: {fileID: 0}
+  karmaCounter: {fileID: 6030480454502661406}
+  monsterIcons:
+  - {fileID: 21300000, guid: 88c63f849cbaa7d418b155a983c46bb4, type: 3}
+  - {fileID: 21300000, guid: 0374ec9a523e71f468fc10d4ff289ece, type: 3}
+  - {fileID: 21300000, guid: ffe0a900dfd36ae4aab6a2940555cf6b, type: 3}
+  monsterTypes: 020000000300000004000000
+  monsterCosts:
+  - 50
+  - 75
+  - 80
+  buttonList: {fileID: 8473025178936878659}
 --- !u!1 &1238274112862726071
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,7 +103,7 @@ GameObject:
   - component: {fileID: 5003327070825058557}
   - component: {fileID: 7667208021935241221}
   m_Layer: 0
-  m_Name: GODScene
+  m_Name: GodContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -634,6 +642,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3158707732455721276, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
   m_PrefabInstance: {fileID: 4993732501700644063}
   m_PrefabAsset: {fileID: 0}
+--- !u!224 &8473025178936878659 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3520538111468219036, guid: 3081cb2694807d542a0cc5885e40cd0c, type: 3}
+  m_PrefabInstance: {fileID: 4993732501700644063}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6765279254665109801
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -821,11 +834,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3353d43881c854c4890518ce8afbfff1, type: 3}
---- !u!1 &1028155094533050310 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7501999973118854551, guid: 3353d43881c854c4890518ce8afbfff1, type: 3}
-  m_PrefabInstance: {fileID: 7374865005127912017}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8642108275897783157 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1276250521564485924, guid: 3353d43881c854c4890518ce8afbfff1, type: 3}

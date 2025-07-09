@@ -1028,8 +1028,10 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   standByManager: {fileID: 1174092480}
   dealingManager: {fileID: 933202962}
+  spawnLocation: {fileID: 0}
   spawnLimit: 20
   type: 1
+  godManagerScript: {fileID: 0}
 --- !u!114 &1484353553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1135,6 +1137,10 @@ PrefabInstance:
       propertyPath: managerBearer
       value: 
       objectReference: {fileID: 1174092479}
+    - target: {fileID: 8557946921620855135, guid: dc3e34b4f8e003b45bed534d65c013f1, type: 3}
+      propertyPath: monsterSpawnScript
+      value: 
+      objectReference: {fileID: 1484353552}
     - target: {fileID: 8557946921620855135, guid: dc3e34b4f8e003b45bed534d65c013f1, type: 3}
       propertyPath: playerDealingManager
       value: 

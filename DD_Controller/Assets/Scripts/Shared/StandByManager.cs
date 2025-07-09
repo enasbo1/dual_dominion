@@ -62,7 +62,7 @@ namespace Shared
             TDealer newDealer;
             if (i == -1)
             {
-                newDealer = Instantiate(objectToSpawn, Vector3.zero, Quaternion.identity).GetComponent<TDealer>();
+                newDealer = Instantiate(objectToSpawn, position, rotation).GetComponent<TDealer>();
                 newDealer.ResetDealed(false);
                 if (newDealer.networkObject)
                     if (spawnNetworkObject)
@@ -93,6 +93,7 @@ namespace Shared
                 }
             }
 
+            Debug.Log($"test {variant}");
             newDealer.ApplyVariant(variant);
 
             if (newDealer.mainTransform)

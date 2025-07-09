@@ -4,7 +4,6 @@ using Monster.AnimParameter;
 using Monster.Behavior;
 using Monster.Variants;
 using Shared;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Monster
@@ -95,19 +94,24 @@ namespace Monster
                 for (int i = 0; i < 5; ++i)
                 {
                     if (i == vIndex) continue;
-                    foreach (GameObject go in _variantAttributes[i])
+                    if (_variantAttributes != null)
                     {
-                        go.SetActive(false);
+                        foreach (GameObject go in _variantAttributes[i])
+                        {
+                            go.SetActive(false);
+                        }
                     }
                 }
                 
                 for (int i = 0; i < 5; ++ i)
                 {
                     if (i != vIndex) continue;
-
-                    foreach (GameObject go in _variantAttributes[i])
-                    { 
-                        go.SetActive(true);
+                    if (_variantAttributes != null)
+                    {
+                        foreach (GameObject go in _variantAttributes[i])
+                        { 
+                            go.SetActive(true);
+                        }
                     }
                     
                     break;

@@ -1,4 +1,6 @@
+using GoD;
 using Mage;
+using Monster;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -11,6 +13,7 @@ namespace initScene
         public PlayerBearer playerBearer;
         public WalkerDealingManager playerDealingManager;
         public GameObject godScenePrefab;
+        public MonsterSpawnScript monsterSpawnScript;
         public Transform spawnPoint;
         public NetworkObject networkObject;
         public Transform playerCamera;
@@ -19,6 +22,11 @@ namespace initScene
         {
             if (!NetworkManager.Singleton.IsServer) 
                 managerBearer.SetActive(false);
+            
+            GodManagerScript godManager = godScenePrefab.GetComponentInChildren<GodManagerScript>();
+            godManager.monsterSpawnScript = monsterSpawnScript;
+            monsterSpawnScript.godManagerScript = godManager;
+            
             GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godScenePrefab;
             
             GameObject go = Instantiate(selectedPrefab, 

@@ -8,13 +8,31 @@ namespace GoD
 {
     public class MonsterSpawnScript : NetworkSpawnScript<MonsterDealer, WalkerEnum, MonsterVariants>
     {
+        public GodManagerScript godManagerScript;
+        
+        private void Update()
+        {
+            if (NetworkManager.Singleton.IsServer) return;
+            if (Input.GetKeyDown(KeyCode.Space) && type != WalkerEnum.None)
+            {
+                MonsterSpawnButton monsterSpawn = godManagerScript.GetMonsterSpawnerByType(type);
+
+                if (godManagerScript.karmaPoint > monsterSpawn.cost)
+                {
+                    godManagerScript.karmaPoint -= monsterSpawn.cost;
+                    SpawnOneRpc(type, spawnLocation.position, Quaternion.identity);
+                }
+            }
+        }
+        
     }
     public class NetworkSpawnScript<TDealer, TEnum, TVariant> : NetworkBehaviour where TDealer : Dealer<TEnum, TVariant> where TEnum : Enum where TVariant : Enum
     {
-        [SerializeField] private StandByManager<TDealer, TEnum, TVariant> standByManager;
+        [SerializeField] public StandByManager<TDealer, TEnum, TVariant> standByManager;
         [SerializeField] private DealingManager<TDealer, TEnum, TVariant> dealingManager;
+        [SerializeField] public Transform spawnLocation;
         [SerializeField] private int spawnLimit = 200;
-        [SerializeField] private TEnum type;
+        public TEnum type;
         
         private float _nextSpawnTime;
 
@@ -26,7 +44,6 @@ namespace GoD
         [Rpc(SendTo.Server)]
         private void SpawnOneRpc(int dealedType, Vector3 position, Quaternion rotation, int variant = default)
         {
-            Debug.Log(dealedType);
             spawnOne((TEnum)Enum.ToObject(typeof(TEnum), dealedType), position, rotation, (TVariant)Enum.ToObject(typeof(TEnum),variant));
         }
 
@@ -37,15 +54,6 @@ namespace GoD
                 if (dealingManager.GetNbDealers()>spawnLimit) return;
 
                 standByManager.Spawn(dealedType, position, rotation, variant);
-                Debug.Log("create Monster");
-            }
-        }
-        private void Update()
-        {
-            if (NetworkManager.Singleton.IsServer) return;
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                SpawnOneRpc(type, transform.position, Quaternion.identity);
             }
         }
     }

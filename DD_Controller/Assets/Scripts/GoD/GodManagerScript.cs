@@ -2,32 +2,36 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using Shared;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace GoD
 {
-    public class MonsterSpawner
+    public class MonsterSpawnButton
     {
         public readonly int id;
-        public readonly string name;
+        public readonly WalkerEnum type;
         public readonly float respawnDelay;
+        public readonly float cost;
 
         public bool canBeSpawn;
         public float cooldown;
         public bool isActive;
-        public GameObject Prefab;
-        public Button trigger;
 
-        public MonsterSpawner(int id, string name, GameObject prefab, Button trigger, float recastDelay,
+        public MonsterSpawnButton(
+            int id,
+            WalkerEnum type,
+            float recastDelay,
+            float cost,
             bool enableByDefault)
         {
             this.id = id;
-            this.name = name;
-            this.trigger = trigger;
-            this.Prefab = prefab;
-            respawnDelay = recastDelay;
+            this.type = type;
+            this.respawnDelay = recastDelay;
+            this.cost = cost;
             isActive = enableByDefault;
         }
     }
@@ -35,73 +39,121 @@ namespace GoD
     public class GodManagerScript : MonoBehaviour
     {
         public double karmaPoint;
-        [SerializeField] private TextMeshProUGUI _karmaCounter;
-        [SerializeField] private List<GameObject> spawnerList = new List<GameObject>();
-        [SerializeField] private List<Button> spawnerButtonList = new List<Button>();
-        private readonly List<MonsterSpawner> _monsterSpawnerList;
-        public readonly List<MonsterSpawner> monsterSpawnerAvailable;
+        public MonsterSpawnScript monsterSpawnScript;
+        [FormerlySerializedAs("_karmaCounter")] [SerializeField] private TextMeshProUGUI karmaCounter;
+        [SerializeField] private List<Sprite> monsterIcons = new List<Sprite>();
+        [SerializeField] private List<WalkerEnum> monsterTypes = new List<WalkerEnum>();
+        [SerializeField] private List<float> monsterCosts = new List<float>();
+        [SerializeField] private Transform buttonList;
+        
+        private List<Image> _buttonsBackground = new List<Image>();
+        
+        private List<MonsterSpawnButton> _monsterSpawnButtonList;
+        private List<MonsterSpawnButton> _monsterSpawnButtonAvailable;
 
-        public GodManagerScript()
+        private void Start()
         {
-            if (spawnerList.Count > spawnerButtonList.Count) return;
+            List<MonsterSpawnButton> test = new List<MonsterSpawnButton>();
+            List<WalkerEnum> typeOrder = new List<WalkerEnum>()
+            {
+                WalkerEnum.DominionArmy,
+            };
+            
+            int i = 0;
+            foreach (Transform button in buttonList)
+            {
+                if (i >= monsterIcons.Count && i >= typeOrder.Count)
+                {
+                    Destroy(button.gameObject);
+                    continue;
+                }
+                
+                _buttonsBackground.Add(button.GetComponent<Image>());
+                i++;
+            }
 
-            List<MonsterSpawner> test = new();
-            for (int i = 0; i < spawnerList.Count; i++)
-                test.Add(new MonsterSpawner(
+            i = 0;
+            foreach (Transform button in buttonList)
+            {
+                if (i >= monsterIcons.Count && i >= typeOrder.Count) break;
+                
+                Debug.Log("1");
+                Sprite monsterIcon = monsterIcons[i];
+                WalkerEnum monsterType = monsterTypes[i];
+                float monsterCost = monsterCosts[i];
+                
+                Debug.Log("2");
+                button.GetChild(0).GetComponent<Image>().sprite = monsterIcon;
+                button.GetChild(1).GetChild(1).GetComponent<TextMeshProUGUI>().text = monsterCost.ToString(CultureInfo.CurrentCulture);
+                button.GetComponent<Button>().onClick.AddListener(() => {
+                    monsterSpawnScript.type = monsterType;
+                    _buttonsBackground.ForEach(background => background.color = Color.black);
+                    button.GetComponent<Image>().color = Color.gray;
+                });
+                
+                Debug.Log("3");
+                test.Add(new MonsterSpawnButton(
                     i,
-                    "MonsterName",
-                    spawnerList[i],
-                    spawnerButtonList[i],
+                    monsterType,
                     5,
+                    monsterCost,
                     true
                 ));
 
-            _monsterSpawnerList = test;
-            monsterSpawnerAvailable = _monsterSpawnerList;
+                i++;
+            }
+            Debug.Log("4");
+
+            _monsterSpawnButtonList = test;
+            _monsterSpawnButtonAvailable = _monsterSpawnButtonList;
+            Debug.Log(test);
+            Debug.Log(_monsterSpawnButtonList);
+            
         }
 
         // Update is called once per frame
         private void Update()
         {
             karmaPoint += Time.deltaTime;
-            _karmaCounter.text = (Math.Round(karmaPoint * 100) / 100).ToString(CultureInfo.CurrentCulture);
+            karmaCounter.text = (Math.Round(karmaPoint * 100) / 100).ToString(CultureInfo.CurrentCulture);
         }
 
         private void FixedUpdate()
         {
             float timeIncrement = Time.deltaTime;
 
-            for (int i = monsterSpawnerAvailable.Count - 1; i >= 0; i--)
+            for (int i = _monsterSpawnButtonAvailable.Count - 1; i >= 0; i--)
             {
-                MonsterSpawner monsterSpawner = monsterSpawnerAvailable[i];
+                MonsterSpawnButton monsterSpawnButton = _monsterSpawnButtonAvailable[i];
 
-                if (monsterSpawner.cooldown < monsterSpawner.respawnDelay) monsterSpawner.cooldown += timeIncrement;
-                monsterSpawner.canBeSpawn = monsterSpawner.cooldown >= monsterSpawner.respawnDelay;
+                if (monsterSpawnButton.cooldown < monsterSpawnButton.respawnDelay) monsterSpawnButton.cooldown += timeIncrement;
+                monsterSpawnButton.canBeSpawn = monsterSpawnButton.cooldown >= monsterSpawnButton.respawnDelay;
 
-                if (!monsterSpawner.isActive) monsterSpawnerAvailable.RemoveAt(i);
+                if (!monsterSpawnButton.isActive) _monsterSpawnButtonAvailable.RemoveAt(i);
             }
         }
 
-        public MonsterSpawner GetMonsterSpawnerByName(string name)
+        public MonsterSpawnButton GetMonsterSpawnerByType(WalkerEnum type)
         {
-            return _monsterSpawnerList.Find(x => x.name == name);
+            Debug.Log(_monsterSpawnButtonList);
+            return _monsterSpawnButtonList.Find(x => x.type == type);
         }
 
-        public List<MonsterSpawner> GetMonsterSpawners()
+        public List<MonsterSpawnButton> GetMonsterSpawners()
         {
-            return _monsterSpawnerList ?? new List<MonsterSpawner>();
+            return _monsterSpawnButtonList ?? new List<MonsterSpawnButton>();
         }
 
-        public void SetMonsterSpawnersAvailable(List<MonsterSpawner> spellsAvailable)
+        public void SetMonsterSpawnersAvailable(List<MonsterSpawnButton> spellsAvailable)
         {
-            monsterSpawnerAvailable.Clear();
-            monsterSpawnerAvailable.AddRange(spellsAvailable);
+            _monsterSpawnButtonAvailable.Clear();
+            _monsterSpawnButtonAvailable.AddRange(spellsAvailable);
         }
 
         public void ResetSpellsAvailable()
         {
-            monsterSpawnerAvailable.Clear();
-            monsterSpawnerAvailable.AddRange(_monsterSpawnerList.Where(spell => spell.isActive));
+            _monsterSpawnButtonAvailable.Clear();
+            _monsterSpawnButtonAvailable.AddRange(_monsterSpawnButtonList.Where(spawner => spawner.isActive));
         }
     }
 }

@@ -6,9 +6,9 @@ namespace GoD.UI
     {
         public bool isPointerOverScrollRect;
 
-        public void Update()
-        {
-            Debug.Log($"{gameObject.name}: {isPointerOverScrollRect}");
-        }
+        // public void Update()
+        // {
+        //     Debug.Log($"{gameObject.name}: {isPointerOverScrollRect}");
+        // }
     }
 }
