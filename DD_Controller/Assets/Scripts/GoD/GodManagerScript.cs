@@ -112,7 +112,7 @@ namespace GoD
         // Update is called once per frame
         private void Update()
         {
-            karmaPoint += Time.deltaTime * 2;
+            karmaPoint += Time.deltaTime * 3;
             karmaCounter.text = (Math.Round(karmaPoint * 100) / 100).ToString(CultureInfo.CurrentCulture);
         }
 

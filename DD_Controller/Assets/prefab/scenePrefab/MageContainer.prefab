@@ -373,7 +373,7 @@ MonoBehaviour:
   - {fileID: 650860838498001736}
   - {fileID: 4125760538661141371}
   size: 1
-  maxHealth: 200
+  maxHealth: 1000
   group: 0
   gameEnd: {fileID: 6277412911993343772}
   levelUpGrimoireObject: {fileID: 505107631431152640}

@@ -43,7 +43,7 @@ namespace Mage.SpellListener
 
         private void OnSpell(Spell spell)
         {
-            _timer = 15;
+            _timer = 25;
             footMoveScript.movementSpeed = _initialValue * 5f;
             effectRenderer.material = effectMaterial;
             _active = true;

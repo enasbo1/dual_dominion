@@ -12,7 +12,7 @@ namespace Mage.SpellListener
         public Transform defaultGroupsPosition;
         public float timeBetweenBullet = 0.2f;
         public int spellId = 8;
-        public float defaultDamageMax = 20f;
+        public float defaultDamageMax = 25f;
 
         private readonly List<GroupOfTheSpell> _groupsOfTheSpell = new List<GroupOfTheSpell>();
         private int _groupCount;
@@ -157,7 +157,7 @@ namespace Mage.SpellListener
                 bullet.transform.localScale = bulletScale;
                 bullet.transform.localPosition = bulletPos;
                 bullet.growMultiplayer += Time.deltaTime;
-                bullet.damageDealer.damageMax += sizeToAdd;
+                bullet.damageDealer.damageMax += sizeToAdd * 1.5f;
             });
         }
 

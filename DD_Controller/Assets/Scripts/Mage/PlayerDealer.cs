@@ -28,17 +28,12 @@ namespace Mage
         [SerializeField] private Image scoreEffect;
         public int skillsToUnlock;
         
-        
-        private string _stringMaxHp;
-        private string _stringMaxXp;
         private Color _originalXpColor;
         private float _effectTimer;
         private void Start()
         {
             lifePoints = maxHealth;
-            _stringMaxHp = lifePoints.ToString(CultureInfo.CurrentCulture);
-            _stringMaxXp = levelXpPoints.ToString(CultureInfo.CurrentCulture);
-            textHp.text = $"{lifePoints.ToString(CultureInfo.CurrentCulture)} / {_stringMaxHp}";
+            textHp.text = $"{lifePoints.ToString(CultureInfo.CurrentCulture)} / {maxHealth.ToString(CultureInfo.CurrentCulture)}";
             UpdateXpUI();
 
             _originalXpColor = scoreEffect.color;
@@ -67,7 +62,7 @@ namespace Mage
             {
                 currentXP -= levelXpPoints;
                 skillsToUnlock += 1;
-                levelXpPoints += 250;
+                levelXpPoints += 150;
 
                 if (skillsToUnlock > 0 && spellManager.spellsToUnlock.Count == 0)
                 {
@@ -112,7 +107,7 @@ namespace Mage
         private void UpdateHealthUI()
         {
             healthBarSlider.value = lifePoints / maxHealth;
-            textHp.text = $"{math.round(lifePoints).ToString(CultureInfo.CurrentCulture)} / {_stringMaxHp}";
+            textHp.text = $"{math.round(lifePoints).ToString(CultureInfo.CurrentCulture)} / {maxHealth.ToString(CultureInfo.CurrentCulture)}";
             
             Color damageEffectColor = damageEffect.color;
             damageEffectColor.a = 1f;
@@ -122,7 +117,7 @@ namespace Mage
         private void UpdateXpUI()
         {
             xpBarSlider.value = currentXP / levelXpPoints;
-            textXp.text = $"{currentXP.ToString(CultureInfo.CurrentCulture)} / {_stringMaxXp}";
+            textXp.text = $"{currentXP.ToString(CultureInfo.CurrentCulture)} / {levelXpPoints.ToString(CultureInfo.CurrentCulture)}";
 
             _effectTimer = 1f;
         }

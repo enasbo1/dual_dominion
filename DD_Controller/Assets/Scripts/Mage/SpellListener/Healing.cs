@@ -19,7 +19,7 @@ namespace Mage.SpellListener
 
         private void OnSpell(Spell spell)
         {
-            playerDealer.lifePoints += 40f;
+            playerDealer.lifePoints += 200f;
             if (playerDealer.lifePoints > playerDealer.maxHealth)
             {
                 playerDealer.lifePoints = playerDealer.maxHealth;
@@ -28,7 +28,7 @@ namespace Mage.SpellListener
         
         private void OnSpellFailure(Spell spell)
         {
-            playerDealer.lifePoints += 7f;
+            playerDealer.lifePoints += 50f;
             if (playerDealer.lifePoints > playerDealer.maxHealth)
             {
                 playerDealer.lifePoints = playerDealer.maxHealth;

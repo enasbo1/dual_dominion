@@ -110,7 +110,7 @@ namespace Mage
                         SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down,
                         SpellDirections.Up
                     },
-                    2,
+                    4,
                     true,
                     true
                 ),
@@ -123,7 +123,7 @@ namespace Mage
                         SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up,
                         SpellDirections.Down, SpellDirections.Up, SpellDirections.Up
                     },
-                    5,
+                    8,
                     true,
                     false
                 ),
