@@ -8,8 +8,8 @@ namespace Move
     public class RandomSpeedManager : WalkerManager
     {
         [SerializeField] private float speedTarget;
-        private readonly TableList<Animator> _animators = new(0);
-        private TableArray<float> _currentSpeed = new(0);
+        private readonly TableList<Animator> _animators = new TableList<Animator>(0);
+        private TableArray<float> _currentSpeed = new TableArray<float>(0);
 
         private void Start()
         {

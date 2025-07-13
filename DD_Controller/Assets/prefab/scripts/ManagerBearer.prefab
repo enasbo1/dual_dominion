@@ -211,7 +211,7 @@ GameObject:
   - component: {fileID: 5798137433258630259}
   - component: {fileID: 2395829284567232972}
   m_Layer: 0
-  m_Name: ManagerBarrer
+  m_Name: ManagerBearer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

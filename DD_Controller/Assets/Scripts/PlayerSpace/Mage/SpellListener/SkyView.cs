@@ -1,7 +1,7 @@
 using Move;
 using UnityEngine;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class SkyView : MonoBehaviour
     {
@@ -16,9 +16,9 @@ namespace Mage.SpellListener
         public Transform mageCharacterTransform;
         public Transform playerCamera;
 
-        [Header("Parameters")] public Vector3 targetPosition = new(0, 40, -4);
+        [Header("Parameters")] public Vector3 targetPosition = new Vector3(0, 40, -4);
 
-        public Vector3 targetEulerRotation = new(85, 0, 0);
+        public Vector3 targetEulerRotation = new Vector3(85, 0, 0);
         private MoveMode _defaultMoveMode;
         private Transform _directionMain;
         private Spell _endSkyView;
@@ -65,7 +65,7 @@ namespace Mage.SpellListener
         private void SpellCasted()
         {
             _skyView.isInCast = true;
-            _endSkyView.isActive = true;
+            _endSkyView.isUnlocked = true;
 
             _timeLimit = 20f;
             _timer = _timeLimit;
@@ -87,7 +87,7 @@ namespace Mage.SpellListener
             playerCameraController.moveMode = _defaultMoveMode;
 
             _skyView.isInCast = false;
-            _endSkyView.isActive = false;
+            _endSkyView.isUnlocked = false;
         }
     }
 }

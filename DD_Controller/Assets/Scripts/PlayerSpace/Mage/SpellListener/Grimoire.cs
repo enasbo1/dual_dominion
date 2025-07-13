@@ -3,8 +3,9 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayerSpace.Mage.UI;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class Grimoire : MonoBehaviour
     {
@@ -17,14 +18,14 @@ namespace Mage.SpellListener
 
         [Range(0.1f, 5f)] public float transitionDistance = 1f;
 
-        private readonly Dictionary<int, SpellUI> _spellsForSpellsUI = new();
+        private readonly Dictionary<int, SpellUI> _spellsForSpellsUI = new Dictionary<int, SpellUI>();
 
         private Spell _grimoireSpell;
         private float _grimoryOpeningTime;
         private Vector2 _scrollGrimoryUISize;
 
         private Vector2 _scrollSpell;
-        private List<Spell> _spellsAvailable = new();
+        private List<Spell> _spellsAvailable = new List<Spell>();
 
         private RectTransform _spellsDisplayUI;
         private RectTransform _spellsUI;
@@ -56,7 +57,7 @@ namespace Mage.SpellListener
         {
             RefreshSpellsUI();
             if (!_grimoireSpell.isInCast) return;
-            _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellsAvailable.Count - 2) * 70);
+            _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellsAvailable.Count - 3) * 70);
 
             if (spellManager.isIncanting) return;
             float transitionSpeed = Time.fixedDeltaTime / transitionDistance;
@@ -71,7 +72,7 @@ namespace Mage.SpellListener
             if (spellManager.isIncanting != _wasIncanting) OnIncantingChange();
 
             // Scroll back spells so that the 1st spell is on top of the UI
-            if (_spellsUI.anchoredPosition.y > _spellsUIEndPosition.y + SPELL_UI_HEIGHT)
+            if (_spellsUI.anchoredPosition.y > _spellsUIEndPosition.y + SPELL_UI_HEIGHT * 1.5f)
             {
                 _scrollSpell = _spellsUI.anchoredPosition - new Vector2(0f, SPELL_UI_HEIGHT / 10);
                 _spellsUI.anchoredPosition = _scrollSpell;
@@ -197,84 +198,162 @@ namespace Mage.SpellListener
                 }
             }
         }
-
-        private static void RefreshSpellUIPosition(RectTransform spellUI, int spellIndex)
+        
+        private List<SpellUIDisplayState> ComputeSpellUIStates()
         {
-            spellUI.gameObject.SetActive(true);
-            Vector2 spellUINewPosition = spellUI.anchoredPosition;
-            spellUINewPosition.y = -2.5f - spellIndex * SPELL_UI_HEIGHT;
-            spellUI.anchoredPosition = spellUINewPosition;
-        }
-
-        private static void RefreshSpellUIStatus(Image spellStatus, Spell spell, MageUIRendererScript mageUIRenderer)
-        {
-            if (spell.canBeCast)
-            {
-                if (spell.isInCast)
-                {
-                    spellStatus.gameObject.SetActive(true);
-                    spellStatus.color = mageUIRenderer.spellBackgroundColorInCast;
-                    return;
-                }
-
-                spellStatus.gameObject.SetActive(false);
-                return;
-            }
-
-            spellStatus.gameObject.SetActive(true);
-            spellStatus.color = mageUIRenderer.spellBackgroundColorOnCooldown;
-            spellStatus.fillAmount =
-                spell.recastDelay > 0f ? Mathf.Clamp01(1f - spell.cooldown / spell.recastDelay) : 1f;
-        }
-
-        private void RefreshSpellNameUI(SpellUI spellUI, Spell spell)
-        {
-            spellUI.spellName.color = spell.canBeCast
-                ? mageUIRenderer.spellNameColorOnCast
-                : mageUIRenderer.spellNameColorOnCooldown;
-        }
-
-        private void RefreshSpellsUI()
-        {
+            List<SpellUIDisplayState> displayStates = new List<SpellUIDisplayState>();
             Spell spellToCast = spellManager.spellToCast;
-            SpellUI spellToCastUI = _spellsForSpellsUI[spellToCast.id];
             int spellToCastId = spellToCast.id;
 
-            int i = 1;
+            Vector2 startPos = _spellsUIStartPosition;
+            float yOffset = -2.5f;
+            int index = 1;
+
             foreach (KeyValuePair<int, SpellUI> spellForSpellUI in _spellsForSpellsUI)
             {
-                int spellId = spellForSpellUI.Key;
-                SpellUI spellUI = spellForSpellUI.Value;
+                int spellIdForThisUI = spellForSpellUI.Key;
+                bool isAvailable = _spellsAvailable.Exists(s => s.id == spellIdForThisUI);
 
-                if (_spellsAvailable.All(s => s.id != spellId))
+                if (!isAvailable)
                 {
-                    spellUI.spellPosition.gameObject.SetActive(false);
+                    displayStates.Add(new SpellUIDisplayState
+                    {
+                        id = spellIdForThisUI,
+                        isVisible = false
+                    });
+                    continue;
+                }
+                
+                Spell spell = _spellsAvailable.First(s => s.id == spellIdForThisUI);
+                if (spellIdForThisUI == spellToCastId) continue;
+                
+                if (spell.isHidden)
+                {
+                    displayStates.Add(new SpellUIDisplayState
+                    {
+                        id = spellIdForThisUI,
+                        isVisible = false
+                    });
+                    continue;
+                }
+                
+                SpellUIDisplayState state = new SpellUIDisplayState
+                {
+                    id = spellIdForThisUI,
+                    isVisible = !spell.isHidden || spellToCast.id == spellIdForThisUI,
+                    position = new Vector2(startPos.x, yOffset - index * SPELL_UI_HEIGHT),
+                    nameColor = spell.canBeCast
+                        ? mageUIRenderer.spellNameColorOnCast
+                        : mageUIRenderer.spellNameColorOnCooldown,
+                    showStatus = !spell.canBeCast || spell.isInCast,
+                    statusColor = spell.isInCast
+                        ? mageUIRenderer.spellBackgroundColorInCast
+                        : mageUIRenderer.spellBackgroundColorOnCooldown,
+                    statusFillAmount = spell.recastDelay > 0f
+                        ? Mathf.Clamp01(1f - spell.cooldown / spell.recastDelay)
+                        : 1f,
+                    directions = spell.inputs.ToArray()
+                };
+
+                displayStates.Add(state);
+                index++;
+            }
+
+            displayStates.Add(new SpellUIDisplayState
+            {
+                id = spellToCast.id,
+                isVisible = true,
+                position = new Vector2(startPos.x, yOffset),
+                nameColor = spellToCast.canBeCast
+                    ? mageUIRenderer.spellNameColorOnCast
+                    : mageUIRenderer.spellNameColorOnCooldown,
+                showStatus = !spellToCast.canBeCast || spellToCast.isInCast,
+                statusColor = spellToCast.isInCast
+                    ? mageUIRenderer.spellBackgroundColorInCast
+                    : mageUIRenderer.spellBackgroundColorOnCooldown,
+                statusFillAmount = spellToCast.recastDelay > 0f
+                    ? Mathf.Clamp01(1f - spellToCast.cooldown / spellToCast.recastDelay)
+                    : 1f,
+                directions = spellToCast.inputs.ToArray()
+            });
+
+            return displayStates;
+        }
+        
+        private void RefreshSpellsUI()
+        {
+            List<SpellUIDisplayState> displayStates = ComputeSpellUIStates();
+
+            foreach (SpellUIDisplayState state in displayStates)
+            {
+                if (!_spellsForSpellsUI.TryGetValue(state.id, out SpellUI ui)) continue;
+
+                if (!state.isVisible)
+                {
+                    if (ui.spellPosition.gameObject.activeSelf)
+                        ui.spellPosition.gameObject.SetActive(false);
                     continue;
                 }
 
-                if (spellId == spellToCastId) continue;
+                // Position
+                ui.spellPosition.gameObject.SetActive(true);
+                ui.spellPosition.anchoredPosition = state.position;
 
-                Spell spell = _spellsAvailable.First(s => s.id == spellId);
-                if (spell.isHidden)
+                // Spell name
+                ui.spellName.color = state.nameColor;
+
+                // Spell status
+                if (state.showStatus)
                 {
-                    spellUI.spellPosition.gameObject.SetActive(false);
-                    continue;
-                };
+                    ui.spellStatus.gameObject.SetActive(true);
+                    ui.spellStatus.color = state.statusColor;
+                    ui.spellStatus.fillAmount = state.statusFillAmount;
+                }
+                else
+                {
+                    ui.spellStatus.gameObject.SetActive(false);
+                }
 
-                RefreshSpellUIPosition(spellUI.spellPosition, i);
+                // Spell Inputs
+                for (int i = 0; i < ui.spellInputs.Count; i++)
+                {
+                    if (i < state.directions.Length)
+                    {
+                        ui.spellInputs[i].gameObject.SetActive(true);
+                        float angle;
+                        Color color;
 
-                RefreshSpellNameUI(spellUI, spell);
-                RefreshSpellUIStatus(spellUI.spellStatus, spell, mageUIRenderer);
-                RefreshInputs(spellUI.spellInputs, spell);
+                        switch (state.directions[i])
+                        {
+                            case SpellDirections.Up:
+                                angle = 0f;
+                                color = mageUIRenderer.upArrowColor;
+                                break;
+                            case SpellDirections.Right:
+                                angle = -90f;
+                                color = mageUIRenderer.rightArrowColor;
+                                break;
+                            case SpellDirections.Down:
+                                angle = 180f;
+                                color = mageUIRenderer.downArrowColor;
+                                break;
+                            case SpellDirections.Left:
+                                angle = 90f;
+                                color = mageUIRenderer.leftArrowColor;
+                                break;
+                            default:
+                                continue;
+                        }
 
-                i++;
+                        ui.spellInputs[i].color = color;
+                        ui.spellInputs[i].rectTransform.rotation = Quaternion.Euler(0, 0, angle);
+                    }
+                    else
+                    {
+                        ui.spellInputs[i].gameObject.SetActive(false);
+                    }
+                }
             }
-
-            RefreshSpellUIPosition(spellToCastUI.spellPosition, 0);
-
-            RefreshSpellNameUI(spellToCastUI, spellToCast);
-            RefreshSpellUIStatus(spellToCastUI.spellStatus, spellToCast, mageUIRenderer);
-            RefreshInputs(spellToCastUI.spellInputs, spellToCast);
         }
 
         private void SpellCasted()

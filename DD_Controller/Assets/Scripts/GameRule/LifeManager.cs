@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Monster;
-using Monster.Behavior;
 using Shared;
 using UnityEngine;
 
@@ -18,7 +17,7 @@ namespace GameRule
         public static LifeManager<TDealer, TEnum, TVariant> MainInstance = null;
         [SerializeField] protected bool IsMainInstance = false;
         [SerializeField] private StandByManager<TDealer, TEnum, TVariant> standByManager;
-        private TableArray<(float current, float max)> _life = new(0);
+        private TableArray<(float current, float max)> _life = new TableArray<(float current, float max)>(0);
 
         protected virtual void Start()
         {

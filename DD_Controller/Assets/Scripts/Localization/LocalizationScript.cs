@@ -9,7 +9,7 @@ namespace Localization
 {
     public class Localization : MonoBehaviour
     {
-        private static readonly Dictionary<LocalizationName, string> LocalizationNames = new()
+        private static readonly Dictionary<LocalizationName, string> LocalizationNames = new Dictionary<LocalizationName, string>
         {
             { LocalizationName.En, "English" },
             { LocalizationName.Fr, "Français" }
@@ -33,7 +33,7 @@ namespace Localization
         {
             dropdownLang.ClearOptions();
 
-            List<string> options = new();
+            List<string> options = new List<string>();
             foreach (LocalizationName locale in Enum.GetValues(typeof(LocalizationName)))
                 options.Add(LocalizationNames[locale]);
 

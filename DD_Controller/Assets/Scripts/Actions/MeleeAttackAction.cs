@@ -1,6 +1,4 @@
-﻿using GameRule;
-using Monster;
-using Move;
+﻿using Monster;
 using UnityEngine;
 
 namespace Actions

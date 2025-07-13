@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Mage
+namespace PlayerSpace.Mage
 {
     public class MageControllerScript : MonoBehaviour
     {

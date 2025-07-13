@@ -9,7 +9,7 @@ namespace Move
     {
         public Transform characterTransform;
         public bool onUpdate;
-        public List<Transform> footList = new();
+        public List<Transform> footList = new List<Transform>();
         private Transform _footTransform;
         private Vector3 _moveValue = Vector3.zero;
 

@@ -30,8 +30,8 @@ namespace LobbyCustom
             {
                 authenticateButton.onClick.AddListener(() => {
                     PlayerManager.Instance.Authenticate(EditPlayerName.Instance.GetPlayerName());
-                    lobbyListUI.Show();
                     LobbyManager.Instance.RefreshLobbyList();
+                    lobbyListUI.Show();
                     Hide();
                 });
             }

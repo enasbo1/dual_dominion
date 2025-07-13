@@ -8,20 +8,28 @@ namespace GoD
 {
     public class MonsterSpawnScript : NetworkSpawnScript<MonsterDealer, WalkerEnum, MonsterVariants>
     {
-        public GodManagerScript godManagerScript;
+        public GodManagerScript godManager;
+        public GodSelectMonsterManagerScript godSelectMonsterManagerScript;
+
+        private NetworkManager _networkManager;
         
+        private void Awake()
+        {
+            _networkManager = NetworkManager.Singleton;
+        }
+
         private void Update()
         {
             if (!spawnLocation?.gameObject.activeSelf?? true) return; 
-            if (NetworkManager.Singleton.IsServer) return;
+            if (_networkManager.IsServer) return;
             if (Input.GetKeyDown(KeyCode.Space) && type != WalkerEnum.None)
             {
-                MonsterSpawnButton monsterSpawn = godManagerScript.GetMonsterSpawnerByType(type, variant);
+                Monster monsterSpawn = godSelectMonsterManagerScript.GetMonsterSpawnerByType(type, variant);
                 if (monsterSpawn == null) return;
-                if (godManagerScript.karmaPoint > monsterSpawn.cost)
+                if (godManager.karmaPoint > monsterSpawn.cost)
                 {
-                    godManagerScript.karmaPoint -= monsterSpawn.cost;
-                    SpawnOneRpc(type, godManagerScript.monsterSpawnPoint.position, godManagerScript.monsterSpawnPoint.rotation, variant);
+                    godManager.karmaPoint -= monsterSpawn.cost;
+                    SpawnOneRpc(type, godSelectMonsterManagerScript.monsterSpawnPoint.position, godSelectMonsterManagerScript.monsterSpawnPoint.rotation, variant);
                 }
             }
         }

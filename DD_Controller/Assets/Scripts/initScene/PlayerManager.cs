@@ -1,49 +1,64 @@
 using GoD;
-using Mage;
-using Monster;
+using Menu;
+using PlayerSpace.Mage;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace initScene
 {
     public class PlayerManager : NetworkBehaviour
     {
+        [Header("Prefabs")]
         public GameObject mageContainerPrefab;
+        public GameObject godContainerPrefab;
+        
+        [Header("")]
         public GameObject managerBearer;
         public PlayerBearer playerBearer;
         public WalkerDealingManager playerDealingManager;
-        public GameObject godScenePrefab;
         public MonsterSpawnScript monsterSpawnScript;
+        public PauseMenuScript pauseMenu;
         public Transform spawnPoint;
-        public NetworkObject networkObject;
         public Transform playerCamera;
+
+        private NetworkManager _networkManager;
 
         private void Start()
         {
-            if (!NetworkManager.Singleton.IsServer) 
+            _networkManager = NetworkManager.Singleton;
+            
+            if (!_networkManager.IsServer) 
                 managerBearer.SetActive(false);
             
             
-            GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godScenePrefab;
+            GameObject selectedPrefab = NetworkManager.Singleton.IsServer ? mageContainerPrefab : godContainerPrefab;
             
             GameObject go = Instantiate(selectedPrefab, 
-                spawnPoint.position + (NetworkManager.Singleton.IsServer? Vector3.zero : Vector3.up * 30), 
+                spawnPoint.position + (_networkManager.IsServer? Vector3.zero : Vector3.up * 30), 
                 spawnPoint.rotation);
-            if (NetworkManager.Singleton.IsServer)
+            
+            pauseMenu.playerInputs = go.GetComponent<PlayerInput>();
+            
+            if (_networkManager.IsServer)
             {
-                PlayerDealer player = go.GetComponent<PlayerDealer>();
+                MageDealer player = go.GetComponent<MageDealer>();
                 if (!player)
                     Debug.LogWarning("Player dealer est null");
                 
                 playerBearer.MainPlayer = player;
-                playerDealingManager.ForceStart();      
+                playerDealingManager.ForceStart();
                 playerDealingManager.Add(playerBearer.MainPlayer);
             }
             else
             {
-                GodManagerScript godManager = go.GetComponentInChildren<GodManagerScript>();
-                godManager.monsterSpawnScript = monsterSpawnScript;
-                monsterSpawnScript.godManagerScript = godManager;
+                GodSelectMonsterManagerScript godSelectMonsterManager = go.GetComponentInChildren<GodSelectMonsterManagerScript>();
+                GodManagerScript godManager = go.GetComponent<GodManagerScript>();
+                
+                godSelectMonsterManager.monsterSpawnScript = monsterSpawnScript;
+
+                monsterSpawnScript.godManager = godManager;
+                monsterSpawnScript.godSelectMonsterManagerScript = godSelectMonsterManager;
             }
             
             NetworkObject no = go.GetComponent<NetworkObject>();

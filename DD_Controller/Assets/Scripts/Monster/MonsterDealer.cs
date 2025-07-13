@@ -34,7 +34,8 @@ namespace Monster
         private float _timeToDie ;
         private List<GameObject>[] _variantAttributes;
         
-        private readonly List<Action<MonsterDealer, Rigidbody>> _hitEvents = new ();
+        private readonly List<Action<MonsterDealer, Rigidbody>> _hitEvents =
+            new List<Action<MonsterDealer, Rigidbody>>();
         public event Action<MonsterDealer, Rigidbody> HitListener
         {
             add => _hitEvents.Add(value);

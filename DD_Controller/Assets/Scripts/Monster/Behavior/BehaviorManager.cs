@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using initScene;
-using Mage;
+using PlayerSpace.Mage;
 using Shared;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,7 +10,7 @@ namespace Monster.Behavior
 {
     public static class MonsterBehaviors
     {
-        public static readonly Dictionary<MonsterBehaviorEnum, IMonsterBehavior> BehaviorMap = new()
+        public static readonly Dictionary<MonsterBehaviorEnum, IMonsterBehavior> BehaviorMap = new Dictionary<MonsterBehaviorEnum, IMonsterBehavior>
         {
             { MonsterBehaviorEnum.Start, new Starts() },
             { MonsterBehaviorEnum.Idle, new Idle() },
@@ -22,22 +22,22 @@ namespace Monster.Behavior
         };
     }
 
-    public class BehaviorManager : Manager<MonsterDealer, WalkerEnum, MonsterVariants>, IPlayerUser<PlayerDealer>
+    public class BehaviorManager : Manager<MonsterDealer, WalkerEnum, MonsterVariants>, IPlayerUser<MageDealer>
     {
         [SerializeField] public Material regroupMaterial;
         [SerializeField] public Material targetMaterial;
         [SerializeField] public Material attackMaterial;
-        [SerializeField] public PlayerBearer<PlayerDealer> playerBearer;
-        public PlayerDealer MainPlayer { get; set; }
+        [SerializeField] public PlayerBearer<MageDealer> playerBearer;
+        public MageDealer MainPlayer { get; set; }
 
-        protected TableArray<MonsterBehaviorEnum> ActivesBehaviors = new(0);
+        protected TableArray<MonsterBehaviorEnum> ActivesBehaviors = new TableArray<MonsterBehaviorEnum>(0);
         protected bool[] Available = new bool[5];
-        public TableArray<float> BehaviorEnd = new(0);
+        public TableArray<float> BehaviorEnd = new TableArray<float>(0);
 
-        [DoNotSerialize] public TableArray<Material[]> DefaultMaterials = new(0);
-        [DoNotSerialize] public TableList<Transform> Transforms = new(0);
-        [DoNotSerialize] public TableList<Rigidbody> Bodies = new(0);
-        protected TableArray<MonsterBehaviorEnum[]> KnownBehaviors = new(0);
+        [DoNotSerialize] public TableArray<Material[]> DefaultMaterials = new TableArray<Material[]>(0);
+        [DoNotSerialize] public TableList<Transform> Transforms = new TableList<Transform>(0);
+        [DoNotSerialize] public TableList<Rigidbody> Bodies = new TableList<Rigidbody>(0);
+        protected TableArray<MonsterBehaviorEnum[]> KnownBehaviors = new TableArray<MonsterBehaviorEnum[]>(0);
 
         private void Start()
         {
@@ -163,7 +163,7 @@ namespace Monster.Behavior
             return -1;
         }
 
-        public void SetMainPlayer(PlayerDealer dealer)
+        public void SetMainPlayer(MageDealer dealer)
         {
             MainPlayer = dealer;
         }

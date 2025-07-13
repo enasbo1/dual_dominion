@@ -6,22 +6,24 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mage
+namespace PlayerSpace.Mage
 {
-    public class PlayerDealer : WalkerDdDealer
+    public class MageDealer : WalkerDdDealer
     {
+        [Header("MageDealer Specific")]
         [SerializeField] private GameEnd gameEnd;
         [SerializeField] private GameObject levelUpGrimoireObject;
         [SerializeField] private SpellManager spellManager;
         
         [Header("Health")]
-        [SerializeField] public float lifePoints;
+        [SerializeField] public float lifePoints = 1000;
         [SerializeField] private Slider healthBarSlider;
         [SerializeField] private TextMeshProUGUI textHp;
         [SerializeField] private Image damageEffect;
+        [SerializeField] private bool isInvicible;
         
         [Header("XP Bar")]
-        [SerializeField] public float levelXpPoints = 1000;
+        [SerializeField] public float levelXpPoints = 850;
         [SerializeField] private float currentXP;
         [SerializeField] private Slider xpBarSlider;
         [SerializeField] private TextMeshProUGUI textXp;        
@@ -30,6 +32,7 @@ namespace Mage
         
         private Color _originalXpColor;
         private float _effectTimer;
+        
         private void Start()
         {
             lifePoints = maxHealth;
@@ -45,12 +48,16 @@ namespace Mage
 
         public void Aie(float damage)
         {
+            if (isInvicible) return;
             lifePoints -= damage;
             animator?.SetTrigger(PlayerAnimP.Hurt);
             UpdateHealthUI();
+            
+            // Mage Defeat conditions
             if (lifePoints <= 0)
             {
-                gameEnd.GameOver();
+                isInvicible = true;
+                gameEnd.EndGame(false);
             }
         }
 
@@ -64,9 +71,11 @@ namespace Mage
                 skillsToUnlock += 1;
                 levelXpPoints += 150;
 
+                // Mage Victory conditions
                 if (skillsToUnlock > 0 && spellManager.spellsToUnlock.Count == 0)
                 {
-                    gameEnd.GameWon();
+                    isInvicible = true;
+                    gameEnd.EndGame(true);
                 }
             }
         }
@@ -104,7 +113,7 @@ namespace Mage
             }
         }
         
-        private void UpdateHealthUI()
+        public void UpdateHealthUI()
         {
             healthBarSlider.value = lifePoints / maxHealth;
             textHp.text = $"{math.round(lifePoints).ToString(CultureInfo.CurrentCulture)} / {maxHealth.ToString(CultureInfo.CurrentCulture)}";

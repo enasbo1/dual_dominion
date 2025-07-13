@@ -1,4 +1,3 @@
-using JetBrains.Annotations;
 using UnityEngine;
 
 namespace end_game
@@ -16,7 +15,7 @@ namespace end_game
         {
             foreach (Transform got in objectLimited)
                 if (got.transform.position.y < deathBottom)
-                    gameEnd.GameOver();
+                    gameEnd.EndGame(false);
         }
     }
 

@@ -80,6 +80,5 @@ namespace LobbyCustom
             gameObject.SetActive(true);
             LobbyManager.Instance.RefreshLobbyList();
         }
-
     }
 }

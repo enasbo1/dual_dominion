@@ -2404,17 +2404,18 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7378392924821820562}
-  - component: {fileID: 2224337078022392302}
   - component: {fileID: 5108773919738165402}
-  - component: {fileID: 3241785497805355682}
-  - component: {fileID: 8986099243556552578}
-  - component: {fileID: 1564173966971634065}
   - component: {fileID: 5831827844683759926}
   - component: {fileID: 5079138801271962013}
   - component: {fileID: 3005969914805125118}
   - component: {fileID: 8932846348381495059}
+  - component: {fileID: 4724048179402247437}
+  - component: {fileID: 6730508720678239742}
+  - component: {fileID: 1080020278904284920}
+  - component: {fileID: 5752555671279305198}
+  - component: {fileID: 778091746645430307}
   m_Layer: 0
-  m_Name: ScriptsMage
+  m_Name: ChildlessSpellsScripts
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2435,30 +2436,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2511644077341689865}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2224337078022392302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7db82d340dc0ef498e732c0eb37943c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  upArrowColor: {r: 1, g: 0.7143854, b: 0, a: 1}
-  rightArrowColor: {r: 1, g: 0, b: 0.5019608, a: 1}
-  downArrowColor: {r: 0, g: 0.616173, b: 1, a: 1}
-  leftArrowColor: {r: 0, g: 0.9960785, b: 0.08235294, a: 1}
-  upDisabledArrowColor: {r: 0.43327618, g: 0.39609763, b: 0.30403653, a: 1}
-  rightDisabledArrowColor: {r: 0.41680968, g: 0.32679883, b: 0.37198073, a: 1}
-  downDisabledArrowColor: {r: 0.30046925, g: 0.38065457, b: 0.43327618, a: 1}
-  leftDisabledArrowColor: {r: 0.3165037, g: 0.41680968, b: 0.32437083, a: 255}
-  spellBackgroundColorOnCooldown: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 255}
-  spellBackgroundColorInCast: {r: 1, g: 1, b: 1, a: 255}
-  spellNameColorOnCooldown: {r: 0.53333336, g: 0.53333336, b: 0.53333336, a: 255}
-  spellNameColorOnCast: {r: 1, g: 1, b: 1, a: 255}
 --- !u!114 &5108773919738165402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2473,54 +2450,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2922125449342376463}
   player: {fileID: 0}
---- !u!114 &3241785497805355682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5400a3d28a04f146bf674e99b743289, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerInputs: {fileID: 0}
-  playerDealer: {fileID: 0}
-  spellManager: {fileID: 8986099243556552578}
-  mageUIRenderer: {fileID: 2224337078022392302}
-  timeBarSlider: {fileID: 4399219090906342657}
-  inputsUI: {fileID: 5864730731692220108}
-  controllerInputType: 1
-  crossDetectionSensibility: 0.65
-  timeLimit: 15
-  bonusTimePerInput: 0.1
---- !u!114 &8986099243556552578
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb17557e749d4f0bad949abbee8b165c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  forceEnableSpell: 0
---- !u!114 &1564173966971634065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5128612816109905871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9732c06fe49c7bd4793a24fbd576bb2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spellManager: {fileID: 8986099243556552578}
 --- !u!114 &5831827844683759926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2533,8 +2462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c385d236f84ae3e4097efb42abb396a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mageUIRenderer: {fileID: 2224337078022392302}
-  spellManager: {fileID: 8986099243556552578}
+  mageUIRenderer: {fileID: 2541942739390474848}
+  spellManager: {fileID: 0}
   grimoireUI: {fileID: 1004673356339403257}
   transitionDistance: 1.7
 --- !u!114 &5079138801271962013
@@ -2549,8 +2478,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec1041ccdb14bd3bce776c3952b9abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mageUIRenderer: {fileID: 2224337078022392302}
-  spellManager: {fileID: 8986099243556552578}
+  mageUIRenderer: {fileID: 2541942739390474848}
+  spellManager: {fileID: 0}
   levelUpGrimoireUI: {fileID: 7752186575266202853}
   transitionDistance: 1
 --- !u!114 &3005969914805125118
@@ -2565,8 +2494,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 696d59d3e902418b9f15ad67a3cef1ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellManager: {fileID: 8986099243556552578}
-  playerDealer: {fileID: 0}
+  spellManager: {fileID: 0}
+  mageDealer: {fileID: 0}
   godManager: {fileID: 0}
 --- !u!114 &8932846348381495059
 MonoBehaviour:
@@ -2580,8 +2509,93 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca78f37ee94483f93bf3813367124b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellManager: {fileID: 8986099243556552578}
-  playerDealer: {fileID: 0}
+  spellManager: {fileID: 0}
+  mageDealer: {fileID: 0}
+--- !u!114 &4724048179402247437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 495f7713d06d4e8fa27ca0b3a8369b4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 0}
+  mageDealer: {fileID: 0}
+--- !u!114 &6730508720678239742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 640668bc4a98a8e4da2ee695d7d07645, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 0}
+  footMoveScript: {fileID: 0}
+  effectMaterial: {fileID: 2100000, guid: e69bcbb1ef3e2224fb7722d4193c9005, type: 2}
+  effectFailureMaterial: {fileID: 2100000, guid: 296ed545baa25744483c243a25bc95db, type: 2}
+  effectRenderer: {fileID: 0}
+--- !u!114 &1080020278904284920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b25ac5a443a404db8a3b9b83b0f1760, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 0}
+  footMoveScript: {fileID: 0}
+  effectMaterial: {fileID: 2100000, guid: 41b2aa076656cdf4d922b1acde1e4b75, type: 2}
+  effectFailureMaterial: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
+  effectRenderer: {fileID: 0}
+--- !u!114 &5752555671279305198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 025dfe1c94ca08f429522909ead0a9db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 0}
+  characterRigidBody: {fileID: 0}
+  effectMaterial: {fileID: 2100000, guid: 92b72afdd2105ea4daae4584d7855b67, type: 2}
+  playerInputs: {fileID: 0}
+  effectBarer: {fileID: 0}
+--- !u!114 &778091746645430307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4221629b37b604090ecf26e66a627d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 0}
+  playerCameraController: {fileID: 0}
+  mageController: {fileID: 0}
+  playerCharacterController: {fileID: 0}
+  mageCharacterTransform: {fileID: 0}
+  playerCamera: {fileID: 0}
+  targetPosition: {x: 0, y: 40, z: -4}
+  targetEulerRotation: {x: 85, y: 0, z: 0}
 --- !u!1 &5129525911974879812
 GameObject:
   m_ObjectHideFlags: 0
@@ -3469,6 +3483,85 @@ MonoBehaviour:
   references:
     version: 2
     RefIds: []
+--- !u!1 &5960409973102693085
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5986218906724752472}
+  - component: {fileID: 2541942739390474848}
+  - component: {fileID: 3972690691662956275}
+  m_Layer: 0
+  m_Name: UIScripts
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5986218906724752472
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960409973102693085}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2511644077341689865}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2541942739390474848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960409973102693085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7db82d340dc0ef498e732c0eb37943c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  upArrowColor: {r: 1, g: 0.7143854, b: 0, a: 1}
+  rightArrowColor: {r: 1, g: 0, b: 0.5019608, a: 1}
+  downArrowColor: {r: 0, g: 0.616173, b: 1, a: 1}
+  leftArrowColor: {r: 0, g: 0.9960785, b: 0.08235294, a: 1}
+  upDisabledArrowColor: {r: 0.43327618, g: 0.39609763, b: 0.30403653, a: 1}
+  rightDisabledArrowColor: {r: 0.41680968, g: 0.32679883, b: 0.37198073, a: 1}
+  downDisabledArrowColor: {r: 0.30046925, g: 0.38065457, b: 0.43327618, a: 1}
+  leftDisabledArrowColor: {r: 0.3165037, g: 0.41680968, b: 0.32437083, a: 255}
+  spellBackgroundColorOnCooldown: {r: 0.3019608, g: 0.3019608, b: 0.3019608, a: 255}
+  spellBackgroundColorInCast: {r: 1, g: 1, b: 1, a: 255}
+  spellNameColorOnCooldown: {r: 0.53333336, g: 0.53333336, b: 0.53333336, a: 255}
+  spellNameColorOnCast: {r: 1, g: 1, b: 1, a: 255}
+--- !u!114 &3972690691662956275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960409973102693085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5400a3d28a04f146bf674e99b743289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerInputs: {fileID: 0}
+  mageDealer: {fileID: 0}
+  spellManager: {fileID: 0}
+  mageUIRenderer: {fileID: 2541942739390474848}
+  timeBarSlider: {fileID: 4399219090906342657}
+  inputsUI: {fileID: 5864730731692220108}
+  controllerInputType: 1
+  crossDetectionSensibility: 0.65
+  timeLimit: 15
+  bonusTimePerInput: 0.1
 --- !u!1 &6161046652096078322
 GameObject:
   m_ObjectHideFlags: 0
@@ -3950,6 +4043,7 @@ Transform:
   m_Children:
   - {fileID: 710259905092662487}
   - {fileID: 7378392924821820562}
+  - {fileID: 5986218906724752472}
   m_Father: {fileID: 3443804139737688913}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7227061589688638124
@@ -5114,10 +5208,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3023288670410890454}
     m_Modifications:
-    - target: {fileID: 4865125885222908186, guid: bd5667c05bc7fcd4ba4e18a256799be9, type: 3}
-      propertyPath: spellManager
-      value: 
-      objectReference: {fileID: 8986099243556552578}
     - target: {fileID: 6637345959575464003, guid: bd5667c05bc7fcd4ba4e18a256799be9, type: 3}
       propertyPath: m_Name
       value: UnnamedSpellV2
@@ -5836,10 +5926,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnnamedSpellV1
       objectReference: {fileID: 0}
-    - target: {fileID: 3933333629458709215, guid: ea1469fe66b9b594685d9f977b36ae29, type: 3}
-      propertyPath: spellManager
-      value: 
-      objectReference: {fileID: 8986099243556552578}
     - target: {fileID: 8390348254115468155, guid: ea1469fe66b9b594685d9f977b36ae29, type: 3}
       propertyPath: damageReductionPerHit
       value: 200
@@ -6820,10 +6906,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4576649893677407098, guid: 772aab24d7a5e0743a3b923b19dd0a4e, type: 3}
-      propertyPath: spellManager
-      value: 
-      objectReference: {fileID: 8986099243556552578}
     - target: {fileID: 4657443058711559423, guid: 772aab24d7a5e0743a3b923b19dd0a4e, type: 3}
       propertyPath: m_Name
       value: GrowingShot

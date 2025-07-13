@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 
 public abstract class WithEndMonoBehavior : MonoBehaviour
 {
-    private readonly List<Action> _cleanActions = new ();
+    private readonly List<Action> _cleanActions = new List<Action>();
 
     protected Action<InputAction.CallbackContext> ToBeCleanedAction(Action<InputAction.CallbackContext> action, Action<Action<InputAction.CallbackContext>> cleanAction)
     {

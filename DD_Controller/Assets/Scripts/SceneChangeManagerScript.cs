@@ -22,7 +22,7 @@ public class ChangeToScene : MonoBehaviour
 
 public static class SceneList
 {
-    public static readonly Dictionary<SceneName, string> SceneNames = new()
+    public static readonly Dictionary<SceneName, string> SceneNames = new Dictionary<SceneName, string>
     {
         { SceneName.Lobby, "LobbyTutorial_Done" },
         { SceneName.MonoPlayer, "MonoPlayerScene" },

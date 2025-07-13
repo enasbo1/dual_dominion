@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Mage
+namespace PlayerSpace.Mage.UI
 {
     public class SpellUI
     {
@@ -13,6 +13,18 @@ namespace Mage
         public TextMeshProUGUI spellName;
         public RectTransform spellPosition;
         public Image spellStatus;
+    }
+    
+    public class SpellUIDisplayState
+    {
+        public int id;
+        public bool isVisible;
+        public Vector2 position;
+        public Color nameColor;
+        public bool showStatus;
+        public Color statusColor;
+        public float statusFillAmount;
+        public SpellDirections[] directions;
     }
 
 
@@ -204,6 +216,71 @@ namespace Mage
         {
             spellUI.spellName.color = mageUIRenderer.spellNameColorOnCast;
         }
+        
+        private void RefreshSpellUI(Spell spell, SpellUI spellUI, int spellIndex)
+        {
+            RefreshSpellUIPosition(spellUI.spellPosition, spellIndex);
+
+            RefreshSpellNameUI(spellUI);
+            RefreshSpellUIStatus(spellUI.spellStatus);
+            RefreshInputs(spellUI.spellInputs, spell);
+        }
+        
+        private List<SpellUIDisplayState> ComputeSpellUIStates()
+        {
+            List<SpellUIDisplayState> displayStates = new List<SpellUIDisplayState>();
+            Spell spellToCast = spellManager.spellToCast;
+            int spellToCastId = spellToCast.id;
+
+            Vector2 startPos = _spellsUIStartPosition;
+            float yOffset = -2.5f;
+            int index = 1;
+
+            foreach (Spell spell in _spellsToUnlock)
+            {
+                if (spell.id == spellToCastId || spell.isHidden)
+                    continue;
+
+                SpellUIDisplayState state = new SpellUIDisplayState
+                {
+                    id = spell.id,
+                    isVisible = true,
+                    position = new Vector2(startPos.x, yOffset - index * SPELL_UI_HEIGHT),
+                    nameColor = mageUIRenderer.spellNameColorOnCast,
+                    showStatus = !spell.canBeCast || spell.isInCast,
+                    statusColor = spell.isInCast
+                        ? mageUIRenderer.spellBackgroundColorInCast
+                        : mageUIRenderer.spellBackgroundColorOnCooldown,
+                    statusFillAmount = spell.recastDelay > 0f
+                        ? Mathf.Clamp01(1f - spell.cooldown / spell.recastDelay)
+                        : 1f,
+                    directions = spell.inputs.ToArray()
+                };
+
+                displayStates.Add(state);
+                index++;
+            }
+
+            displayStates.Add(new SpellUIDisplayState
+            {
+                id = spellToCast.id,
+                isVisible = true,
+                position = new Vector2(startPos.x, yOffset - SPELL_UI_HEIGHT),
+                nameColor = spellToCast.canBeCast
+                    ? mageUIRenderer.spellNameColorOnCast
+                    : mageUIRenderer.spellNameColorOnCooldown,
+                showStatus = !spellToCast.canBeCast || spellToCast.isInCast,
+                statusColor = spellToCast.isInCast
+                    ? mageUIRenderer.spellBackgroundColorInCast
+                    : mageUIRenderer.spellBackgroundColorOnCooldown,
+                statusFillAmount = spellToCast.recastDelay > 0f
+                    ? Mathf.Clamp01(1f - spellToCast.cooldown / spellToCast.recastDelay)
+                    : 1f,
+                directions = spellToCast.inputs.ToArray()
+            });
+
+            return displayStates;
+        }
 
         private void RefreshSpellsUI()
         {
@@ -227,20 +304,11 @@ namespace Mage
 
                 Spell spell = _spellsToUnlock.First(s => s.id == spellId);
 
-                RefreshSpellUIPosition(spellUI.spellPosition, i);
-
-                RefreshSpellNameUI(spellUI);
-                RefreshSpellUIStatus(spellUI.spellStatus);
-                RefreshInputs(spellUI.spellInputs, spell);
+                RefreshSpellUI(spell, spellUI, i);
 
                 i++;
             }
-
-            RefreshSpellUIPosition(spellToUnlockUI.spellPosition, 0);
-
-            RefreshSpellNameUI(spellToUnlockUI);
-            RefreshSpellUIStatus(spellToUnlockUI.spellStatus);
-            RefreshInputs(spellToUnlockUI.spellInputs, spellToUnlock);
+            RefreshSpellUI(spellToUnlock, spellToUnlockUI, 0);
         }
 
         private void CastEnd()

@@ -9,9 +9,9 @@ namespace Move
     {
         public float angleTolerance = 10.0f;
 
-        public List<GameObject> standingGameObjects = new();
+        public List<GameObject> standingGameObjects = new List<GameObject>();
 
-        private readonly List<StandingObject> _standingObjects = new();
+        private readonly List<StandingObject> _standingObjects = new List<StandingObject>();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         private void Start()

@@ -1,12 +1,13 @@
 using GoD;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class Konami : MonoBehaviour
     {
         public SpellManager spellManager;
-        public PlayerDealer playerDealer;
+        [FormerlySerializedAs("mageDealer")] public MageDealer mageDealer;
         public GodManagerScript godManager;
 
         private float _initialValue;
@@ -22,9 +23,9 @@ namespace Mage.SpellListener
 
         private void OnSpell(Spell spell)
         {
-            if (playerDealer != null)
+            if (mageDealer != null)
             {
-                playerDealer.skillsToUnlock += 1;
+                mageDealer.skillsToUnlock += 1;
             }
 
             if (godManager != null)

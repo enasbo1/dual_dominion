@@ -1,5 +1,4 @@
-﻿using System;
-using Globals;
+﻿using Globals;
 using UnityEngine;
 
 namespace initScene

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace Mage
+namespace PlayerSpace.Mage.UI
 {
     public class MageQTEScript : WithEndMonoBehavior
     {
@@ -18,7 +18,7 @@ namespace Mage
 
         [Header("GameObjects needed")] public PlayerInput playerInputs;
 
-        public PlayerDealer playerDealer;
+        public MageDealer mageDealer;
         public SpellManager spellManager;
         public MageUIRendererScript mageUIRenderer;
         public Slider timeBarSlider;
@@ -161,13 +161,12 @@ namespace Mage
                 return;
             }
             
-            if (playerDealer.skillsToUnlock >= 1)
+            if (mageDealer.skillsToUnlock >= 1)
             {
                 if (spellToCast.id != spellManager.defaultSpell.id)
                 {
-                    spellToCast.isActive = true;
-                    spellToCast.isUnlockable = false;
-                    playerDealer.skillsToUnlock -= 1;
+                    spellToCast.UnlockSpell();
+                    mageDealer.skillsToUnlock -= 1;
                 }
 
                 IncantationEnd();
@@ -254,7 +253,7 @@ namespace Mage
 
             if (_inputCurrent == SpellDirections.None) return;
 
-            if (playerDealer.skillsToUnlock > 0)
+            if (mageDealer.skillsToUnlock > 0)
             {
                 spellManager.SetSpellsToUnlock(_spellsToUnlock.Where(spell =>
                 {

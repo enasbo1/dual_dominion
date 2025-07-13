@@ -4,25 +4,24 @@ using Shared;
 using Unity.Burst;
 using Unity.Collections;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Move
 {
     public class BoidsManager : Manager<WalkerDdDealer, WalkerEnum, MonsterVariants>
     {
         [SerializeField] public int bnTargetUpdate = 50;
-        private readonly TableList<Rigidbody> _boidsRb = new(0);
-        private readonly TableList<Transform> _transform = new(0);
-        private TableArray<float> _angleList = new(0, false);
-        private TableNArray<float> _sizeList = new(Allocator.Persistent);
+        private readonly TableList<Rigidbody> _boidsRb = new TableList<Rigidbody>(0);
+        private readonly TableList<Transform> _transform = new TableList<Transform>(0);
+        private TableArray<float> _angleList = new TableArray<float>(0, false);
+        private TableNArray<float> _sizeList = new TableNArray<float>(Allocator.Domain);
 
-        private TableNArray<Vector2> _boidsPos = new(Allocator.Persistent,0, false);
+        private TableNArray<Vector2> _boidsPos = new TableNArray<Vector2>(Allocator.Domain, 0, false);
 
-        private TableNArray<int> _groups = new(Allocator.Persistent);
-        private TableArray<bool> _hasRb = new(0);
+        private TableNArray<int> _groups = new TableNArray<int>(Allocator.Domain);
+        private TableArray<bool> _hasRb = new TableArray<bool>(0);
 
         private int _index;
-        private TableArray<int?> _lastTarget = new(0);
+        private TableArray<int?> _lastTarget = new TableArray<int?>(0);
         private int _rbSize;
 
         // Update is called once per frame
@@ -151,11 +150,17 @@ namespace Move
             _sizeList.Add(element.size);
         }
 
-        protected override void onEnd()
+        protected override void OnEnd()
         {
-            _sizeList.End();
-            _groups.End();
-            _boidsPos.End();
+            _sizeList.Dispose();
+            _groups.Dispose();
+            _boidsPos.Dispose();
+        }
+        
+        private void OnDestroy()
+        {
+            Active.Dispose();
+            OnEnd();
         }
 
         public void ChangeGroup(WalkerDdDealer element, int? group = null)

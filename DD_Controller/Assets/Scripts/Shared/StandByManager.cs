@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Monster;
-using Unity.Netcode;
 using UnityEngine;
 
 namespace Shared
@@ -19,8 +18,8 @@ namespace Shared
         [SerializeField] private bool spawnNetworkObject;
         [SerializeField] [CanBeNull] private TDealer[] reserve;
         public bool SpawnNetworkObject => spawnNetworkObject;
-        private readonly List<TDealer> _dealers = new();
-        private readonly List<bool> _isDead = new();
+        private readonly List<TDealer> _dealers = new List<TDealer>();
+        private readonly List<bool> _isDead = new List<bool>();
 
         private void Awake()
         {

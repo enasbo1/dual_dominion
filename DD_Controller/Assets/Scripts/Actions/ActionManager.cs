@@ -5,7 +5,7 @@ namespace Actions
 {
     public class ActionManager : MonoBehaviour
     {
-        private readonly List<IDdAction> _actions = new();
+        private readonly List<IDdAction> _actions = new List<IDdAction>();
         private int _serial;
 
         private void FixedUpdate()

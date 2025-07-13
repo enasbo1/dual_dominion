@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class SpellLogger : MonoBehaviour
     {

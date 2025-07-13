@@ -518,7 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerInputs: {fileID: 0}
   neutralTimeFlow: 1
-  pauseTimeFlow: 0.1
+  pauseTimeFlow: 0.005
   objectsToDisable: []
   canvas: {fileID: 5579575576103773834}
   resumeButton: {fileID: 5608331995436782490}

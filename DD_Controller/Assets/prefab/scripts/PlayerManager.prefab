@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3802205815
+  GlobalObjectIdHash: 3039384496
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 2
@@ -72,10 +72,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   mageContainerPrefab: {fileID: 7148764649362112785, guid: 1c77fa3a0592fce49ad10a9f81bead47, type: 3}
-  ManagerBearer: {fileID: 0}
+  godContainerPrefab: {fileID: 1238274112862726071, guid: ae3bc7c29c0c1094f836670edfb872cf, type: 3}
+  managerBearer: {fileID: 0}
   playerBearer: {fileID: 0}
+  godManager: {fileID: 0}
   playerDealingManager: {fileID: 0}
-  godScenePrefab: {fileID: 1238274112862726071, guid: ae3bc7c29c0c1094f836670edfb872cf, type: 3}
+  monsterSpawnScript: {fileID: 0}
   spawnPoint: {fileID: 7109384860923867675}
   networkObject: {fileID: 8016791414827324424}
   playerCamera: {fileID: 0}

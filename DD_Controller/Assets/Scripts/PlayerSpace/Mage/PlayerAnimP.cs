@@ -1,7 +1,7 @@
 ﻿using Shared.AnimParameter;
 using UnityEngine;
 
-namespace Mage
+namespace PlayerSpace.Mage
 {
     public abstract class PlayerAnimP : WalkerAnimP
     {

@@ -9,12 +9,12 @@ namespace Move
     public class MidAirManager : WalkerManager
     {
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        private readonly TableList<Animator> _animators = new(0);
-        private readonly TableList<Rigidbody> _body = new(0);
-        private readonly TableList<Vector3> _lastPosition = new(0);
-        private readonly TableList<MoveScript> _moveScript = new(0);
-        private readonly TableList<Transform> _transforms = new(0);
-        private readonly TableList<float> _size = new(0);
+        private readonly TableList<Animator> _animators = new TableList<Animator>(0);
+        private readonly TableList<Rigidbody> _body = new TableList<Rigidbody>(0);
+        private readonly TableList<Vector3> _lastPosition = new TableList<Vector3>(0);
+        private readonly TableList<MoveScript> _moveScript = new TableList<MoveScript>(0);
+        private readonly TableList<Transform> _transforms = new TableList<Transform>(0);
+        private readonly TableList<float> _size = new TableList<float>(0);
 
         private void FixedUpdate()
         {

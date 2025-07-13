@@ -17,7 +17,8 @@ namespace Globals
             add => WaitingAction(value);
             remove => OnInitialized.Remove(value);
         }
-        private static readonly List<Action<SceneObjectReferencer>> OnInitialized = new();
+        private static readonly List<Action<SceneObjectReferencer>> OnInitialized =
+            new List<Action<SceneObjectReferencer>>();
 
         private void Awake()
         {

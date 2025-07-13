@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace GoD
 {
-    public class MonsterSpawnButton
+    public class Monster
     {
         public readonly int id;
         public readonly WalkerEnum type;
@@ -23,7 +23,7 @@ namespace GoD
         public float cooldown;
         public bool isActive;
 
-        public MonsterSpawnButton(
+        public Monster(
             int id,
             WalkerEnum type,
             MonsterVariants variant,
@@ -41,9 +41,9 @@ namespace GoD
         }
     }
 
-    public class GodManagerScript : MonoBehaviour
+    public class GodSelectMonsterManagerScript : MonoBehaviour
     {
-        public double karmaPoint;
+        public GodManagerScript godManager;
         public MonsterSpawnScript monsterSpawnScript;
         [SerializeField] public Transform monsterSpawnPoint;
         [FormerlySerializedAs("_karmaCounter")] [SerializeField] private TextMeshProUGUI karmaCounter;
@@ -53,14 +53,13 @@ namespace GoD
         [SerializeField] private List<float> monsterCosts = new List<float>();
         [SerializeField] private Transform[] buttonList;
         
-        private List<Image> _buttonsBackground = new List<Image>();
+        private readonly List<Image> _buttonsBackground = new List<Image>();
         
-        private readonly List<MonsterSpawnButton> _monsterSpawnButtonList = new ();
-        private List<MonsterSpawnButton> _monsterSpawnButtonAvailable;
+        private readonly List<Monster> _monsterSpawnButtonList = new List<Monster>();
+        private List<Monster> _monsterSpawnButtonAvailable;
 
         private void Awake()
         {
-            
             int i = 0;
             foreach (Transform button in buttonList)
             {
@@ -94,7 +93,7 @@ namespace GoD
                     button.GetComponent<Image>().color = Color.gray;
                 });
                 
-                _monsterSpawnButtonList.Add(new MonsterSpawnButton(
+                _monsterSpawnButtonList.Add(new Monster(
                     i,
                     monsterType,
                     monsterVariants[i],
@@ -109,11 +108,9 @@ namespace GoD
             //_monsterSpawnButtonAvailable = _monsterSpawnButtonList;
         }
 
-        // Update is called once per frame
         private void Update()
         {
-            karmaPoint += Time.deltaTime * 3;
-            karmaCounter.text = (Math.Round(karmaPoint * 100) / 100).ToString(CultureInfo.CurrentCulture);
+            karmaCounter.text = (Math.Round(godManager.karmaPoint * 100) / 100).ToString(CultureInfo.CurrentCulture);
         }
 
         private void FixedUpdate()
@@ -132,23 +129,23 @@ namespace GoD
             */
         }
 
-        public MonsterSpawnButton GetMonsterSpawnerByType(WalkerEnum type, MonsterVariants variant)
+        public Monster GetMonsterSpawnerByType(WalkerEnum type, MonsterVariants variant)
         {
             return _monsterSpawnButtonList.Find(x => x.type == type && x.variant == variant);
         }
 
-        public List<MonsterSpawnButton> GetMonsterSpawners()
+        public List<Monster> GetMonsterSpawners()
         {
-            return _monsterSpawnButtonList ?? new List<MonsterSpawnButton>();
+            return _monsterSpawnButtonList ?? new List<Monster>();
         }
 
-        public void SetMonsterSpawnersAvailable(List<MonsterSpawnButton> spellsAvailable)
+        public void SetMonsterSpawnersAvailable(List<Monster> spellsAvailable)
         {
             _monsterSpawnButtonAvailable.Clear();
             _monsterSpawnButtonAvailable.AddRange(spellsAvailable);
         }
 
-        public void ResetSpellsAvailable()
+        public void ResetMonstersAvailable()
         {
             _monsterSpawnButtonAvailable.Clear();
             _monsterSpawnButtonAvailable.AddRange(_monsterSpawnButtonList.Where(spawner => spawner.isActive));

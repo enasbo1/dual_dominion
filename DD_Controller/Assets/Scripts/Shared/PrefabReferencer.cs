@@ -15,7 +15,8 @@ namespace Shared
     {
         public TDealer[] prefabDealer;
 
-        public readonly Dictionary<TEnum, (GameObject, TDealer)> PrefabDealerDict = new();
+        public readonly Dictionary<TEnum, (GameObject, TDealer)> PrefabDealerDict =
+            new Dictionary<TEnum, (GameObject, TDealer)>();
 
         public (GameObject, TDealer) this[TEnum index] => PrefabDealerDict[index];
 

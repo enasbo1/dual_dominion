@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class JumpSpell : MonoBehaviour
     {

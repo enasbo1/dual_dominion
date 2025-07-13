@@ -559,7 +559,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
-      value: ButtonMonster (5)
+      value: ButtonMonster (3)
       objectReference: {fileID: 0}
     - target: {fileID: 4288736147735259027, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Pivot.x
@@ -862,7 +862,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
-      value: ButtonMonster (4)
+      value: ButtonMonster (2)
       objectReference: {fileID: 0}
     - target: {fileID: 4288736147735259027, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Pivot.x
@@ -970,7 +970,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
-      value: ButtonMonster (3)
+      value: ButtonMonster (5)
       objectReference: {fileID: 0}
     - target: {fileID: 4288736147735259027, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Pivot.x
@@ -1288,7 +1288,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 826368366132812992, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Name
-      value: ButtonMonster (2)
+      value: ButtonMonster (4)
       objectReference: {fileID: 0}
     - target: {fileID: 4288736147735259027, guid: 22b38ab1dccb46544999cf65c729903b, type: 3}
       propertyPath: m_Pivot.x

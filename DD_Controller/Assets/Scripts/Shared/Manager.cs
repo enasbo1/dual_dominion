@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.Burst;
 using Unity.Collections;
 using UnityEngine;
 
@@ -11,9 +10,9 @@ namespace Shared
         where TEnum : Enum
         where TVariant : Enum
     {
-        protected readonly TableList<TDealer> Elements = new(0);
+        protected readonly TableList<TDealer> Elements = new TableList<TDealer>(0);
 
-        protected TableNArray<bool> Active = new(Allocator.Persistent, 0);
+        protected TableNArray<bool> Active = new TableNArray<bool>(Allocator.Domain);
         protected int Size { get; private set; }
 
         public void InitializeChunk(int size = 50)
@@ -92,11 +91,12 @@ namespace Shared
 
         private void OnDestroy()
         {
-            Active.End();
-            onEnd();
+            Debug.Log($"{GetType().Name} OnDestroy called");
+            Active.Dispose();
+            OnEnd();
         }
 
-        protected virtual void onEnd()
+        protected virtual void OnEnd()
         {
             
         }
@@ -134,7 +134,8 @@ namespace Shared
             set => Values[index] = value;
         }
     }
-    public struct TableNArray<TValues> : ITable<NativeArray<TValues>, TValues> where TValues : struct
+    
+    public class TableNArray<TValues> : ITable<NativeArray<TValues>, TValues> where TValues : struct
     {
         private readonly bool _keepValues;
         private readonly Allocator _allocator;
@@ -155,6 +156,7 @@ namespace Shared
             _allocator = allocator;
             _values = new NativeArray<TValues>(Math.Max(size, chunkSize), allocator);
             _count = 0;
+            
         }
 
         public TableNArray<TValues> Clear()
@@ -179,7 +181,7 @@ namespace Shared
 
         private void _AddChunk(int size, bool silently)
         {
-            NativeArray<TValues> temp = new(_count + size, _allocator);
+            NativeArray<TValues> temp = new NativeArray<TValues>(_count + size, _allocator);
             if (_keepValues)
             {
                 for (int i = 0; i < _count; i++)
@@ -209,12 +211,14 @@ namespace Shared
             get => _values[index];
             set => _values[index] = value;
         }
-
-        public void End()
+        
+        public void Dispose()
         {
-            _values.Dispose();
+            if (_values.IsCreated)
+                _values.Dispose();
         }
     }
+    
     public struct TableArray<TValues> : ITable<TValues[], TValues>
     {
         private readonly bool _keepValues;

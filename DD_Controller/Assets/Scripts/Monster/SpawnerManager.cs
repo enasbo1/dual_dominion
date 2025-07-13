@@ -11,10 +11,10 @@ namespace Monster
         [SerializeField] private MonsterDealingManager monsterDealingManager;
         [SerializeField] private MonsterReferencer monsterReferencer;
         [SerializeField] public int SpawnLimit = 200;
-        private readonly TableList<float> _nextSpawnTime = new(0);
-        private readonly TableList<WalkerEnum[]> _spawned = new(0);
+        private readonly TableList<float> _nextSpawnTime = new TableList<float>(0);
+        private readonly TableList<WalkerEnum[]> _spawned = new TableList<WalkerEnum[]>(0);
 
-        private readonly TableList<Transform> _transform = new(0);
+        private readonly TableList<Transform> _transform = new TableList<Transform>(0);
 
         private void FixedUpdate()
         {

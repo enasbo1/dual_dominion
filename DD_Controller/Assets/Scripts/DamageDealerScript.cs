@@ -1,7 +1,5 @@
 using System.Collections.Generic;
-using GameRule;
 using Monster;
-using Shared;
 using UnityEngine;
 using UnityEngine.Serialization;
 

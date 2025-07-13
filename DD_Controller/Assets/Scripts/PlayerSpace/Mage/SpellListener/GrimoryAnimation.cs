@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.Serialization;
+using PlayerSpace.Mage.UI;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class GrimoryAnimation : MonoBehaviour
     {

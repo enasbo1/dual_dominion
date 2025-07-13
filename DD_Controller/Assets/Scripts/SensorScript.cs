@@ -7,7 +7,7 @@ using UnityEngine;
 public class SensorScript : MonoBehaviour
 {
     [SerializeField][CanBeNull] public Renderer renderer;
-    [DoNotSerialize] public List<Collider> nearby = new();
+    [DoNotSerialize] public List<Collider> nearby = new List<Collider>();
     [DoNotSerialize] public bool keepPresent = false;
 
     public event Action<Collider> Listener
@@ -16,7 +16,7 @@ public class SensorScript : MonoBehaviour
         remove => listener.Remove(value);
     }
 
-    private List<Action<Collider>> listener = new ();
+    private List<Action<Collider>> listener = new List<Action<Collider>>();
     private void OnTriggerEnter(Collider monster)
     {
         if (keepPresent)

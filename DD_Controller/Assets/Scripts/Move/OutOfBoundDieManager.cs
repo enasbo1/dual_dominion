@@ -16,7 +16,7 @@ namespace Move
         [SerializeField] [NotNull] public StandByManager<TDealer, TEnum, TVariant> standBy;
         public int deathBottom = -100;
 
-        private readonly TableList<Transform> _transform = new(0);
+        private readonly TableList<Transform> _transform = new TableList<Transform>(0);
 
 
         // Update is called once per frame

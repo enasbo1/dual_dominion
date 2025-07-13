@@ -2,7 +2,7 @@ using Move;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class RunSpell : MonoBehaviour
     {

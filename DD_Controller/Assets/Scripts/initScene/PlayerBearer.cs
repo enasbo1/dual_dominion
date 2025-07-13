@@ -1,20 +1,20 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
-using Mage;
+using PlayerSpace.Mage;
 using Shared;
 using Unity.VisualScripting;
 using UnityEngine;
 
 namespace initScene
 {
-    public class PlayerBearer : PlayerBearer<PlayerDealer>
+    public class PlayerBearer : PlayerBearer<MageDealer>
     {
     }
     public abstract class PlayerBearer<TDealer> : MonoBehaviour, IPlayerUser<TDealer> where TDealer : Dealer
     {
-        private readonly List<IPlayerUser<TDealer>> _playerUser = new();
+        private readonly List<IPlayerUser<TDealer>> _playerUser = new List<IPlayerUser<TDealer>>();
         [SerializeField][CanBeNull] private TDealer mainPlayer;
-        public List<PlayerBearer<TDealer>> childPlayerBearers = new();
+        public List<PlayerBearer<TDealer>> childPlayerBearers = new List<PlayerBearer<TDealer>>();
 
         public TDealer MainPlayer { get=>mainPlayer; set=>SetMainPlayer(value); }
         public void Subscribe(IPlayerUser<TDealer> playerUser)

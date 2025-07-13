@@ -20,13 +20,21 @@ namespace LobbyCustom
         public event EventHandler OnPlayerDataNetworkListChanged;
 
         private NetworkList<PlayerData> _playerDataNetworkList;
+        private NetworkManager _networkManager;
         private string _playerName;
         
         private void Awake()
         {
-            Instance = this;
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
 
+            Instance = this;
             DontDestroyOnLoad(gameObject);
+    
+            _networkManager = NetworkManager.Singleton;
 
             _playerName = PlayerPrefs.GetString(PLAYER_PREFS_PLAYER_NAME_MULTIPLAYER, "PlayerName" + UnityEngine.Random.Range(100, 1000));
 
@@ -53,12 +61,12 @@ namespace LobbyCustom
 
         public void StartHost()
         {
-            NetworkManager.Singleton.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
-            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
-            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
-            NetworkManager.Singleton.StartHost();
+            _networkManager.ConnectionApprovalCallback += NetworkManager_ConnectionApprovalCallback;
+            _networkManager.OnClientConnectedCallback += NetworkManager_OnClientConnectedCallback;
+            _networkManager.OnClientDisconnectCallback += NetworkManager_Server_OnClientDisconnectCallback;
+            _networkManager.StartHost();
         
-            NetworkManager.Singleton.SceneManager.LoadScene(SceneList.SceneNames[SceneName.Multiplayer], LoadSceneMode.Single);
+            _networkManager.SceneManager.LoadScene(SceneList.SceneNames[SceneName.Multiplayer], LoadSceneMode.Single);
         }
 
 
@@ -86,7 +94,7 @@ namespace LobbyCustom
 
         private void NetworkManager_ConnectionApprovalCallback(NetworkManager.ConnectionApprovalRequest connectionApprovalRequest, NetworkManager.ConnectionApprovalResponse connectionApprovalResponse)
         {
-            if (NetworkManager.Singleton.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
+            if (_networkManager.ConnectedClientsIds.Count >= MAX_PLAYER_AMOUNT)
             {
                 connectionApprovalResponse.Approved = false;
                 connectionApprovalResponse.Reason = "Game is full";
@@ -100,15 +108,12 @@ namespace LobbyCustom
         {
             OnTryingToJoinGame?.Invoke(this, EventArgs.Empty);
 
-            NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback; 
-            NetworkManager.Singleton.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
-
+            _networkManager.OnClientDisconnectCallback += NetworkManager_Client_OnClientDisconnectCallback; 
+            _networkManager.OnClientConnectedCallback += NetworkManager_Client_OnClientConnectedCallback;
 
             //((UnityTransport)NetworkManager.Singleton.NetworkConfig.NetworkTransport).SetConnectionData(default);
         
-            Debug.Log("0");
-            NetworkManager.Singleton.StartClient();
-            Debug.Log("1");
+            _networkManager.StartClient();
         }
 
         private void NetworkManager_Client_OnClientConnectedCallback(ulong clientId)
@@ -177,7 +182,7 @@ namespace LobbyCustom
 
         public PlayerData GetPlayerData()
         {
-            return GetPlayerDataFromClientId(NetworkManager.Singleton.LocalClientId);
+            return GetPlayerDataFromClientId(_networkManager.LocalClientId);
         }
 
         public PlayerData GetPlayerDataFromPlayerIndex(int playerIndex)
@@ -187,7 +192,7 @@ namespace LobbyCustom
 
         public void KickPlayer(ulong clientId)
         {
-            NetworkManager.Singleton.DisconnectClient(clientId);
+            _networkManager.DisconnectClient(clientId);
             NetworkManager_Server_OnClientDisconnectCallback(clientId);
         }
     }

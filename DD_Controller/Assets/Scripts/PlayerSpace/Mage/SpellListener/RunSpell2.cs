@@ -1,7 +1,7 @@
 using Move;
 using UnityEngine;
 
-namespace Mage.SpellListener
+namespace PlayerSpace.Mage.SpellListener
 {
     public class RunSpell2 : MonoBehaviour
     {

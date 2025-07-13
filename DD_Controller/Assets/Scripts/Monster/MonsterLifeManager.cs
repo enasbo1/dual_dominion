@@ -1,7 +1,7 @@
 ﻿using System;
 using GameRule;
 using initScene;
-using Mage;
+using PlayerSpace.Mage;
 using Shared;
 using UnityEngine;
 
@@ -9,7 +9,7 @@ namespace Monster
 {
     public class MonsterLifeManager : LifeManager<MonsterDealer, WalkerEnum, MonsterVariants>
     {
-        [SerializeField] public PlayerBearer<PlayerDealer> playerBearer;
+        [SerializeField] public PlayerBearer<MageDealer> playerBearer;
         public new static MonsterLifeManager MainInstance;
 
         private new void Start()

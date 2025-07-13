@@ -48,6 +48,7 @@ namespace LobbyCustom
             AuthenticationService.Instance.SignedIn += () => {
                 // do nothing
                 Debug.Log("Signed in! " + AuthenticationService.Instance.PlayerId);
+                LobbyManager.Instance.RefreshLobbyList();
             };
 
             await AuthenticationService.Instance.SignInAnonymouslyAsync();

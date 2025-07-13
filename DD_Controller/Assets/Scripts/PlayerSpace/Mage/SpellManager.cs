@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Mage
+namespace PlayerSpace.Mage
 {
     public enum SpellDirections
     {
@@ -16,35 +16,47 @@ namespace Mage
 
     public class Spell
     {
-        private readonly List<Action<Spell>> _spellEvents;
-        private readonly List<Action<Spell>> _spellFailureEvents;
-        public readonly bool canRecastWhileInCast;
         public readonly int id;
-        public readonly List<SpellDirections> inputs;
         public readonly string name;
+        public readonly List<SpellDirections> inputs;
         public readonly float recastDelay;
+        public readonly bool canRecastWhileInCast;
+        private readonly bool _canBeCastOnUnlock;
+        public readonly bool isHidden;
 
         public bool canBeCast;
-        public float cooldown;
-        public bool isActive;
-        public bool isUnlockable;
-        public bool isHidden;
         public bool isInCast;
+        public float cooldown;
+        public bool isUnlocked;
+        public bool isUnlockable;
+        
+        private readonly List<Action<Spell>> _spellEvents;
+        private readonly List<Action<Spell>> _spellFailureEvents;
 
-        public Spell(int id, string name, List<SpellDirections> inputs, float recastDelay, bool canRecastWhileInCast,
-            bool enableByDefault, bool isUnlockable = true, bool isHidden = false)
+        public Spell(
+            int id,
+            string name,
+            List<SpellDirections> inputs,
+            float recastDelay = 0,
+            bool canBeCastOnUnlock = true,
+            bool canRecastWhileInCast = true,
+            bool unlockedByDefault = true,
+            bool isUnlockable = true,
+            bool isHidden = false)
         {
             this.id = id;
             this.name = name;
-            this.canRecastWhileInCast = canRecastWhileInCast;
-            this.isInCast = false;
-            this.recastDelay = recastDelay;
-            this.isActive = enableByDefault;
-            this.isUnlockable = !enableByDefault && isUnlockable;
-            this.isHidden = isHidden;
-
             this.inputs = inputs;
-
+            this.recastDelay = recastDelay;
+            this.canRecastWhileInCast = canRecastWhileInCast;
+            this._canBeCastOnUnlock = canBeCastOnUnlock;
+            this.isHidden = isHidden;
+            
+            this.isInCast = false;
+            this.cooldown = canBeCastOnUnlock ? recastDelay : 0;
+            this.isUnlocked = unlockedByDefault;
+            this.isUnlockable = !unlockedByDefault && isUnlockable;
+            
             this._spellEvents = new List<Action<Spell>>();
             this._spellFailureEvents = new List<Action<Spell>>();
         }
@@ -76,6 +88,13 @@ namespace Mage
         {
             _spellEvents.Clear();
         }
+
+        public void UnlockSpell()
+        {
+            isUnlocked = true;
+            isUnlockable = false;
+            cooldown = _canBeCastOnUnlock ? recastDelay : 0;
+        }
     }
 
     public class SpellManager : MonoBehaviour
@@ -98,9 +117,7 @@ namespace Mage
                     0,
                     "Grimoire",
                     new List<SpellDirections>(),
-                    0,
-                    false,
-                    true
+                    canRecastWhileInCast: false
                 ),
                 new Spell(
                     1,
@@ -110,9 +127,7 @@ namespace Mage
                         SpellDirections.Up, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down,
                         SpellDirections.Up
                     },
-                    4,
-                    true,
-                    true
+                    recastDelay: 4
                 ),
                 new Spell(
                     9,
@@ -123,9 +138,8 @@ namespace Mage
                         SpellDirections.Up, SpellDirections.Down, SpellDirections.Up, SpellDirections.Up,
                         SpellDirections.Down, SpellDirections.Up, SpellDirections.Up
                     },
-                    8,
-                    true,
-                    false
+                    recastDelay: 8,
+                    unlockedByDefault: false
                 ),
                 new Spell(
                     5,
@@ -135,18 +149,14 @@ namespace Mage
                         SpellDirections.Down, SpellDirections.Down, SpellDirections.Left, SpellDirections.Right,
                         SpellDirections.Down, SpellDirections.Up
                     },
-                    1,
-                    true,
-                    false
+                    recastDelay: 2,
+                    unlockedByDefault: false
                 ),
                 new Spell(
                     6,
                     "UnnamedSpell",
                     new List<SpellDirections>
-                        { SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down },
-                    0,
-                    true,
-                    true
+                        { SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down }
                 ),
                 new Spell(
                     7,
@@ -156,9 +166,7 @@ namespace Mage
                         SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down,
                         SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down
                     },
-                    0,
-                    true,
-                    false
+                    unlockedByDefault: false
                 ),
                 new Spell(
                     8,
@@ -168,27 +176,22 @@ namespace Mage
                         SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down,
                         SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Up
                     },
-                    5,
-                    true,
-                    false
+                    recastDelay: 10,
+                    unlockedByDefault: false
                 ),
                 new Spell(
                     2,
                     "SkyView",
                     new List<SpellDirections>
                         { SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Down },
-                    1,
-                    true,
-                    true
+                    recastDelay: 4
                 ),
                 new Spell(
                     3,
                     "End SkyView",
                     new List<SpellDirections> { SpellDirections.Down },
-                    0,
-                    true,
-                    false,
-                    false
+                    unlockedByDefault: false,
+                    isUnlockable: false
                 ),
                 new Spell(
                     4,
@@ -199,9 +202,7 @@ namespace Mage
                         SpellDirections.Left, SpellDirections.Right, SpellDirections.Left, SpellDirections.Right,
                         SpellDirections.Left, SpellDirections.Up
                     },
-                    10,
-                    true,
-                    true,
+                    recastDelay: 6,
                     isHidden: true
                 ),
                 new Spell(
@@ -209,17 +210,29 @@ namespace Mage
                     "Healing",
                     new List<SpellDirections>
                     {
+                        SpellDirections.Left, SpellDirections.Right, SpellDirections.Down, SpellDirections.Up
+                    },
+                    recastDelay: 20,
+                    canBeCastOnUnlock: false,
+                    canRecastWhileInCast: false
+                ),
+                new Spell(
+                    11,
+                    "Healing 2",
+                    new List<SpellDirections>
+                    {
                         SpellDirections.Left, SpellDirections.Right, SpellDirections.Down, SpellDirections.Up,
                         SpellDirections.Right, SpellDirections.Left, SpellDirections.Up, SpellDirections.Down
                     },
-                    30,
-                    false,
-                    true
+                    recastDelay: 30,
+                    canBeCastOnUnlock: false,
+                    canRecastWhileInCast: false,
+                    unlockedByDefault: false
                 )
             };
 
             _spellList = test;
-            spellsAvailable = test.Where(spell => spell.isActive).ToList();
+            spellsAvailable = test.Where(spell => spell.isUnlocked).ToList();
             spellsToUnlock = test.Where(spell => spell.isUnlockable).ToList();
             defaultSpell = GetSpellById(0);
             spellToCast = defaultSpell;
@@ -231,7 +244,7 @@ namespace Mage
             {
                 spellsAvailable.Clear();
                 spellsAvailable.AddRange(_spellList);
-                spellsAvailable.ForEach(spell => spell.isActive = true);
+                spellsAvailable.ForEach(spell => spell.isUnlocked = true);
                 _forcedEnabled = true;
             }
 
@@ -245,7 +258,7 @@ namespace Mage
                 spell.canBeCast = (!spell.isInCast || spell.canRecastWhileInCast) &&
                                   spell.cooldown >= spell.recastDelay;
 
-                if (!spell.isActive) spellsAvailable.RemoveAt(i);
+                if (!spell.isUnlocked) spellsAvailable.RemoveAt(i);
             }
         }
 
@@ -268,7 +281,7 @@ namespace Mage
         public void ResetSpellsAvailable()
         {
             spellsAvailable.Clear();
-            spellsAvailable.AddRange(_spellList.Where(spell => spell.isActive));
+            spellsAvailable.AddRange(_spellList.Where(spell => spell.isUnlocked));
         }
         
         public void SetSpellsToUnlock(List<Spell> spellsToUnlock)
