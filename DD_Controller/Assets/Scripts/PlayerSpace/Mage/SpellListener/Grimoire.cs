@@ -288,16 +288,20 @@ namespace PlayerSpace.Mage.SpellListener
             {
                 if (!_spellsForSpellsUI.TryGetValue(state.id, out SpellUI ui)) continue;
 
+                RectTransform spellPosition = ui.spellPosition;
+                GameObject spellPositionObject = spellPosition.gameObject;
+                Image spellStatus = ui.spellStatus;
+                
                 if (!state.isVisible)
                 {
-                    if (ui.spellPosition.gameObject.activeSelf)
-                        ui.spellPosition.gameObject.SetActive(false);
+                    if (spellPositionObject.activeSelf)
+                        spellPositionObject.SetActive(false);
                     continue;
                 }
 
                 // Position
-                ui.spellPosition.gameObject.SetActive(true);
-                ui.spellPosition.anchoredPosition = state.position;
+                spellPositionObject.SetActive(true);
+                spellPosition.anchoredPosition = state.position;
 
                 // Spell name
                 ui.spellName.color = state.nameColor;
@@ -305,21 +309,22 @@ namespace PlayerSpace.Mage.SpellListener
                 // Spell status
                 if (state.showStatus)
                 {
-                    ui.spellStatus.gameObject.SetActive(true);
-                    ui.spellStatus.color = state.statusColor;
-                    ui.spellStatus.fillAmount = state.statusFillAmount;
+                    spellStatus.gameObject.SetActive(true);
+                    spellStatus.color = state.statusColor;
+                    spellStatus.fillAmount = state.statusFillAmount;
                 }
                 else
                 {
-                    ui.spellStatus.gameObject.SetActive(false);
+                    spellStatus.gameObject.SetActive(false);
                 }
 
                 // Spell Inputs
                 for (int i = 0; i < ui.spellInputs.Count; i++)
                 {
+                    Image spellInput = ui.spellInputs[i];
                     if (i < state.directions.Length)
                     {
-                        ui.spellInputs[i].gameObject.SetActive(true);
+                        spellInput.gameObject.SetActive(true);
                         float angle;
                         Color color;
 
@@ -345,12 +350,12 @@ namespace PlayerSpace.Mage.SpellListener
                                 continue;
                         }
 
-                        ui.spellInputs[i].color = color;
-                        ui.spellInputs[i].rectTransform.rotation = Quaternion.Euler(0, 0, angle);
+                        spellInput.color = color;
+                        spellInput.rectTransform.rotation = Quaternion.Euler(0, 0, angle);
                     }
                     else
                     {
-                        ui.spellInputs[i].gameObject.SetActive(false);
+                        spellInput.gameObject.SetActive(false);
                     }
                 }
             }

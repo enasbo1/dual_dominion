@@ -66,10 +66,7 @@ namespace PlayerSpace.Mage.UI
 
             _spellTrigger = playerInputs.actions["CastSpell"];
             _spellTrigger.started += ToBeCleanedAction(
-                _ =>
-                {
-                    if (spellManager.isIncanting) CastSpell();
-                },
+                _ => { if (spellManager.isIncanting) CastSpell(); },
                 a => _spellTrigger.started -= a
             );
 
@@ -118,22 +115,18 @@ namespace PlayerSpace.Mage.UI
         private void Update()
         {
             IncantationCheck();
+            IncantationDisplay();
+            if (spellManager.isIncanting) Incanting();
         }
 
         private void FixedUpdate()
         {
             if (_inputStep > 0) _inputTimer += Time.deltaTime;
-            if (spellManager.isIncanting) Incanting();
             
             // Condition to fail an incantation
-            if (_spellsAvailable.Count > 0 && _inputTimer < timeLimit) return;
+            if (_spellsAvailable.Count > 0 && _spellsToUnlock.Count > 0 && _inputTimer < timeLimit) return;
 
             CastSpell(true);
-        }
-
-        private void LateUpdate()
-        {
-            IncantationDisplay();
         }
 
         private void IncantationEnd()
@@ -163,7 +156,7 @@ namespace PlayerSpace.Mage.UI
             
             if (mageDealer.skillsToUnlock >= 1)
             {
-                if (spellToCast.id != spellManager.defaultSpell.id)
+                if (!castAsError && spellToCast.id != spellManager.defaultSpell.id)
                 {
                     spellToCast.UnlockSpell();
                     mageDealer.skillsToUnlock -= 1;
@@ -188,10 +181,8 @@ namespace PlayerSpace.Mage.UI
         {
             _inputPrevious = SpellDirections.None;
             spellManager.isIncanting = true;
-            spellManager.isIncanting = true;
         }
-
-
+        
         private void IncantationCheck()
         {
             if (!spellManager.isIncanting) return;
@@ -250,7 +241,6 @@ namespace PlayerSpace.Mage.UI
             if (_inputPrevious == _inputCurrent) return;
 
             _inputPrevious = _inputCurrent;
-
             if (_inputCurrent == SpellDirections.None) return;
 
             if (mageDealer.skillsToUnlock > 0)

@@ -176,7 +176,7 @@ namespace PlayerSpace.Mage
                         SpellDirections.Left, SpellDirections.Up, SpellDirections.Right, SpellDirections.Down,
                         SpellDirections.Down, SpellDirections.Up, SpellDirections.Up, SpellDirections.Up
                     },
-                    recastDelay: 10,
+                    recastDelay: 15,
                     unlockedByDefault: false
                 ),
                 new Spell(

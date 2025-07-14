@@ -9,91 +9,91 @@ namespace Menu
 {
     public class PauseMenuScript : NetworkBehaviour
     {
-        private readonly NetworkVariable<float> _syncedTimeScale = new NetworkVariable<float>(
-            1f,
-            NetworkVariableReadPermission.Everyone,
-            NetworkVariableWritePermission.Server
-        );
-
+        private const float TOLERANCE = 0.001f;
+        
+        public static PauseMenuScript Instance { get; private set; }
+        
         public PlayerInput playerInputs;
-
-        [Range(0.01f, 3f)] public float neutralTimeFlow = 1f;
-        [Range(0.001f, 3f)] public float pauseTimeFlow = 0.005f;
-
         public List<GameObject> objectsToDisable = new List<GameObject>();
 
         [SerializeField] private GameObject canvas;
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button leavePartyButton;
         [SerializeField] private Button leaveGameButton;
-        private bool _isPauseActive;
-
+        
+        [NonSerialized] public bool isPauseActive;
+        private TimeScaleController _timeScaleController;
         private InputAction _pauseTrigger;
         private bool _isMultiplayer;
-
-        [ServerRpc(RequireOwnership = false)]
-        private void RequestPauseServerRpc(bool shouldPause)
-        {
-            _syncedTimeScale.Value = shouldPause ? pauseTimeFlow : neutralTimeFlow;
-        }
         
-        private void OnTimeScaleChanged(float oldFlow, float newFlow)
+        private void ApplyPause(bool shouldPause)
         {
-            ApplyPause(newFlow, Math.Abs(newFlow - neutralTimeFlow) > 0.0012f);
-        }
-        
-        private void ChangePause(bool shouldPause)
-        {
-            float newFlow = shouldPause ? pauseTimeFlow : neutralTimeFlow;
-
-            ApplyPause(newFlow, shouldPause);
-        }
-        
-        private void ApplyPause(float newFlow, bool shouldPause)
-        {
-            Time.timeScale = newFlow;
-            _isPauseActive = shouldPause;
+            isPauseActive = shouldPause;
             canvas.SetActive(shouldPause);
             objectsToDisable.ForEach(x => x.SetActive(!shouldPause));
             
             Cursor.lockState = shouldPause && (!_isMultiplayer || (_isMultiplayer && IsServer)) ? CursorLockMode.None : CursorLockMode.Locked;
         }
+                
+        private void ChangePause(bool shouldPause)
+        {
+            _timeScaleController.SetTimeScale(shouldPause ? _timeScaleController.timeFlowPause : _timeScaleController.previousTimeFlow);
+
+            if (!_isMultiplayer) ApplyPause(shouldPause);
+        }
+
+        private void OnSyncedTimeChange(float _, float newFlow)
+        {
+            if ((!isPauseActive && Math.Abs(newFlow - _timeScaleController.timeFlowPause) < TOLERANCE) || 
+                (isPauseActive && Math.Abs(newFlow - _timeScaleController.timeFlowNeutral) < TOLERANCE)
+               ) ApplyPause(!isPauseActive);
+        }
+        
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(this);
+                return;
+            }
+            Instance = this;
+        }
         
         public void Start()
         {
-            _isMultiplayer = NetworkManager.Singleton != null && NetworkManager.Singleton.IsConnectedClient;
-            Time.timeScale = neutralTimeFlow;
-            
-            resumeButton.onClick.AddListener(() =>
+            _timeScaleController = TimeScaleController.Instance;
+            if (_timeScaleController == null)
             {
-                if (_isMultiplayer) RequestPauseServerRpc(false);
-                else ChangePause(false);
-            });
+                Debug.LogError("TimeScaleController instance not found in scene.");
+                enabled = false;
+                return;
+            }
+            
+            _isMultiplayer = NetworkManager.Singleton != null && NetworkManager.Singleton.IsConnectedClient;
+            Time.timeScale = _timeScaleController.timeFlowNeutral;
+            
+            resumeButton.onClick.AddListener(() => { ChangePause(false); });
 
             leavePartyButton.onClick.AddListener(() =>
             {
-                Time.timeScale = neutralTimeFlow;
+                Time.timeScale = _timeScaleController.timeFlowNeutral;
                 SceneManagerScript.ChangeToScene(SceneName.Lobby);
             });
 
             leaveGameButton.onClick.AddListener(Application.Quit);
 
             _pauseTrigger = playerInputs.actions["Escape"];
-            _pauseTrigger.started += _ =>
+            _pauseTrigger.started += _ => { ChangePause(!isPauseActive); };
+
+            _timeScaleController.syncedTimeScale.OnValueChanged += OnSyncedTimeChange;
+        }
+        
+        private new void OnDestroy()
+        {
+            if (_timeScaleController != null)
             {
-                if (_isMultiplayer) RequestPauseServerRpc(!_isPauseActive);
-                else ChangePause(!_isPauseActive);
-            };
-        }
-
-        private void OnEnable()
-        {
-            _syncedTimeScale.OnValueChanged += OnTimeScaleChanged;
-        }
-
-        private void OnDisable()
-        {
-            _syncedTimeScale.OnValueChanged -= OnTimeScaleChanged;
+                _timeScaleController.syncedTimeScale.OnValueChanged -= OnSyncedTimeChange;
+            }
         }
     }
 }

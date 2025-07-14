@@ -1,5 +1,7 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using end_game;
+using Menu;
 using Shared;
 using TMPro;
 using Unity.Mathematics;
@@ -20,7 +22,7 @@ namespace PlayerSpace.Mage
         [SerializeField] private Slider healthBarSlider;
         [SerializeField] private TextMeshProUGUI textHp;
         [SerializeField] private Image damageEffect;
-        [SerializeField] private bool isInvicible;
+        [SerializeField] private bool isInvincible;
         
         [Header("XP Bar")]
         [SerializeField] public float levelXpPoints = 850;
@@ -30,11 +32,29 @@ namespace PlayerSpace.Mage
         [SerializeField] private Image scoreEffect;
         public int skillsToUnlock;
         
+        private TimeScaleController _timeScaleController;
+        private PauseMenuScript _pauseMenu;
         private Color _originalXpColor;
         private float _effectTimer;
         
         private void Start()
         {
+            _timeScaleController = TimeScaleController.Instance;
+            if (_timeScaleController == null)
+            {
+                Debug.LogError("TimeScaleController instance not found in scene.");
+                enabled = false;
+                return;
+            }
+            
+            _pauseMenu = PauseMenuScript.Instance;
+            if (_pauseMenu == null)
+            {
+                Debug.LogError("PauseMenuScript instance not found in scene.");
+                enabled = false;
+                return;
+            }
+            
             lifePoints = maxHealth;
             textHp.text = $"{lifePoints.ToString(CultureInfo.CurrentCulture)} / {maxHealth.ToString(CultureInfo.CurrentCulture)}";
             UpdateXpUI();
@@ -48,7 +68,7 @@ namespace PlayerSpace.Mage
 
         public void Aie(float damage)
         {
-            if (isInvicible) return;
+            if (isInvincible) return;
             lifePoints -= damage;
             animator?.SetTrigger(PlayerAnimP.Hurt);
             UpdateHealthUI();
@@ -56,7 +76,7 @@ namespace PlayerSpace.Mage
             // Mage Defeat conditions
             if (lifePoints <= 0)
             {
-                isInvicible = true;
+                isInvincible = true;
                 gameEnd.EndGame(false);
             }
         }
@@ -74,7 +94,7 @@ namespace PlayerSpace.Mage
                 // Mage Victory conditions
                 if (skillsToUnlock > 0 && spellManager.spellsToUnlock.Count == 0)
                 {
-                    isInvicible = true;
+                    isInvincible = true;
                     gameEnd.EndGame(true);
                 }
             }
@@ -82,6 +102,12 @@ namespace PlayerSpace.Mage
 
         private void Update()
         {
+            bool isLevelUpTime = Math.Abs(Time.timeScale - _timeScaleController.timeFlowLevelUp) < 0.001f;
+            if (!_pauseMenu.isPauseActive && skillsToUnlock > 0 && !isLevelUpTime)
+                _timeScaleController.SetTimeScale(_timeScaleController.timeFlowLevelUp);
+            if (skillsToUnlock <= 0 && isLevelUpTime)
+                _timeScaleController.SetTimeScale(_timeScaleController.timeFlowNeutral);
+            
             if (networkObject != null && networkObject.isActiveAndEnabled && !networkObject.IsOwner) return;
             levelUpGrimoireObject.SetActive(skillsToUnlock > 0);
             
