@@ -1,4 +1,5 @@
-﻿using Unity.Netcode;
+﻿using Globals;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace end_game
@@ -34,23 +35,14 @@ namespace end_game
             foreach (MonoBehaviour script in scriptToDisable) script.enabled = false;
             Cursor.visible = true;
         }
-        
         public void EndGame(bool mageWin)
         {
-            if (mageWin)
+            if (SceneObjectReferencer.MainInstance.isNetworkScene)
             {
-                if (IsServer)
-                {
-                    // god screen
-                    GameLost();
-                    return;
-                }
-
-                GameWon();
-                return;
+                EndGameRpc(mageWin);
             }
             
-            if (IsServer)
+            if (mageWin)
             {
                 // god screen
                 GameWon();
@@ -58,6 +50,32 @@ namespace end_game
             }
 
             GameLost();
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void EndGameRpc(bool mageWin)
+        {
+            if (IsServer)
+            {
+                if (mageWin)
+                {
+                    // god screen
+                    GameWon();
+                    return;
+                }
+
+                GameLost();
+                return;
+            }
+            
+            if (mageWin)
+            {
+                // god screen
+                GameLost();
+                return;
+            }
+
+            GameWon();
         }
     }
 }

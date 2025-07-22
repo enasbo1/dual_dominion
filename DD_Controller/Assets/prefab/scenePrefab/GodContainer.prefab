@@ -342,7 +342,7 @@ MonoBehaviour:
     m_ActionId: 8b34f25a-aec2-4a47-bb1e-0d8c9bd07fef
     m_ActionName: 'GoD/Look[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/XInputControllerWindows/rightStick]'
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: GoD
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
