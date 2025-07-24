@@ -2,9 +2,9 @@
 using Unity.Netcode;
 using UnityEngine;
 
-namespace end_game
+namespace EndGame
 {
-    class GameEnd : NetworkBehaviour
+    public class GameEnd : NetworkBehaviour
     {
         [SerializeField] private GameObject gameOverCanvas;
         [SerializeField] private GameObject gameWonCanvas;

@@ -1,3 +1,4 @@
+using EndGame;
 using UnityEngine;
 
 namespace end_game

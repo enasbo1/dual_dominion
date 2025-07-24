@@ -38,8 +38,6 @@ namespace initScene
                 spawnPoint.position + (_networkManager.IsServer? Vector3.zero : Vector3.up * 30), 
                 spawnPoint.rotation);
             
-            pauseMenu.playerInputs = go.GetComponent<PlayerInput>();
-            
             if (_networkManager.IsServer)
             {
                 MageDealer player = go.GetComponent<MageDealer>();

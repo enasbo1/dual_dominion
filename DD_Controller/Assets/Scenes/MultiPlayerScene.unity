@@ -914,7 +914,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  neutralTimeFlow: 1
+  timeFlowNeutral: 1
+  timeFlowPause: 0.005
+  timeFlowLevelUp: 0.1
 --- !u!1001 &1563089180
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -977,6 +979,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2415583982799976933, guid: bfcaccc01c494e949ab232289992cd73, type: 3}
   m_PrefabInstance: {fileID: 1563089180}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1563089182 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4260023545898328430, guid: bfcaccc01c494e949ab232289992cd73, type: 3}
+  m_PrefabInstance: {fileID: 1563089180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5015123276043b28d5076c76cd36530, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1731251182
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1183,12 +1196,20 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
+      propertyPath: pauseTrigger
+      value: 
+      objectReference: {fileID: -654455388144267844, guid: 4e9ae680ba9532140866e0c015269516, type: 3}
+    - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
       propertyPath: playerInputs
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
       propertyPath: neutralTimeFlow
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
+      propertyPath: pauseTrigger.m_Name
+      value: Pause Trigger
       objectReference: {fileID: 0}
     - target: {fileID: 7736077962557439926, guid: b5053429b75b5084c8565cd982dcbc9b, type: 3}
       propertyPath: objectsToDisable.Array.size
@@ -1300,9 +1321,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 408239705}
     - target: {fileID: 5910750721984070646, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
+      propertyPath: gameEnd
+      value: 
+      objectReference: {fileID: 1563089182}
+    - target: {fileID: 5910750721984070646, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
+      propertyPath: pauseMenu
+      value: 
+      objectReference: {fileID: 1853746099}
+    - target: {fileID: 5910750721984070646, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
       propertyPath: isNetworkScene
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5910750721984070646, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
+      propertyPath: timeScaleController
+      value: 
+      objectReference: {fileID: 1484353554}
     - target: {fileID: 5910750721984070646, guid: 28fe789456db0304c9c2628bcd5fda54, type: 3}
       propertyPath: monsterStandByManager
       value: 

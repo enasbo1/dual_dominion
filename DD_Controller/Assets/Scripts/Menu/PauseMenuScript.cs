@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Globals;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -13,7 +14,7 @@ namespace Menu
         
         public static PauseMenuScript Instance { get; private set; }
         
-        public PlayerInput playerInputs;
+        public InputActionReference pauseTrigger;
         public List<GameObject> objectsToDisable = new List<GameObject>();
 
         [SerializeField] private GameObject canvas;
@@ -23,16 +24,32 @@ namespace Menu
         
         [NonSerialized] public bool isPauseActive;
         private TimeScaleController _timeScaleController;
-        private InputAction _pauseTrigger;
         private bool _isMultiplayer;
-        
+
         private void ApplyPause(bool shouldPause)
         {
+            if (_isMultiplayer)
+            {
+                ApplyPauseRpc(shouldPause);
+            }
+            else
+            {
+                _applyPause(shouldPause);
+            }
+        }
+        [Rpc(SendTo.Everyone)]
+        private void ApplyPauseRpc(bool shouldPause)
+        {
+            _applyPause(shouldPause);
+        }
+
+        private void _applyPause(bool shouldPause)
+        { 
             isPauseActive = shouldPause;
             canvas.SetActive(shouldPause);
             objectsToDisable.ForEach(x => x.SetActive(!shouldPause));
             
-            Cursor.lockState = shouldPause && (!_isMultiplayer || (_isMultiplayer && IsServer)) ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.lockState = shouldPause || (_isMultiplayer && !IsServer) ? CursorLockMode.None : CursorLockMode.Locked;
         }
                 
         private void ChangePause(bool shouldPause)
@@ -68,8 +85,12 @@ namespace Menu
                 enabled = false;
                 return;
             }
-            
-            _isMultiplayer = NetworkManager.Singleton != null && NetworkManager.Singleton.IsConnectedClient;
+
+            SceneObjectReferencer.WaitingInit += sor =>
+            {
+                _isMultiplayer = sor.isNetworkScene;
+            };
+
             Time.timeScale = _timeScaleController.timeFlowNeutral;
             
             resumeButton.onClick.AddListener(() => { ChangePause(false); });
@@ -81,9 +102,9 @@ namespace Menu
             });
 
             leaveGameButton.onClick.AddListener(Application.Quit);
-
-            _pauseTrigger = playerInputs.actions["Escape"];
-            _pauseTrigger.started += _ => { ChangePause(!isPauseActive); };
+            
+            pauseTrigger.action.Enable();
+            pauseTrigger.action.started += _ => { ChangePause(!isPauseActive); };
 
             _timeScaleController.syncedTimeScale.OnValueChanged += OnSyncedTimeChange;
         }

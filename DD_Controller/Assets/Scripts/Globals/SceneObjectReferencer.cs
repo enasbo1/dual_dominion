@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using end_game;
+using EndGame;
+using Menu;
 using Monster;
 using UnityEngine;
 
@@ -12,6 +15,10 @@ namespace Globals
         public Camera camera;
         public bool isNetworkScene;
         public MonsterStandByManager monsterStandByManager;
+        public GameEnd gameEnd;
+        public PauseMenuScript pauseMenu;
+        public TimeScaleController timeScaleController;
+
         public static event Action<SceneObjectReferencer> WaitingInit 
         {
             add => WaitingAction(value);

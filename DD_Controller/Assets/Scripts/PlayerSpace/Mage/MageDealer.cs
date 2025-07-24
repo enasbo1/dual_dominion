@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Globalization;
 using end_game;
+using EndGame;
+using Globals;
 using Menu;
 using Shared;
 using TMPro;
@@ -39,21 +41,27 @@ namespace PlayerSpace.Mage
         
         private void Start()
         {
-            _timeScaleController = TimeScaleController.Instance;
-            if (_timeScaleController == null)
+            SceneObjectReferencer.WaitingInit += sor =>
             {
-                Debug.LogError("TimeScaleController instance not found in scene.");
-                enabled = false;
-                return;
-            }
-            
-            _pauseMenu = PauseMenuScript.Instance;
-            if (_pauseMenu == null)
-            {
-                Debug.LogError("PauseMenuScript instance not found in scene.");
-                enabled = false;
-                return;
-            }
+                _timeScaleController = sor.timeScaleController;
+
+                if (!_timeScaleController) {
+                    Debug.LogError("TimeScaleController instance not found in scene.");
+                    enabled = false;
+                    return;
+                }
+
+                
+                _pauseMenu  = sor.pauseMenu;
+
+                if (!_pauseMenu) {
+                    Debug.LogError("PauseMenuScript instance not found in scene.");
+                    enabled = false;
+                    return;
+                }
+                
+                if (!gameEnd) gameEnd = sor.gameEnd;
+            };
             
             lifePoints = maxHealth;
             textHp.text = $"{lifePoints.ToString(CultureInfo.CurrentCulture)} / {maxHealth.ToString(CultureInfo.CurrentCulture)}";
