@@ -122,9 +122,15 @@ namespace PlayerSpace.Mage.UI
         private void FixedUpdate()
         {
             if (_inputStep > 0) _inputTimer += Time.deltaTime;
+
+            if (mageDealer.skillsToUnlock > 0 && _spellsToUnlock.Count <= 0)
+            {
+                CastSpell(true);
+                return;
+            }
             
             // Condition to fail an incantation
-            if (_spellsAvailable.Count > 0 && _spellsToUnlock.Count > 0 && _inputTimer < timeLimit) return;
+            if (_spellsAvailable.Count > 0 && _inputTimer < timeLimit) return;
 
             CastSpell(true);
         }
