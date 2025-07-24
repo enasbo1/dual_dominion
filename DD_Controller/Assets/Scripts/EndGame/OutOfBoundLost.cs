@@ -1,7 +1,7 @@
-using EndGame;
+using Globals;
 using UnityEngine;
 
-namespace end_game
+namespace EndGame
 {
     public class OutOfBoundLost : MonoBehaviour
     {
@@ -9,7 +9,14 @@ namespace end_game
         public Transform[] objectLimited;
         public int deathBottom = -100;
 
-
+        private void Start()
+        {
+            if (!gameEnd)
+                SceneObjectReferencer.WaitingInit += sor =>
+                {
+                    gameEnd = sor.gameEnd;
+                };
+        }
 
         // Update is called once per frame
         private void Update()

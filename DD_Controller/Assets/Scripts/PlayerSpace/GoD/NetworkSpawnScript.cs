@@ -1,5 +1,6 @@
 using System;
 using Monster;
+using PlayerSpace.GoD;
 using Shared;
 using Unity.Netcode;
 using UnityEngine;
@@ -24,7 +25,7 @@ namespace GoD
             if (_networkManager.IsServer) return;
             if (Input.GetKeyDown(KeyCode.Space) && type != WalkerEnum.None)
             {
-                Monster monsterSpawn = godSelectMonsterManagerScript.GetMonsterSpawnerByType(type, variant);
+                PlayerSpace.GoD.Monster monsterSpawn = godSelectMonsterManagerScript.GetMonsterSpawnerByType(type, variant);
                 if (monsterSpawn == null) return;
                 if (godManager.karmaPoint > monsterSpawn.cost)
                 {

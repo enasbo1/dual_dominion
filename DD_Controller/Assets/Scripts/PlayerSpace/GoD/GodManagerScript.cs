@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GoD
+namespace PlayerSpace.GoD
 {
     public class GodManagerScript : MonoBehaviour
     {

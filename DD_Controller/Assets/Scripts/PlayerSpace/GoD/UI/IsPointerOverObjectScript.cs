@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace GoD.UI
+namespace PlayerSpace.GoD.UI
 {
     public class IsPointerOverObjectScript : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {

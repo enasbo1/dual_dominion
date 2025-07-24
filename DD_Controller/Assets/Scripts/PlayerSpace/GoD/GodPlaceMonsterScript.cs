@@ -2,7 +2,7 @@ using Globals;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace GoD
+namespace PlayerSpace.GoD
 {
     public class GodPlaceMonsterScript : MonoBehaviour
     {

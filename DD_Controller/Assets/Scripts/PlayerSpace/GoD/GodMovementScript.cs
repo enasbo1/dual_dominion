@@ -1,8 +1,8 @@
-using GoD.UI;
+using PlayerSpace.GoD.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace GoD
+namespace PlayerSpace.GoD
 {
     public class GodMovementScript : MonoBehaviour
     {

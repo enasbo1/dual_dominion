@@ -51,6 +51,9 @@ MonoBehaviour:
   camera: {fileID: 0}
   isNetworkScene: 0
   monsterStandByManager: {fileID: 0}
+  gameEnd: {fileID: 0}
+  pauseMenu: {fileID: 0}
+  timeScaleController: {fileID: 0}
 --- !u!114 &604951058825950401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -76,3 +79,5 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 265d6f46b0efcff47ab30c2228b50062, type: 2}
   - {fileID: 2100000, guid: 92b72afdd2105ea4daae4584d7855b67, type: 2}
   - {fileID: 2100000, guid: 68be5da2d4db183479126c452549dfad, type: 2}
+  - {fileID: 2100000, guid: a08939910f2c49e4a9bf4d89f5259f53, type: 2}
+  - {fileID: 2100000, guid: 13db1f4ae27473943b878d2301e099ed, type: 2}

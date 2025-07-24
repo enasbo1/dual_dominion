@@ -1,6 +1,7 @@
 ﻿using System;
 using GameRule;
 using initScene;
+using PlayerSpace;
 using PlayerSpace.Mage;
 using Shared;
 using UnityEngine;

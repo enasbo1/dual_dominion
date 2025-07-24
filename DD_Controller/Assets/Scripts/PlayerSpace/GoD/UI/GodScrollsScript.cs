@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace GoD.UI
+namespace PlayerSpace.GoD.UI
 {
     public class GodScrollsScript : MonoBehaviour
     {

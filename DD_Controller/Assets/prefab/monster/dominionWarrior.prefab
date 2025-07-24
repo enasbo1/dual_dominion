@@ -122,6 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eca3bb5362069e4a959bc83bf707714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderer: {fileID: 0}
   nearby: []
   keepPresent: 1
 --- !u!1001 &350986174641425343
@@ -290,7 +291,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 2a93680f4b532934289c42c0e853acc4, type: 3}
       propertyPath: m_Name
-      value: IG_Chibi_dominion_warrior (1)
+      value: IG_Chibi_dominion_warrior
       objectReference: {fileID: 0}
     - target: {fileID: 3999581100801238497, guid: 2a93680f4b532934289c42c0e853acc4, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -342,6 +343,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a93680f4b532934289c42c0e853acc4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2556967216339409079}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a93680f4b532934289c42c0e853acc4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7999714382019651267}
   m_SourcePrefab: {fileID: 100100000, guid: 2a93680f4b532934289c42c0e853acc4, type: 3}
 --- !u!1 &122863528723455104 stripped
 GameObject:
@@ -370,6 +374,56 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7999714382019651267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122863528723455104}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 1
+    OriginatingState: 1092759200
+    DestinationState: 1748109174
+    TransitionDuration: 0.25
+    TriggerNameHash: 301916809
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 1
+    OriginatingState: 2081823275
+    DestinationState: 1748109174
+    TransitionDuration: 0.25
+    TriggerNameHash: 301916809
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 2
+    OriginatingState: 1736441620
+    DestinationState: -806913119
+    TransitionDuration: 0.1
+    TriggerNameHash: 1080829965
+    TransitionIndex: 2
+  - IsCrossFadeExit: 0
+    Layer: 2
+    OriginatingState: 1270818176
+    DestinationState: -1929447031
+    TransitionDuration: 0.25
+    TriggerNameHash: -1376407236
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 2
+    OriginatingState: 1270818176
+    DestinationState: -806913119
+    TransitionDuration: 0.1
+    TriggerNameHash: 1080829965
+    TransitionIndex: 3
+  m_Animator: {fileID: 2556967216339409079}
 --- !u!4 &792544572287338042 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a93680f4b532934289c42c0e853acc4, type: 3}
@@ -1782,6 +1836,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e21699b81028d1e40beed36c2148c0b0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
     - target: {fileID: 919132149155446097, guid: e21699b81028d1e40beed36c2148c0b0, type: 3}
       propertyPath: m_Name
       value: ecaille_RArm_III

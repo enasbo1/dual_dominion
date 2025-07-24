@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using GoD;
 using Monster;
 using Shared;
 using TMPro;
@@ -9,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace GoD
+namespace PlayerSpace.GoD
 {
     public class Monster
     {

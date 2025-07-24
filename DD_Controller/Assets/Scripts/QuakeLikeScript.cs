@@ -44,13 +44,17 @@ public class QuakeLikeScript : MonoBehaviour
             _mouse = false;
         }
 
+        float time = _mouse ? 0.8f * Time.timeScale : Time.deltaTime * 90;
+        
         Vector3 rot = playerTransform.rotation.eulerAngles;
-        rot.y += _lookVector.x * 90 * Time.deltaTime * sensibilityH;
+        rot.y += _lookVector.x * time * sensibilityH;
 
         playerTransform.rotation = Quaternion.Euler(rot);
 
         Vector3 roth = headTransform.localRotation.eulerAngles;
-        roth.x -= _lookVector.y * 90 * Time.deltaTime * sensibilityV;
+        roth.x -= _lookVector.y * time * sensibilityV;
+        roth.x = Mathf.Clamp(roth.x, -85, 85);
+
         headTransform.localRotation = Quaternion.Euler(roth);
     }
 
@@ -77,7 +81,7 @@ public class QuakeLikeScript : MonoBehaviour
 
     private void RotateCameraFromMouse(Vector2 direction)
     {
-        if (_mouse) _lookVector = direction / 4;
+        if (_mouse) _lookVector = direction / 5;
     }
 
     private void JumpIntent()

@@ -1,9 +1,9 @@
 using GoD;
 using Menu;
+using PlayerSpace.GoD;
 using PlayerSpace.Mage;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace initScene
 {
