@@ -19,9 +19,6 @@ namespace Monster.Behavior
                 Debug.LogWarning("erreur lors de la récupération du sensor du monstre");
                 return false;
             }
-
-            behaviorManager.GetDealer(index).sensor.keepPresent = true;
-            
             
             Vector3 position = behaviorManager.Transforms[index].position;
             Vector3? target = behaviorManager.MainPlayer.mainTransform?.position;
@@ -35,7 +32,7 @@ namespace Monster.Behavior
             
             dealer.animator?.SetTrigger(WyvernAnimP.Fly);
             _behaviorManager = behaviorManager;
-            dealer.sensor.keepPresent = true;
+            
             if (!dealer.mainTransform) return 0;
             Vector3 dir = dealer.mainTransform.rotation * FireDirectionVector;
 

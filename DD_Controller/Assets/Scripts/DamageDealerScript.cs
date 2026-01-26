@@ -1,27 +1,19 @@
-using System.Collections.Generic;
 using Monster;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class DamageDealerScript : MonoBehaviour
 {
-    [FormerlySerializedAs("enemySensorScript")] public SensorScript sensorScript;
     public float damageMax;
     public float damageReductionPerHit;
-
-    private List<Collider> _monstersNearby;
+    public float currentDamage;
 
     private void Start()
     {
-        _monstersNearby = sensorScript.nearby;
+        currentDamage = damageMax;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!sensorScript) return;
-        float damageToReduce = 0;
-        _monstersNearby.ForEach(_ => { damageToReduce += damageReductionPerHit; });
-
         if (MonsterLifeManager.MainInstance == null)
         {
             Debug.LogWarning("Monster life manager main instance not specified");
@@ -29,8 +21,11 @@ public class DamageDealerScript : MonoBehaviour
         }
 
         MonsterLifeManager.MainInstance.Hit(other.gameObject, damageMax);
-        damageMax -= damageToReduce;
+        currentDamage -= damageReductionPerHit;
 
-        if (damageMax <= 0) gameObject.SetActive(false);
+        if (currentDamage > 0) return;
+        
+        gameObject.SetActive(false);
+        currentDamage = damageMax;
     }
 }

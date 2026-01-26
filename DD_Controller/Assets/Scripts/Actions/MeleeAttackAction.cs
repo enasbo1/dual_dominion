@@ -23,7 +23,6 @@ namespace Actions
             _attackTimer = 0f;
             _damage = damage;
             _sensorScript = sensorScript;
-            sensorScript.keepPresent = true;
         }
 
         public void launch()

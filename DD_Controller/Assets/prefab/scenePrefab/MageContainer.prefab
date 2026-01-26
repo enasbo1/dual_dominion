@@ -284,7 +284,7 @@ MonoBehaviour:
   - {fileID: 4064451389469332225}
   ComponentsToDestroy:
   - {fileID: 3295819885744193216}
-  - {fileID: 8146033194334452516}
+  - {fileID: 0}
   RigidbodiesToDestroy:
   - {fileID: 6110237759414914894}
 --- !u!114 &2800593394507225767
@@ -321,7 +321,7 @@ MonoBehaviour:
   healthBarSlider: {fileID: 4399138162147914700}
   textHp: {fileID: 2110949284355283334}
   damageEffect: {fileID: 1750091918387609345}
-  isInvicible: 0
+  isInvincible: 0
   levelXpPoints: 850
   currentXP: 0
   xpBarSlider: {fileID: 2906513661562100444}
@@ -493,6 +493,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
@@ -598,6 +608,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
   AuthorityMode: 1
   TickSyncChildren: 0
   UseUnreliableDeltas: 0
@@ -1072,6 +1092,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3851298224877111225, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: spellManager
+      value: 
+      objectReference: {fileID: 2326763454919911114}
+    - target: {fileID: 3851298224877111225, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: effectRenderer
+      value: 
+      objectReference: {fileID: 1272778761155543733}
+    - target: {fileID: 3851298224877111225, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: footMoveScript
+      value: 
+      objectReference: {fileID: 8705256961887707652}
     - target: {fileID: 3972690691662956275, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: mageDealer
       value: 
@@ -1081,6 +1113,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2140186896141865387}
     - target: {fileID: 3972690691662956275, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: spellManager
+      value: 
+      objectReference: {fileID: 2326763454919911114}
+    - target: {fileID: 4170831452486104179, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: spellManager
       value: 
       objectReference: {fileID: 2326763454919911114}
@@ -1216,6 +1252,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7796129458814110475, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: spellManager
+      value: 
+      objectReference: {fileID: 2326763454919911114}
+    - target: {fileID: 7796129458814110475, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: characterTransform
+      value: 
+      objectReference: {fileID: 5313604575902248990}
+    - target: {fileID: 7796129458814110475, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
+      propertyPath: castedGroupsPosition
+      value: 
+      objectReference: {fileID: 7907222497124521009}
     - target: {fileID: 8069558942337710419, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1398,14 +1446,3 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7105789301247937640, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
   m_PrefabInstance: {fileID: 4453186847628578114}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8146033194334452516 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5530530155456345702, guid: 6e673f5e1e8165642b7c7baf951e6b3b, type: 3}
-  m_PrefabInstance: {fileID: 4453186847628578114}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce74d462489f3e146bd2f27e9a3c5dab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

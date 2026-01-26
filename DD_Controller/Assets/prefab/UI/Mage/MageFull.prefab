@@ -659,6 +659,7 @@ Transform:
   - {fileID: 2776973013299469513}
   - {fileID: 8806884181648120109}
   - {fileID: 8096387679540887061}
+  - {fileID: 7430696538687483185}
   m_Father: {fileID: 866303749232423170}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1602558159732827421
@@ -2412,6 +2413,7 @@ GameObject:
   - component: {fileID: 4724048179402247437}
   - component: {fileID: 6730508720678239742}
   - component: {fileID: 1080020278904284920}
+  - component: {fileID: 3851298224877111225}
   - component: {fileID: 5752555671279305198}
   - component: {fileID: 778091746645430307}
   m_Layer: 0
@@ -2540,7 +2542,8 @@ MonoBehaviour:
   spellManager: {fileID: 0}
   footMoveScript: {fileID: 0}
   effectMaterial: {fileID: 2100000, guid: e69bcbb1ef3e2224fb7722d4193c9005, type: 2}
-  effectFailureMaterial: {fileID: 2100000, guid: 296ed545baa25744483c243a25bc95db, type: 2}
+  effectFailureMaterial: {fileID: 2100000, guid: fa35c68ae1b209b42823bdcd4cb76da6, type: 2}
+  effectRecastFailureMaterial: {fileID: 2100000, guid: 8511cab65a884284b9aca0115aa6f10e, type: 2}
   effectRenderer: {fileID: 0}
 --- !u!114 &1080020278904284920
 MonoBehaviour:
@@ -2556,8 +2559,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spellManager: {fileID: 0}
   footMoveScript: {fileID: 0}
-  effectMaterial: {fileID: 2100000, guid: 41b2aa076656cdf4d922b1acde1e4b75, type: 2}
-  effectFailureMaterial: {fileID: 2100000, guid: f1dad403e19a77443bf3ca59b1ac50aa, type: 2}
+  effectMaterial: {fileID: 2100000, guid: 5605c8afc72eb8e41ada04dc608130f2, type: 2}
+  effectFailureMaterial: {fileID: 2100000, guid: 08af9fc637b660043ab13e091ddae951, type: 2}
+  effectRecastFailureMaterial: {fileID: 2100000, guid: e4e33f3ad63490540900e98ba599d24c, type: 2}
+  effectRenderer: {fileID: 0}
+--- !u!114 &3851298224877111225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5128612816109905871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65ce7b6ce06b47e98261665eeb0565e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spellManager: {fileID: 0}
+  footMoveScript: {fileID: 0}
+  effectMaterial: {fileID: 2100000, guid: 8b3a3bf12a612b74f99697fbcd9804dd, type: 2}
+  effectFailureMaterial: {fileID: 2100000, guid: 13fffb4c086b9b248894986627dbe132, type: 2}
+  effectRecastFailureMaterial: {fileID: 2100000, guid: 8bf8239309d08aa41a568a61a4881bcb, type: 2}
   effectRenderer: {fileID: 0}
 --- !u!114 &5752555671279305198
 MonoBehaviour:
@@ -5926,10 +5948,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: UnnamedSpellV1
       objectReference: {fileID: 0}
-    - target: {fileID: 8390348254115468155, guid: ea1469fe66b9b594685d9f977b36ae29, type: 3}
-      propertyPath: damageReductionPerHit
-      value: 200
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8455,6 +8473,64 @@ PrefabInstance:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2606862682690704167, guid: 37023571862c7af46b74a3712108d81c, type: 3}
   m_PrefabInstance: {fileID: 8912621139190417408}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &8985163115639086447
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3023288670410890454}
+    m_Modifications:
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3406737502454710719, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+      propertyPath: m_Name
+      value: DomeShield
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+--- !u!4 &7430696538687483185 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1994695642843000926, guid: 41880b5738ca31d4ea1261c2049a5818, type: 3}
+  m_PrefabInstance: {fileID: 8985163115639086447}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9033472951591849082
 PrefabInstance:

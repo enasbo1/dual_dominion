@@ -80,20 +80,23 @@ namespace PlayerSpace.Mage.UI
             }
 
             float transitionSpeed = _localDeltaTime / transitionDistance;
-            float waitTime = SPELL_UI_HEIGHT * (2 / transitionDistance * transitionSpeed);
+            float waitTime = SPELL_UI_HEIGHT * (2f / transitionDistance * transitionSpeed);
             _timer = -waitTime;
         }
         
-        private void SpellScroll()
+        private void ScrollSpells()
         {
             if (spellManager.isIncanting != _wasIncanting) OnIncantingChange();
-
-            _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0, (_spellsToUnlock.Count - 2) * 70);
+            _spellsUIEndPosition = _spellsUIStartPosition + new Vector2(0f, (_spellsToUnlock.Count - - 3) * SPELL_UI_HEIGHT);
+            
+            Vector2 spellsUIPosition = _spellsUI.anchoredPosition;
             
             // Scroll back spells so that the 1st spell is on top of the UI
-            if (_spellsUI.anchoredPosition.y > _spellsUIEndPosition.y + SPELL_UI_HEIGHT)
+            if (spellManager.isIncanting &&
+                spellsUIPosition.y > _spellsUIStartPosition.y &&
+                spellsUIPosition.y > _spellsUIEndPosition.y - 2f * SPELL_UI_HEIGHT)
             {
-                _scrollSpell = _spellsUI.anchoredPosition - new Vector2(0f, SPELL_UI_HEIGHT / (SPELL_UI_HEIGHT / 5));
+                _scrollSpell = spellsUIPosition - new Vector2(0f, SPELL_UI_HEIGHT / (SPELL_UI_HEIGHT / 5));
                 _spellsUI.anchoredPosition = _scrollSpell;
             }
 
@@ -110,15 +113,15 @@ namespace PlayerSpace.Mage.UI
             if (_timer < 0f) return;
             
             // Scroll spells
-            if (_spellsUI.anchoredPosition.y >= _spellsUIEndPosition.y) return;
-            _scrollSpell = _spellsUI.anchoredPosition + new Vector2(0f, transitionDistance);
+            if (spellsUIPosition.y >= _spellsUIEndPosition.y) return;
+            _scrollSpell = spellsUIPosition + new Vector2(0f, transitionDistance);
             _spellsUI.anchoredPosition = _scrollSpell;
         }
 
         private void Update()
         {
-            SpellScroll();
             RefreshSpellsUI();
+            ScrollSpells();
         }
 
         private void FixedUpdate()

@@ -17,9 +17,6 @@ namespace Monster.Behavior
                 Debug.LogWarning("erreur lors de la récupération du sensor du monstre");
                 return false;
             }
-
-            behaviorManager.GetDealer(index).sensor.keepPresent = true;
-            
             
             Vector3 position = behaviorManager.Transforms[index].position;
             Vector3? target = behaviorManager.MainPlayer.mainTransform?.position;
